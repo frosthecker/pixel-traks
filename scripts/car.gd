@@ -8,18 +8,18 @@ class_name Vehicle extends VehicleBody3D
 @export var coast_brake: float = 1.5
 
 @export_group("Steering")
-@export var turn_speed: float = 6.0
-@export var turn_amount: float = 0.45
-@export var drift_turn_amount: float = 0.70
+@export var turn_speed: float = 5.0
+@export var turn_amount: float = 0.38 # Smooth, predictable turning angle (~22 degrees)
+@export var counter_steer_amount: float = 0.55 # Extra range when counter-steering into a slide (~31 degrees)
 
 @export_group("Drift Mechanics")
-@export var normal_rear_friction: float = 3.5
-@export var drift_rear_friction: float = 0.85
-@export var front_friction: float = 5.5
-@export var drift_kick_impulse: float = 3800.0
-@export var drift_torque_assist: float = 600.0
-@export var counter_steer_assist: float = 500.0
-@export var drift_engine_boost: float = 1.25
+@export var normal_rear_friction: float = 3.0 # Solid straight-line traction
+@export var drift_rear_friction: float = 1.6 # Controlled, smooth slide (not ice)
+@export var front_friction: float = 3.2 # Balanced front grip (prevents aggressive pivoting)
+@export var friction_transition_speed: float = 5.0 # Smooth, progressive friction drop/recovery
+@export var counter_steer_assist: float = 600.0 # Damps excess spin when counter-steering
+@export var max_yaw_rate: float = 1.5 # Soft yaw rate cap (rad/s) to prevent sudden snapping
+@export var drift_engine_boost: float = 1.15
 @export var min_drift_speed_kmh: float = 10.0
 
 @export_group("Wheels")
@@ -40,7 +40,7 @@ var current_steering: float = 0.0
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	# Auto-locate wheels if not explicitly assigned in inspector
+	# Auto-locate wheels if not explicitly assigned
 	if not front_left_wheel:
 		front_left_wheel = get_node_or_null("fl_wheel")
 	if not front_right_wheel:
@@ -50,13 +50,13 @@ func _ready() -> void:
 	if not rear_right_wheel:
 		rear_right_wheel = get_node_or_null("br_wheel")
 	
-	# Fallback to legacy exported variables if assigned
+	# Fallback to legacy exported variables
 	if not front_left_wheel and wheel_trac_l:
 		front_left_wheel = wheel_trac_l
 	if not front_right_wheel and wheel_trac_r:
 		front_right_wheel = wheel_trac_r
 	
-	# Initialize wheel friction
+	# Set initial wheel friction
 	if front_left_wheel:
 		front_left_wheel.wheel_friction_slip = front_friction
 	if front_right_wheel:
@@ -88,46 +88,41 @@ func _physics_process(delta: float) -> void:
 		cross_y = car_forward.cross(h_vel.normalized()).y
 		slip_angle_deg = rad_to_deg(asin(clamp(cross_y, -1.0, 1.0)))
 	
-	# Drift determination:
-	# Triggered by drift button when moving, or natural power slide at speed
+	# Drift determination (drift button or high-speed power slide)
 	var want_drift = drift_action and (speed_kmh > min_drift_speed_kmh)
-	var is_power_sliding = abs(slip_angle_deg) > 10.0 and accel > 0.0 and speed_kmh > 18.0
-	var enter_drift = want_drift or is_power_sliding
+	var is_power_sliding = abs(slip_angle_deg) > 12.0 and accel > 0.0 and speed_kmh > 20.0
+	is_drifting = want_drift or is_power_sliding
 	
-	# Drift kick initiation: kick the tail out when initiating drift while turning
-	if want_drift and not is_drifting and abs(steering_dir) > 0.1:
-		var kick = car_up * (steering_dir * drift_kick_impulse)
-		apply_torque_impulse(kick)
-	
-	is_drifting = enter_drift
-	
-	# Dynamic wheel friction (drop rear friction during drift, maintain front grip)
+	# Smooth, progressive wheel friction transition (no sudden drop/snap)
 	var target_rear_fric = drift_rear_friction if is_drifting else normal_rear_friction
 	if rear_left_wheel:
-		rear_left_wheel.wheel_friction_slip = lerp(rear_left_wheel.wheel_friction_slip, target_rear_fric, 12.0 * delta)
+		rear_left_wheel.wheel_friction_slip = lerp(rear_left_wheel.wheel_friction_slip, target_rear_fric, friction_transition_speed * delta)
 	if rear_right_wheel:
-		rear_right_wheel.wheel_friction_slip = lerp(rear_right_wheel.wheel_friction_slip, target_rear_fric, 12.0 * delta)
+		rear_right_wheel.wheel_friction_slip = lerp(rear_right_wheel.wheel_friction_slip, target_rear_fric, friction_transition_speed * delta)
 	if front_left_wheel:
 		front_left_wheel.wheel_friction_slip = front_friction
 	if front_right_wheel:
 		front_right_wheel.wheel_friction_slip = front_friction
 	
-	# Adaptive steering: expand max angle during drift for deep counter-steering
-	var target_max_steer = drift_turn_amount if is_drifting else turn_amount
-	current_steering = lerp(current_steering, steering_dir * target_max_steer, turn_speed * delta)
+	# Adaptive steering:
+	# Only allow wider angle when counter-steering into the slide;
+	# when turning normally into the corner, keep angle bounded to prevent sudden sharp turns
+	var is_counter_steering = is_drifting and ((steering_dir * cross_y) < 0.0)
+	var max_steer = counter_steer_amount if is_counter_steering else turn_amount
+	current_steering = lerp(current_steering, steering_dir * max_steer, turn_speed * delta)
 	steering = current_steering
 	
-	# Drift assistance & stabilization
-	if is_drifting and h_vel.length() > 3.0:
-		# Counter-steer stabilization: prevents violent spin-out when driver counter-steers into slide
-		if (steering_dir * cross_y) < 0.0:
+	# Soft yaw rate damper: prevents the car from snapping or spinning out violently
+	if is_drifting:
+		# Counter-steer stabilization: stabilizes car when catching a slide
+		if is_counter_steering:
 			var stab = -angular_velocity.y * counter_steer_assist * delta
 			apply_torque(car_up * stab)
 		
-		# Spinout catch: dampens extreme slip angle (> 55 degrees) to keep drift recoverable
-		if abs(slip_angle_deg) > 55.0:
-			var catch_stab = -angular_velocity.y * 700.0 * delta
-			apply_torque(car_up * catch_stab)
+		# Softly clamp excess angular rotation to keep the slide smooth and steady
+		if abs(angular_velocity.y) > max_yaw_rate:
+			var excess = angular_velocity.y - sign(angular_velocity.y) * max_yaw_rate
+			apply_torque(car_up * (-excess * 2000.0 * delta))
 	
 	# Engine & Brake control
 	if accel > 0.0:
