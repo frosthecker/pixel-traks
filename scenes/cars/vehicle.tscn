@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b7g5o3xt2ltbn"]
+
+[ext_resource type="Script" uid="uid://oqnm0vu5nkfx" path="res://scripts/car.gd" id="1_de3p0"]
+
+[node name="VehicleBody3D" type="VehicleBody3D" unique_id=843520797]
+mass = 240.0
+script = ExtResource("1_de3p0")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=148930695]
+unique_name_in_owner = true
+collision_mask = 0
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=1529899762]

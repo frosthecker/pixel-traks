@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dyjulssocnllw"
+path="res://.godot/imported/Road1_Curve1.obj-63e6c5de76e9e285bebc0e96f68933b9.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Road1_Curve1.obj-63e6c5de76e9e285bebc0e96f68933b9.mesh"]
+
+source_file="res://assets/3d_models/tracks/[FREE] Modular Roads - Base/PLUS/obj/Road1_Curve1.obj"
+dest_files=["res://.godot/imported/Road1_Curve1.obj-63e6c5de76e9e285bebc0e96f68933b9.mesh", "res://.godot/imported/Road1_Curve1.obj-63e6c5de76e9e285bebc0e96f68933b9.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
