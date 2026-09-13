@@ -1569,7 +1569,6 @@ data = PackedVector3Array(0.8527, 0.039699998, 2.4392998, 1.0895, 0.0778, -0.82,
 
 [node name="Car" parent="." unique_id=843520797 instance=ExtResource("1_mi8v4")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 3.0945706, 0)
-turn_amount = 0.1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1155772166]
 environment = SubResource("Environment_lmksl")

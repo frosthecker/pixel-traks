@@ -591,18 +591,20 @@ center_of_mass_mode = 1
 center_of_mass = Vector3(-0.2, -0.2, 0)
 linear_damp = 0.1
 angular_damp = 0.1
-torque = 4000
-max_RPM = 1000
-wheel_trac_l = NodePath("fl_wheel")
-wheel_trac_r = NodePath("fr_wheel")
+torque = 12000.0
+turn_speed = 6.0
+turn_amount = 0.45
+wheel_trac_l = NodePath("bl_wheel")
+wheel_trac_r = NodePath("br_wheel")
 
 [node name="fl_wheel" type="VehicleWheel3D" parent="." index="0" unique_id=1919706945]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.1571741, 0.30864504, 0.6583808)
 use_as_steering = true
 wheel_radius = 0.263
-wheel_friction_slip = 2.5
-suspension_stiffness = 30.0
-damping_compression = 1.5
+wheel_friction_slip = 5.5
+suspension_travel = 0.2
+suspension_stiffness = 35.0
+damping_compression = 1.8
 damping_relaxation = 2.0
 
 [node name="lFWheel_003" type="MeshInstance3D" parent="fl_wheel" index="0" unique_id=1951583023]
@@ -613,9 +615,10 @@ mesh = SubResource("ArrayMesh_qk5hs")
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.1571741, 0.30864498, -0.6543237)
 use_as_steering = true
 wheel_radius = 0.263
-wheel_friction_slip = 2.5
-suspension_stiffness = 30.0
-damping_compression = 1.5
+wheel_friction_slip = 5.5
+suspension_travel = 0.2
+suspension_stiffness = 35.0
+damping_compression = 1.8
 damping_relaxation = 2.0
 
 [node name="rFWheel_003" type="MeshInstance3D" parent="fr_wheel" index="0" unique_id=1489792754]
@@ -626,10 +629,10 @@ mesh = SubResource("ArrayMesh_hqrjh")
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.0808645, 0.30864504, 0.6725869)
 use_as_traction = true
 wheel_radius = 0.263
-wheel_friction_slip = 1.2
-suspension_travel = 0.15
-suspension_stiffness = 60.0
-damping_compression = 3.0
+wheel_friction_slip = 3.5
+suspension_travel = 0.2
+suspension_stiffness = 45.0
+damping_compression = 2.2
 damping_relaxation = 2.0
 
 [node name="lRWheel_003" type="MeshInstance3D" parent="bl_wheel" index="0" unique_id=119793514]
@@ -640,10 +643,10 @@ mesh = SubResource("ArrayMesh_lxu0x")
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 1.0808647, 0.30864498, -0.6922064)
 use_as_traction = true
 wheel_radius = 0.263
-wheel_friction_slip = 1.2
-suspension_travel = 0.15
-suspension_stiffness = 60.0
-damping_compression = 3.0
+wheel_friction_slip = 3.5
+suspension_travel = 0.2
+suspension_stiffness = 45.0
+damping_compression = 2.2
 damping_relaxation = 2.0
 
 [node name="rRWheel_002" type="MeshInstance3D" parent="br_wheel" index="0" unique_id=1776742714]
