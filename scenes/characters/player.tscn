@@ -152,53 +152,6 @@ tracks/1/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_kmyvj"]
-resource_name = "fish_down"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [18, 19, 20, 21]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"tool_use_emit"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_c3kfx"]
-resource_name = "fish_idle_down"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.20000002),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [20, 21]
-}
-
 [sub_resource type="Animation" id="Animation_6rclf"]
 resource_name = "fish_idle_left"
 length = 0.4
@@ -218,7 +171,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_s0anf"]
 resource_name = "fish_idle_right"
-length = 0.4
+length = 4.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -227,27 +180,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.20000002),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.1998, 0.2997, 0.3996, 0.4995, 0.5994, 0.6993, 0.7992, 0.8991, 0.999, 1.1, 1.2066125, 1.2987, 1.3986, 1.4985, 1.5984, 1.6983, 1.7982, 1.8981, 1.998, 2.0979, 2.1978, 2.2977, 2.3976, 2.4975),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [86, 87]
-}
-
-[sub_resource type="Animation" id="Animation_s1x7u"]
-resource_name = "fish_idle_up"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.20000002),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [119, 120]
+"values": [210, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233]
 }
 
 [sub_resource type="Animation" id="Animation_a2luo"]
@@ -294,36 +230,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [84, 85, 86, 87]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.4),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"tool_use_emit"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_eir2k"]
-resource_name = "fish_up"
-length = 0.8
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [117, 118, 119, 120]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -1167,14 +1073,10 @@ _data = {
 &"axe_right": SubResource("Animation_kqtwu"),
 &"death_left": SubResource("Animation_2l4js"),
 &"death_right": SubResource("Animation_xhtjm"),
-&"fish_down": SubResource("Animation_kmyvj"),
-&"fish_idle_down": SubResource("Animation_c3kfx"),
 &"fish_idle_left": SubResource("Animation_6rclf"),
 &"fish_idle_right": SubResource("Animation_s0anf"),
-&"fish_idle_up": SubResource("Animation_s1x7u"),
 &"fish_left": SubResource("Animation_a2luo"),
 &"fish_right": SubResource("Animation_tswxa"),
-&"fish_up": SubResource("Animation_eir2k"),
 &"hammer_left": SubResource("Animation_k4v7y"),
 &"hammer_right": SubResource("Animation_g66nw"),
 &"hoe_left": SubResource("Animation_d6tgn"),
