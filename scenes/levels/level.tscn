@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkaf0otbgtrp5"]
+
+[ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="2_b2cq8"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Layers" type="Node2D" parent="."]
+
+[node name="Objects" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Player" parent="Objects" instance=ExtResource("2_b2cq8")]
+position = Vector2(186, 342)

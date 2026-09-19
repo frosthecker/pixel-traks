@@ -1,3 +1,18 @@
-# Godot 4+ specific ignores
+# Godot specific ignores
 .godot/
-/android/
+.import/
+export_presets.cfg
+*.import
+
+# Build and template files (Crucial for your repo size!)
+builds/
+*.tpz
+
+# Mono/C# specifics
+.mono/
+data_*/
+mono_crash_*.log
+
+# System/Editor specifics
+*.translation
+*.log
