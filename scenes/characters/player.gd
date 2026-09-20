@@ -4,12 +4,22 @@ var direction: Vector2
 var speed = 50
 @onready var animation_tree: AnimationTree = $Animation/AnimationTree
 @onready var move_state_machine = animation_tree.get("parameters/MoveStateMachine/playback")
+@onready var tool_state_machine = animation_tree.get("parameters/ToolStateMachine/playback")
+
+func _ready() -> void:
+	animation_tree.active = true
 
 
 func _physics_process(delta: float) -> void:
 	move()
 	animate()
+	get_basic_input()
 
+func get_basic_input():
+	if Input.is_action_just_pressed("action"):
+		
+		tool_state_machine.travel("Axe")
+		animation_tree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 func move():
 	direction = Input.get_vector("left", "right", "down", "up")
 	velocity = direction * speed
@@ -17,10 +27,14 @@ func move():
 
 func animate():
 	if direction:
-		move_state_machine.travel("walk")
 		var direction_animation = Vector2(round(direction.x), round(direction.y))
+		move_state_machine.travel("walk")
 		animation_tree.set("parameters/MoveStateMachine/idle/blend_position", direction_animation)
 		animation_tree.set("parameters/MoveStateMachine/walk/blend_position", direction_animation)
+		var tool_direction = Vector2(round(direction.x), round(direction.y)) if direction else Vector2.DOWN
+		for animation in Data.TOOL_STATE_ANIMATIONS.values():
+			var animation_name: String = "parameters/ToolStateMachine/" + animation + "/blend_position"
+			animation_tree.set(animation_name, tool_direction)
 	else:
 		move_state_machine.travel("idle")
 
