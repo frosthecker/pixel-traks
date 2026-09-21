@@ -95,4 +95,5 @@ const TOOL_STATE_ANIMATIONS = {
 	Enum.Tool.SWORD: 'Sword',
 	Enum.Tool.FISH: 'Fish',
 	Enum.Tool.SEED: 'Seed',
+	Enum.Tool.HAMMER: 'Hammer',
 	}
