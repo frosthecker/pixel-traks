@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 func get_basic_input():
 	if Input.is_action_just_pressed("tool_backward") or Input.is_action_just_pressed("tool_forward"):
 		var dir = Input.get_axis("tool_backward", "tool_forward")
-		current_tool += int(dir)
+		current_tool = (current_tool + int(dir) ) % Enum.Tool.size()
 	
 	if Input.is_action_just_pressed("action"):
 		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
