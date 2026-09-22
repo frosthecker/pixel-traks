@@ -36,7 +36,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_jk2m4"]
 resource_name = "axe_left"
-length = 1.1
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -44,10 +44,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1004, 0.19979998, 0.3004, 0.4004, 0.4995, 0.59940004, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1004, 0.19979998, 0.3004, 0.4004, 0.4995, 0.59940004, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 155]
+"values": [156, 157, 158, 159, 160, 161, 162, 163, 155]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -78,7 +78,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_kqtwu"]
 resource_name = "axe_right"
-length = 1.1
+length = 0.9
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -86,10 +86,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1004, 0.19979998, 0.3004, 0.4004, 0.4995, 0.59940004, 0.7, 0.8, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1004, 0.19979998, 0.3004, 0.4004, 0.4995, 0.59940004, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 156]
+"values": [156, 157, 158, 159, 160, 161, 162, 163, 155]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -132,7 +132,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.10000001, 0.2, 0.3, 0.40000004, 0.5, 0.6, 0.7, 0.8, 0.90000004, 1, 1.0999999, 1.2002605, 1.3025777),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122]
+"values": [108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -161,7 +161,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.10000001, 0.2, 0.3, 0.40000004, 0.5, 0.6, 0.7, 0.8, 0.90000004, 1, 1.0999999, 1.2002605, 1.3025777),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122]
+"values": [108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -247,7 +247,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.09990001, 0.19980001, 0.29970002, 0.39960003, 0.49950004, 0.59940004, 0.69930005, 0.79920006, 0.89910007, 0.9990001, 1.0989001, 1.1988, 1.2987, 1.3986, 1.4985, 1.5984, 1.6983, 1.7982, 1.8981, 1.998, 2.0979),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257]
+"values": [235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -286,10 +286,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.09990001, 0.19980001, 0.29970002, 0.39960003, 0.49950004, 0.59940004, 0.69930005, 0.79920006, 0.89910007, 0.9990001, 1.0989001, 1.1988, 1.2987, 1.3986, 1.4985, 1.5984, 1.6983, 1.7982, 1.8981, 1.998, 2.0979),
+"times": PackedFloat32Array(0.02052853, 0.12042854, 0.22032854, 0.32022855, 0.42012855, 0.5200286, 0.6199286, 0.7198286, 0.8197286, 0.9196286, 1.0195286, 1.1194286, 1.2193285, 1.3192285, 1.4191285, 1.5190285, 1.6189286, 1.7188286, 1.8187286, 1.9186286, 2.0185285, 2.1184285),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257]
+"values": [235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -298,7 +298,7 @@ tracks/1/path = NodePath("Sprite2D:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.02052853),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -468,10 +468,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.19980001, 0.2997, 0.3996, 0.4995, 0.5994, 0.6993, 0.7992, 0.8991),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.19980001, 0.2997, 0.3996, 0.4995, 0.5994, 0.6993, 0.7992, 0.8991, 0.9972657),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [166, 167, 168, 169, 170, 171, 172, 173, 174, 175]
+"values": [164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 164]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -507,10 +507,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.19980001, 0.2997, 0.3996, 0.4995, 0.5994, 0.6993, 0.7992, 0.8991),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0.0027123687, 0.10271237, 0.20251238, 0.30241236, 0.40231237, 0.50221235, 0.60211235, 0.70201236, 0.80191237, 0.9018124, 0.99997807),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [166, 167, 168, 169, 170, 171, 172, 173, 174, 175]
+"values": [164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 164]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -530,7 +530,7 @@ tracks/2/path = NodePath("Sprite2D:flip_h")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.0027123687),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -2011,3 +2011,5 @@ parameters/ToolOneShot/request = 0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=431958372]
 zoom = Vector2(5, 5)
+
+[connection signal="animation_finished" from="Animation/AnimationTree" to="." method="_on_animation_tree_animation_finished"]
