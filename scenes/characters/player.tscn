@@ -2033,10 +2033,10 @@ states/Sword/position = Vector2(768.5333, -502.53336)
 states/Water/node = SubResource("AnimationNodeBlendSpace2D_yyjep")
 states/Water/position = Vector2(1181.5254, 243.5152)
 transitions = ["Start", "Axe", SubResource("AnimationNodeStateMachineTransition_6aj6e"), "Axe", "Hoe", SubResource("AnimationNodeStateMachineTransition_n7k00"), "Hoe", "Axe", SubResource("AnimationNodeStateMachineTransition_lnpl6"), "Hoe", "Sword", SubResource("AnimationNodeStateMachineTransition_5bn3a"), "Sword", "Hoe", SubResource("AnimationNodeStateMachineTransition_tnye5"), "Axe", "Fish", SubResource("AnimationNodeStateMachineTransition_as8yd"), "Fish", "Axe", SubResource("AnimationNodeStateMachineTransition_qmarm"), "Sword", "Seed", SubResource("AnimationNodeStateMachineTransition_w5bca"), "Seed", "Sword", SubResource("AnimationNodeStateMachineTransition_j057w"), "Sword", "Water", SubResource("AnimationNodeStateMachineTransition_18mi3"), "Water", "Sword", SubResource("AnimationNodeStateMachineTransition_3uc7m"), "Sword", "Fish", SubResource("AnimationNodeStateMachineTransition_pue7u"), "Fish", "Sword", SubResource("AnimationNodeStateMachineTransition_7k8pb"), "Sword", "Axe", SubResource("AnimationNodeStateMachineTransition_5njio"), "Axe", "Sword", SubResource("AnimationNodeStateMachineTransition_aphfe"), "Seed", "Water", SubResource("AnimationNodeStateMachineTransition_dvq58"), "Water", "Seed", SubResource("AnimationNodeStateMachineTransition_qgqs5"), "Seed", "Fish", SubResource("AnimationNodeStateMachineTransition_e1rhj"), "Fish", "Seed", SubResource("AnimationNodeStateMachineTransition_qdswu"), "Seed", "Axe", SubResource("AnimationNodeStateMachineTransition_itbg4"), "Axe", "Seed", SubResource("AnimationNodeStateMachineTransition_ojpyd"), "Seed", "Hoe", SubResource("AnimationNodeStateMachineTransition_16acs"), "Hoe", "Seed", SubResource("AnimationNodeStateMachineTransition_djobu"), "Hoe", "Water", SubResource("AnimationNodeStateMachineTransition_s7nkp"), "Water", "Hoe", SubResource("AnimationNodeStateMachineTransition_csfhi"), "Hoe", "Fish", SubResource("AnimationNodeStateMachineTransition_tigr0"), "Fish", "Hoe", SubResource("AnimationNodeStateMachineTransition_5oy2u"), "Axe", "Water", SubResource("AnimationNodeStateMachineTransition_g65n5"), "Water", "Axe", SubResource("AnimationNodeStateMachineTransition_25jl8"), "Fish", "Water", SubResource("AnimationNodeStateMachineTransition_xnwxl"), "Water", "Fish", SubResource("AnimationNodeStateMachineTransition_m1gc8"), "Fish", "End", SubResource("AnimationNodeStateMachineTransition_8dtuh"), "Axe", "End", SubResource("AnimationNodeStateMachineTransition_ktr60"), "Water", "End", SubResource("AnimationNodeStateMachineTransition_jmtvv"), "Seed", "End", SubResource("AnimationNodeStateMachineTransition_jpw38"), "Sword", "End", SubResource("AnimationNodeStateMachineTransition_kvdys"), "Hoe", "End", SubResource("AnimationNodeStateMachineTransition_bl5np"), "Sword", "Hammer", SubResource("AnimationNodeStateMachineTransition_w5sjy"), "Hammer", "Sword", SubResource("AnimationNodeStateMachineTransition_b50a2"), "Hammer", "Hoe", SubResource("AnimationNodeStateMachineTransition_m3gdl"), "Hoe", "Hammer", SubResource("AnimationNodeStateMachineTransition_l38cc"), "Hammer", "Seed", SubResource("AnimationNodeStateMachineTransition_0prtj"), "Seed", "Hammer", SubResource("AnimationNodeStateMachineTransition_8xyep"), "Hammer", "Water", SubResource("AnimationNodeStateMachineTransition_uinop"), "Water", "Hammer", SubResource("AnimationNodeStateMachineTransition_f3kgr"), "Hammer", "Axe", SubResource("AnimationNodeStateMachineTransition_4yset"), "Axe", "Hammer", SubResource("AnimationNodeStateMachineTransition_b5chb"), "Hammer", "Fish", SubResource("AnimationNodeStateMachineTransition_qoogc"), "Fish", "Hammer", SubResource("AnimationNodeStateMachineTransition_gxkhf"), "Hammer", "End", SubResource("AnimationNodeStateMachineTransition_17uin")]
-graph_offset = Vector2(155, -308.69104)
+graph_offset = Vector2(124, 196.30896)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_inhyd"]
-graph_offset = Vector2(-190.66667, -344)
+graph_offset = Vector2(17.733337, -516.86664)
 nodes/output/position = Vector2(960, -80)
 nodes/ToolStateMachine/node = SubResource("AnimationNodeStateMachine_w5sjy")
 nodes/ToolStateMachine/position = Vector2(120, -140)
@@ -2059,7 +2059,7 @@ vframes = 16
 frame = 140
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=829021822]
-visible = false
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_atpat")
 
 [node name="Animation" type="Node" parent="." unique_id=1685573147]
@@ -2088,5 +2088,3 @@ parameters/ToolOneShot/request = 0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=431958372]
 zoom = Vector2(5, 5)
-
-[connection signal="animation_finished" from="Animation/AnimationTree" to="." method="_on_animation_tree_animation_finished"]
