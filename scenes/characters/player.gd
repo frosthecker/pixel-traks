@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 var direction: Vector2
+var last_direction: Vector2 = Vector2.DOWN
 var speed = 40
 var current_tool: Enum.Tool = Enum.Tool.HOE
 var current_seed: Enum.Seed
@@ -32,13 +33,20 @@ func get_basic_input():
 		print(current_seed)
 	
 	if Input.is_action_just_pressed("action"):
+		# The current tool sprites do not contain usable front/back actions.
+		# Ignore the input instead of starting an animation with no matching pose.
+		if last_direction == Vector2.UP or last_direction == Vector2.DOWN:
+			return
 		can_move = false
 		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		animation_tree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
-		tool_use.emit(current_tool, position)
+		var use_position := global_position if current_tool == Enum.Tool.WATER else global_position + last_direction * Data.TILE_SIZE
+		tool_use.emit(current_tool, use_position)
 
 func move():
 	direction = Input.get_vector("left", "right", "down", "up")
+	if direction:
+		last_direction = Vector2(round(direction.x), round(direction.y))
 	velocity = direction * speed
 	move_and_slide()
 
@@ -56,4 +64,6 @@ func animate():
 		move_state_machine.travel("idle")
 
 func tool_use_emit():
-	print('tool')
+	# Tool placement is emitted when the action starts. This method remains for
+	# existing animation tracks but must not emit a second time.
+	pass
