@@ -7,7 +7,7 @@ var current_tool: Enum.Tool = Enum.Tool.AXE
 var current_seed: Enum.Seed
 var can_move: bool = true
 @onready var sprite2d: Sprite2D = $Sprite2D
-
+@onready var tool_ui: Control = $ToolUI
 @onready var animation_tree: AnimationTree = $Animation/AnimationTree
 @onready var move_state_machine = animation_tree.get("parameters/MoveStateMachine/playback")
 @onready var tool_state_machine = animation_tree.get("parameters/ToolStateMachine/playback")
@@ -34,6 +34,7 @@ func get_basic_input():
 		var dir = Input.get_axis("tool_backward", "tool_forward")
 		current_tool = posmod(current_tool + int(dir), Enum.Tool.size()) as Enum.Tool
 		print(current_tool)
+		tool_ui.reveal()
 		
 	if Input.is_action_just_pressed("seed_forward"):
 		current_seed = posmod(current_seed + 1, Enum.Seed.size()) as Enum.Seed

@@ -24,6 +24,11 @@ anchor_bottom = 0.5
 offset_left = -50.0
 offset_top = -55.0
 offset_right = 50.0
-offset_bottom = -25.0
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="HideTimer" type="Timer" parent="." unique_id=540519307]
+one_shot = true
+
+[connection signal="timeout" from="HideTimer" to="." method="_on_hide_timer_timeout"]
