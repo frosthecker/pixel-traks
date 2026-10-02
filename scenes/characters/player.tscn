@@ -480,9 +480,12 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"tool_use_emit"
+}]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -519,9 +522,12 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"tool_use_emit"
+}]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -2036,7 +2042,7 @@ transitions = ["Start", "Axe", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(124, 196.30896)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_inhyd"]
-graph_offset = Vector2(17.733337, -516.86664)
+graph_offset = Vector2(-195.66682, -329.31296)
 nodes/output/position = Vector2(960, -80)
 nodes/ToolStateMachine/node = SubResource("AnimationNodeStateMachine_w5sjy")
 nodes/ToolStateMachine/position = Vector2(120, -140)
@@ -2059,7 +2065,6 @@ vframes = 16
 frame = 140
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=829021822]
-position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_atpat")
 
 [node name="Animation" type="Node" parent="." unique_id=1685573147]

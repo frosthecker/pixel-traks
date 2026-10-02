@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dj1ogh1d2wdw"]
+
+[ext_resource type="Script" uid="uid://fhja4euu2kvm" path="res://scripts/plant.gd" id="1_fvfks"]
+[ext_resource type="Texture2D" uid="uid://c0nd2h5o5umkd" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png" id="1_re4db"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ubixv"]
+radius = 2.0
+height = 4.0
+
+[node name="plant" type="StaticBody2D" unique_id=926497680]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_fvfks")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1288702707]
+position = Vector2(0, 2)
+texture = ExtResource("1_re4db")
+hframes = 64
+vframes = 64
+frame = 819
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1051485394]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_ubixv")
