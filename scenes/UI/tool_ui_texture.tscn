@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://l6qi3nbv3f0"]
+
+[ext_resource type="Script" uid="uid://cf6jvuo18bnhp" path="res://scripts/tool_ui_texture.gd" id="1_5godu"]
+[ext_resource type="Texture2D" uid="uid://bp8e6kc0ya2wb" path="res://assets/Sunnyside_World_Assets/UI/pickaxe.png" id="1_x4u7f"]
+
+[node name="ToolUITexture" type="Control" unique_id=1585584170]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 20.0
+offset_bottom = 20.0
+script = ExtResource("1_5godu")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=550026866]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_x4u7f")
+expand_mode = 2

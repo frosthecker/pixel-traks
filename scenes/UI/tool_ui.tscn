@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://b0b8cstbg0xhi"]
+
+[ext_resource type="Script" uid="uid://c75vsc15svxko" path="res://scripts/tool_ui.gd" id="1_5w4ni"]
+
+[node name="ToolUI" type="Control" unique_id=1325860234]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5w4ni")
+
+[node name="ToolContainer" type="HBoxContainer" parent="." unique_id=836112598]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -55.0
+offset_right = 50.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2

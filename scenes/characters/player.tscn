@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dbmbhotl3mjb4" path="res://scenes/characters/player.gd" id="2_76oj4"]
 [ext_resource type="Texture2D" uid="uid://dll3c0647oao1" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_spikey_hair.png" id="2_yewv4"]
+[ext_resource type="PackedScene" uid="uid://b0b8cstbg0xhi" path="res://scenes/UI/tool_ui.tscn" id="3_76oj4"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
 radius = 4.0
@@ -2052,7 +2053,7 @@ nodes/ToolOneShot/node = SubResource("AnimationNodeOneShot_yewv4")
 nodes/ToolOneShot/position = Vector2(596.75977, -117.60858)
 node_connections = [&"output", 0, &"ToolOneShot", &"ToolOneShot", 0, &"MoveStateMachine", &"ToolOneShot", 1, &"ToolStateMachine"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1434011847]
+[node name="Player" type="CharacterBody2D" unique_id=1434011847 groups=["Player"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_76oj4")
@@ -2094,3 +2095,5 @@ parameters/ToolOneShot/request = 0
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=431958372]
 zoom = Vector2(5, 5)
+
+[node name="ToolUI" parent="." unique_id=1325860234 instance=ExtResource("3_76oj4")]
