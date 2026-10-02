@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://ccp45yg8geggs"]
+
+[ext_resource type="Script" uid="uid://d3jt4a7cksvsa" path="res://scripts/tree.gd" id="1_5qchx"]
+[ext_resource type="Texture2D" uid="uid://0fxxeuy4gqnt" path="res://assets/Sunnyside_World_Assets/Elements/Plants/spr_deco_tree_01_strip4.png" id="1_r6wkp"]
+[ext_resource type="PackedScene" uid="uid://cm1w86qwgiw57" path="res://scenes/vfx/flash_sprite_2d.tscn" id="2_7yu6v"]
+[ext_resource type="Texture2D" uid="uid://c0nd2h5o5umkd" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png" id="2_mbbxw"]
+[ext_resource type="Shader" uid="uid://d1prripd71ba3" path="res://shaders/flash.tres" id="3_mbbxw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lg7fn"]
+resource_local_to_scene = true
+shader = ExtResource("3_mbbxw")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u86jo"]
+radius = 7.0
+height = 16.0
+
+[node name="tree" type="StaticBody2D" unique_id=335220519 groups=["Objects"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_5qchx")
+
+[node name="stump" type="Sprite2D" parent="." unique_id=1190719047]
+visible = false
+position = Vector2(0, 7)
+texture = ExtResource("2_mbbxw")
+hframes = 64
+vframes = 64
+frame = 351
+
+[node name="FlashSprite2D" parent="." unique_id=710909796 instance=ExtResource("2_7yu6v")]
+material = SubResource("ShaderMaterial_lg7fn")
+texture = ExtResource("1_r6wkp")
+hframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1815621470]
+visible = false
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_u86jo")

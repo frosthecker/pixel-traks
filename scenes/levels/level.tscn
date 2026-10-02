@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bdbfnhevi22uh" path="res://scripts/level.gd" id="1_b2cq8"]
 [ext_resource type="TileSet" uid="uid://caenfd2q6s02v" path="res://assets/main_tileset.tres" id="1_bovvr"]
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="2_b2cq8"]
+[ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_xb4v1"]
 
 [node name="Level" type="Node2D" unique_id=2141842218]
 script = ExtResource("1_b2cq8")
@@ -49,5 +50,7 @@ y_sort_enabled = true
 
 [node name="Player" parent="Objects" unique_id=2055263155 instance=ExtResource("2_b2cq8")]
 position = Vector2(-14, 47)
+
+[node name="tree" parent="Objects" unique_id=335220519 instance=ExtResource("4_xb4v1")]
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
