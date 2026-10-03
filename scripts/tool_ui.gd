@@ -11,6 +11,9 @@ const TOOL_TEXTURES = {
 	Enum.Tool.SEED: preload("res://assets/Sunnyside_World_Assets/Elements/Crops/seeds_generic.png"),
 	Enum.Tool.HAMMER: preload("res://assets/Sunnyside_World_Assets/UI/hammer.png"),
 }
+const SEED_TEXTURES = {
+	Enum.Seed.
+}
 var tool_texture_scene = preload("res://scenes/UI/tool_ui_texture.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
