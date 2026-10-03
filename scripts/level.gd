@@ -7,6 +7,7 @@ var used_cells: Array[Vector2i]
 @export var daytime_color: Gradient
 @onready var day_timer: Timer = $Timers/DayTimer
 @onready var day_time_color: CanvasModulate = $Overlay/DayTimeColor
+@onready var day_transition_layer_material = $Overlay/CanvasLayer/DayTransitionLayer.material
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	var light_dirt_layer: TileMapLayer = $Layers/LightDirtLayer
@@ -78,3 +79,16 @@ func _process(delta: float) -> void:
 		var daytime_point = 1 - (day_timer.time_left / day_timer.wait_time)
 		var color = daytime_color.sample(daytime_point)
 		day_time_color.color = color
+		if Input.is_action_just_pressed("day_change"):
+			day_restart()
+
+func day_restart():
+	var tween = create_tween()
+	tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 1.0, 1.0)	
+	tween.tween_interval(0.5)
+	tween.tween_callback(level_reset)
+	tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)	
+
+func level_reset():
+	print('level reset')
+	day_timer.start()

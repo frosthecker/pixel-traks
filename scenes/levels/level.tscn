@@ -5,10 +5,15 @@
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="2_b2cq8"]
 [ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_xb4v1"]
 [ext_resource type="PackedScene" uid="uid://d11vhvv5pspkc" path="res://scenes/objects/simple_object.tscn" id="5_urvlt"]
+[ext_resource type="Shader" uid="uid://bpvr7bvak7ydr" path="res://shaders/circle_transition.gdshader" id="6_d4w6o"]
 
 [sub_resource type="Gradient" id="Gradient_u86jo"]
 offsets = PackedFloat32Array(0, 0.35945946, 0.5162162, 1)
 colors = PackedColorArray(0.93333334, 0.8666667, 0.8039216, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.36862746, 0.46666667, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nqb67"]
+shader = ExtResource("6_d4w6o")
+shader_parameter/progress = 0.0
 
 [node name="Level" type="Node2D" unique_id=2141842218]
 script = ExtResource("1_b2cq8")
@@ -164,10 +169,21 @@ position = Vector2(409, 70)
 
 [node name="DayTimeColor" type="CanvasModulate" parent="Overlay" unique_id=167455733]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="Overlay" unique_id=1487210503]
+
+[node name="DayTransitionLayer" type="ColorRect" parent="Overlay/CanvasLayer" unique_id=2056137771]
+material = SubResource("ShaderMaterial_nqb67")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08208982, 0.082089834, 0.08208982, 1)
+
 [node name="Timers" type="Node" parent="." unique_id=386833648]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1592096192]
-wait_time = 20.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
