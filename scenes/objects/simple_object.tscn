@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d11vhvv5pspkc"]
+
+[ext_resource type="Texture2D" uid="uid://ccuibk5q013rb" path="res://assets/Sunnyside_World_Assets/Tileset/object_spritesheet.png" id="1_jad2w"]
+[ext_resource type="Script" uid="uid://be0d8xv57oqe1" path="res://scripts/simple_object.gd" id="1_n4sul"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ifi7"]
+size = Vector2(12, 6.5)
+
+[node name="SimpleObject" type="StaticBody2D" unique_id=1399841637]
+collision_mask = 0
+script = ExtResource("1_n4sul")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1082379412]
+texture = ExtResource("1_jad2w")
+hframes = 8
+vframes = 3
+frame = 19
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1482031913]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_4ifi7")

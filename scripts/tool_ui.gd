@@ -50,4 +50,5 @@ func reveal(tool: bool):
 		texture.highlight(target == texture.tool_enum)
 
 func _on_hide_timer_timeout() -> void:
-	tool_container.hide()
+	for container in [tool_container, seed_container]:
+		container.hide()

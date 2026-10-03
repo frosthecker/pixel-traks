@@ -4,6 +4,7 @@
 [ext_resource type="TileSet" uid="uid://caenfd2q6s02v" path="res://assets/main_tileset.tres" id="1_bovvr"]
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="2_b2cq8"]
 [ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_xb4v1"]
+[ext_resource type="PackedScene" uid="uid://d11vhvv5pspkc" path="res://scenes/objects/simple_object.tscn" id="5_urvlt"]
 
 [node name="Level" type="Node2D" unique_id=2141842218]
 script = ExtResource("1_b2cq8")
@@ -30,10 +31,6 @@ tile_set = ExtResource("1_bovvr")
 tile_map_data = PackedByteArray("AAAYAA0AAAAMAAgAAAAYAAwAAAAUAAgAAAAYAAsAAAAUAAgAAAAYAAoAAAAMAAcAAAAYAAkAAAAUAAcAAAAYAAgAAAAUAAcAAAAYAAcAAAAMAAcAAAAYAAYAAAAOAAcAAAAXAA0AAAAUAAgAAAAXAAwAAAAMAAcAAAAXAAsAAAAVAAgAAAAXAAoAAAAUAAgAAAAXAAkAAAAUAAgAAAAXAAgAAAAMAAcAAAAXAAcAAAAMAAcAAAAXAAYAAAAUAAcAAAAWAA0AAAAVAAcAAAAWAAwAAAAVAAcAAAAWAAsAAAAUAAcAAAAWAAoAAAAUAAgAAAAWAAkAAAAUAAcAAAAWAAgAAAAVAAcAAAAWAAcAAAAVAAgAAAAWAAYAAAAVAAgAAAAVAA0AAAAUAAcAAAAVAAwAAAAVAAcAAAAVAAsAAAAVAAcAAAAVAAoAAAAVAAgAAAAVAAkAAAAMAAcAAAAVAAgAAAAUAAgAAAAVAAcAAAAMAAcAAAAVAAYAAAAVAAgAAAAUAA0AAAAUAAgAAAAUAAwAAAAUAAgAAAAUAAsAAAAVAAcAAAAUAAoAAAAMAAcAAAAUAAkAAAAMAAcAAAAUAAgAAAAVAAcAAAAUAAcAAAAVAAcAAAAUAAYAAAAVAAgAAAATAA0AAAAUAAgAAAATAAwAAAAMAAcAAAATAAsAAAAUAAcAAAATAAoAAAAVAAcAAAATAAkAAAAMAAcAAAATAAgAAAAVAAgAAAATAAcAAAAVAAgAAAATAAYAAAAUAAgAAAASAA0AAAAMAAcAAAASAAwAAAAVAAcAAAASAAsAAAAUAAgAAAASAAoAAAAVAAcAAAASAAkAAAAVAAcAAAASAAgAAAAVAAgAAAASAAcAAAAUAAcAAAASAAYAAAAVAAgAAAARAA0AAAAVAAcAAAARAAwAAAAVAAgAAAARAAsAAAAVAAcAAAARAAoAAAAUAAgAAAARAAkAAAAUAAcAAAARAAgAAAAMAAcAAAARAAcAAAAUAAgAAAARAAYAAAAVAAcAAAAQAA0AAAAQAAcAAAAQAAwAAAAUAAgAAAAQAAsAAAAMAAcAAAAQAAoAAAAVAAgAAAAQAAkAAAAVAAcAAAAQAAgAAAAVAAcAAAAQAAcAAAAVAAcAAAAQAAYAAAANAAcAAAAPAAcAAAARAAcAAAAPAAYAAAATAAcAAAAQAAUAAAATAAcAAAARAAUAAAAPAAcAAAAPAAgAAAARAAcAAAAPAAkAAAARAAcAAAAPAAoAAAARAAcAAAAPAAsAAAARAAcAAAAPAAwAAAARAAcAAAAPAA0AAAARAAgAAAARAA4AAAAQAAgAAAAQAA4AAAARAAgAAAASAAUAAAAPAAcAAAASAA4AAAAQAAgAAAATAAUAAAAPAAcAAAATAA4AAAAQAAgAAAAUAAUAAAAPAAcAAAAUAA4AAAAQAAgAAAAVAAUAAAAPAAcAAAAVAA4AAAAQAAgAAAAWAAUAAAAPAAcAAAAWAA4AAAAQAAgAAAAXAAUAAAAPAAcAAAAXAA4AAAAQAAgAAAAYAAUAAAAPAAgAAAAYAA4AAAASAAgAAAAZAAYAAAAPAAgAAAAZAAcAAAAOAAgAAAAZAAgAAAAOAAgAAAAZAAkAAAAOAAgAAAAZAAoAAAAOAAgAAAAZAAsAAAAOAAgAAAAZAAwAAAAOAAgAAAAZAA0AAAASAAgAAAA=")
 tile_set = ExtResource("1_bovvr")
 
-[node name="Plants" type="TileMapLayer" parent="Layers" unique_id=1906988492]
-tile_map_data = PackedByteArray("AAAQAP//AQAFAAMAAAAQAAAAAQAFAAQAAAARAP//AQAGAAMAAAARAAAAAQAGAAQAAAATAAAAAQAFAAMAAAATAAEAAQAFAAQAAAAUAAAAAQAGAAMAAAAUAAEAAQAGAAQAAAAPAAQAAQAFAAMAAAAPAAUAAQAFAAQAAAAQAAQAAQAGAAMAAAAQAAUAAQAGAAQAAAAaAP7/AQAFAAMAAAAaAP//AQAFAAQAAAAbAP7/AQAGAAMAAAAbAP//AQAGAAQAAAAeAAMAAQAFAAMAAAAeAAQAAQAFAAQAAAAfAAMAAQAGAAMAAAAfAAQAAQAGAAQAAAAhAAAAAQAFAAMAAAAhAAEAAQAFAAQAAAAiAAAAAQAGAAMAAAAiAAEAAQAGAAQAAAAbAAwAAQAFAAMAAAAbAA0AAQAFAAQAAAAcAAwAAQAGAAMAAAAcAA0AAQAGAAQAAAARAA4AAQAFAAMAAAARAA8AAQAFAAQAAAASAA4AAQAGAAMAAAASAA8AAQAGAAQAAAA=")
-tile_set = ExtResource("1_bovvr")
-
 [node name="Water_land_merge" type="TileMapLayer" parent="Layers" unique_id=1567436970]
 tile_set = ExtResource("1_bovvr")
 
@@ -52,5 +49,110 @@ y_sort_enabled = true
 position = Vector2(-14, 47)
 
 [node name="tree" parent="Objects" unique_id=335220519 instance=ExtResource("4_xb4v1")]
+
+[node name="tree2" parent="Objects" unique_id=65820125 instance=ExtResource("4_xb4v1")]
+position = Vector2(134, 98)
+
+[node name="tree3" parent="Objects" unique_id=1144551854 instance=ExtResource("4_xb4v1")]
+position = Vector2(181, -39)
+
+[node name="tree4" parent="Objects" unique_id=1547630145 instance=ExtResource("4_xb4v1")]
+position = Vector2(202, 214)
+
+[node name="tree5" parent="Objects" unique_id=1267260604 instance=ExtResource("4_xb4v1")]
+position = Vector2(-52, 214)
+
+[node name="tree6" parent="Objects" unique_id=1788261878 instance=ExtResource("4_xb4v1")]
+position = Vector2(-263, 158)
+
+[node name="tree7" parent="Objects" unique_id=1305413744 instance=ExtResource("4_xb4v1")]
+position = Vector2(-210, 36)
+
+[node name="tree8" parent="Objects" unique_id=1977385636 instance=ExtResource("4_xb4v1")]
+position = Vector2(-250, -69)
+
+[node name="tree9" parent="Objects" unique_id=1829485123 instance=ExtResource("4_xb4v1")]
+position = Vector2(-64, -82)
+
+[node name="tree10" parent="Objects" unique_id=1043006356 instance=ExtResource("4_xb4v1")]
+position = Vector2(339, 15)
+
+[node name="tree11" parent="Objects" unique_id=371635323 instance=ExtResource("4_xb4v1")]
+position = Vector2(510, 62)
+
+[node name="SimpleObject" parent="Objects" unique_id=1399841637 instance=ExtResource("5_urvlt")]
+position = Vector2(49, 26)
+
+[node name="SimpleObject2" parent="Objects" unique_id=1238517468 instance=ExtResource("5_urvlt")]
+position = Vector2(132, 51)
+
+[node name="SimpleObject3" parent="Objects" unique_id=1333343628 instance=ExtResource("5_urvlt")]
+position = Vector2(50, 96)
+
+[node name="SimpleObject4" parent="Objects" unique_id=790597533 instance=ExtResource("5_urvlt")]
+position = Vector2(183, 120)
+
+[node name="SimpleObject5" parent="Objects" unique_id=983822673 instance=ExtResource("5_urvlt")]
+position = Vector2(226, 27)
+
+[node name="SimpleObject6" parent="Objects" unique_id=998504873 instance=ExtResource("5_urvlt")]
+position = Vector2(116, -38)
+
+[node name="SimpleObject7" parent="Objects" unique_id=36881251 instance=ExtResource("5_urvlt")]
+position = Vector2(-20, -70)
+
+[node name="SimpleObject8" parent="Objects" unique_id=446937403 instance=ExtResource("5_urvlt")]
+position = Vector2(210, -72)
+
+[node name="SimpleObject9" parent="Objects" unique_id=531394861 instance=ExtResource("5_urvlt")]
+position = Vector2(-124, -38)
+
+[node name="SimpleObject10" parent="Objects" unique_id=1281339266 instance=ExtResource("5_urvlt")]
+position = Vector2(-187, 0)
+
+[node name="SimpleObject11" parent="Objects" unique_id=255289665 instance=ExtResource("5_urvlt")]
+position = Vector2(-247, -76)
+
+[node name="SimpleObject12" parent="Objects" unique_id=619906441 instance=ExtResource("5_urvlt")]
+position = Vector2(-160, 116)
+
+[node name="SimpleObject13" parent="Objects" unique_id=1592830592 instance=ExtResource("5_urvlt")]
+position = Vector2(-270, 58)
+
+[node name="SimpleObject14" parent="Objects" unique_id=523438715 instance=ExtResource("5_urvlt")]
+position = Vector2(-222, 190)
+
+[node name="SimpleObject15" parent="Objects" unique_id=300860472 instance=ExtResource("5_urvlt")]
+position = Vector2(-54, 183)
+
+[node name="SimpleObject16" parent="Objects" unique_id=879986992 instance=ExtResource("5_urvlt")]
+position = Vector2(167, 221)
+
+[node name="SimpleObject17" parent="Objects" unique_id=1206233532 instance=ExtResource("5_urvlt")]
+position = Vector2(86, 206)
+
+[node name="SimpleObject18" parent="Objects" unique_id=896153035 instance=ExtResource("5_urvlt")]
+position = Vector2(355, -1)
+
+[node name="SimpleObject19" parent="Objects" unique_id=391320360 instance=ExtResource("5_urvlt")]
+position = Vector2(476, 26)
+
+[node name="SimpleObject20" parent="Objects" unique_id=1930548010 instance=ExtResource("5_urvlt")]
+position = Vector2(540, -15)
+
+[node name="SimpleObject21" parent="Objects" unique_id=813314608 instance=ExtResource("5_urvlt")]
+position = Vector2(541, 59)
+
+[node name="SimpleObject22" parent="Objects" unique_id=1440633305 instance=ExtResource("5_urvlt")]
+position = Vector2(441, 128)
+
+[node name="SimpleObject23" parent="Objects" unique_id=89844976 instance=ExtResource("5_urvlt")]
+position = Vector2(407, 231)
+
+[node name="SimpleObject24" parent="Objects" unique_id=1866150018 instance=ExtResource("5_urvlt")]
+position = Vector2(348, 51)
+
+[node name="SimpleObject25" parent="Objects" unique_id=1560468830 instance=ExtResource("5_urvlt")]
+position = Vector2(409, 70)
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
