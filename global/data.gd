@@ -48,7 +48,7 @@ var PLANT_DATA = {
 		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/carrot_05.png",
 		'name':'Carrot',
 		'h_frames': 3,
-		'grow_speed': 0.3,
+		'grow_speed': 0.4,
 		'death_max': 3,
 		'reward': Enum.Item.CARROT},
 	Enum.Seed.CAULIFLOWER: {
@@ -56,7 +56,7 @@ var PLANT_DATA = {
 		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/cauliflower_05.png",
 		'name':'Cauiflower',
 		'h_frames': 3,
-		'grow_speed': 0.3,
+		'grow_speed': 0.5,
 		'death_max': 3,
 		'reward': Enum.Item.CAULIFLOWER},
 	Enum.Seed.POTATO: {
@@ -72,7 +72,7 @@ var PLANT_DATA = {
 		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/radish_05.png",
 		'name':'Radish',
 		'h_frames': 3,
-		'grow_speed': 0.3,
+		'grow_speed': 0.8,
 		'death_max': 3,
 		'reward': Enum.Item.RADISH}
 	
