@@ -8,17 +8,17 @@
 radius = 2.0
 height = 4.0
 
-[node name="plant" type="StaticBody2D" unique_id=926497680]
+[node name="plant" type="StaticBody2D" unique_id=926497680 groups=["Plants"]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_fvfks")
 res = ExtResource("2_7bmar")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1288702707]
-position = Vector2(0, -6)
+position = Vector2(0, -2)
 texture = ExtResource("3_7bmar")
 hframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1051485394]
-position = Vector2(0, -1)
+position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_ubixv")

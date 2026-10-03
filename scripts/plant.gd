@@ -10,3 +10,9 @@ func setup(grid_coord: Vector2i, parent: Node2D):
 	parent.add_child(self)
 	coord = grid_coord
 	sprite_2d.texture = res.texture
+
+func grow(watered: bool):
+	if watered:
+		res.grow(sprite_2d)
+	else:
+		res.decay(self)

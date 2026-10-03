@@ -8,6 +8,7 @@ var used_cells: Array[Vector2i]
 @onready var day_timer: Timer = $Timers/DayTimer
 @onready var day_time_color: CanvasModulate = $Overlay/DayTimeColor
 @onready var day_transition_layer_material = $Overlay/CanvasLayer/DayTransitionLayer.material
+@onready var dark_dirt_layer: TileMapLayer = $Layers/DarkDirtLayer
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	var light_dirt_layer: TileMapLayer = $Layers/LightDirtLayer
@@ -90,5 +91,8 @@ func day_restart():
 	tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)	
 
 func level_reset():
+	for plant in get_tree().get_nodes_in_group('Plants'):
+		plant.grow(plant.coord in dark_dirt_layer.get_used_cells())
+	dark_dirt_layer.clear()
 	print('level reset')
 	day_timer.start()
