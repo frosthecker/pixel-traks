@@ -6,8 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_xb4v1"]
 [ext_resource type="PackedScene" uid="uid://d11vhvv5pspkc" path="res://scenes/objects/simple_object.tscn" id="5_urvlt"]
 
+[sub_resource type="Gradient" id="Gradient_u86jo"]
+offsets = PackedFloat32Array(0, 0.35945946, 0.5162162, 1)
+colors = PackedColorArray(0.93333334, 0.8666667, 0.8039216, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.36862746, 0.46666667, 1, 1)
+
 [node name="Level" type="Node2D" unique_id=2141842218]
 script = ExtResource("1_b2cq8")
+daytime_color = SubResource("Gradient_u86jo")
 
 [node name="Layers" type="Node2D" parent="." unique_id=1142195989]
 
@@ -154,5 +159,16 @@ position = Vector2(348, 51)
 
 [node name="SimpleObject25" parent="Objects" unique_id=1560468830 instance=ExtResource("5_urvlt")]
 position = Vector2(409, 70)
+
+[node name="Overlay" type="Node2D" parent="." unique_id=1167205808]
+
+[node name="DayTimeColor" type="CanvasModulate" parent="Overlay" unique_id=167455733]
+
+[node name="Timers" type="Node" parent="." unique_id=386833648]
+
+[node name="DayTimer" type="Timer" parent="Timers" unique_id=1592096192]
+wait_time = 20.0
+one_shot = true
+autostart = true
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

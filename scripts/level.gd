@@ -4,7 +4,9 @@ extends Node2D
 var plant_scene = preload("res://scenes/objects/plant.tscn")
 var used_cells: Array[Vector2i]
 @onready var player: CharacterBody2D = $Objects/Player
-
+@export var daytime_color: Gradient
+@onready var day_timer: Timer = $Timers/DayTimer
+@onready var day_time_color: CanvasModulate = $Overlay/DayTimeColor
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	var light_dirt_layer: TileMapLayer = $Layers/LightDirtLayer
@@ -72,4 +74,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 				if object.position.distance_to(pos) < 20:
 					object.hit(tool)
 			
-			
+func _process(delta: float) -> void:
+		var daytime_point = 1 - (day_timer.time_left / day_timer.wait_time)
+		var color = daytime_color.sample(daytime_point)
+		day_time_color.color = color
