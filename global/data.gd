@@ -10,39 +10,73 @@ const PLAYER_SKINS = {
 	
 	}
 const TILE_SIZE = 16
-'''const PLANT_DATA = {
-	Enum.Seed.TOMATO: {
-		'texture': "res://graphics/plants/tomato.png",
-		'icon_texture': "res://graphics/icons/tomato.png",
-		'name':'Tomato',
+var PLANT_DATA = {
+	Enum.Seed.BEETROOT: {
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/beetroot_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/beetroot_05.png",
+		'name':'Beetroot',
 		'h_frames': 3,
 		'grow_speed': 0.6,
 		'death_max': 3,
-		'reward': Enum.Item.TOMATO},
-	Enum.Seed.CORN: {
-		'texture': "res://graphics/plants/corn.png",
-		'icon_texture': "res://graphics/icons/corn.png",
-		'name':'Corn',
+		'reward': Enum.Item.BEETROOT},
+	Enum.Seed.CABBAGE: {
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/cabbage_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/cabbage_05.png",
+		'name':'Cabbage',
 		'h_frames': 3,
 		'grow_speed': 1.0,
 		'death_max': 2,
-		'reward': Enum.Item.CORN},
+		'reward': Enum.Item.CABBAGE},
 	Enum.Seed.PUMPKIN: {
-		'texture': "res://graphics/plants/pumpkin.png",
-		'icon_texture': "res://graphics/icons/pumpkin.png",
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/pumpkin_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/pumpkin_05.png",
 		'name':'Pumpkin',
 		'h_frames': 3,
 		'grow_speed': 0.3,
 		'death_max': 3,
 		'reward': Enum.Item.PUMPKIN},
 	Enum.Seed.WHEAT: {
-		'texture': "res://graphics/plants/wheat.png",
-		'icon_texture': "res://graphics/icons/wheat.png",
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/wheat_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/wheat_05.png",
 		'name':'Wheat',
 		'h_frames': 3,
 		'grow_speed': 1.0,
 		'death_max': 3,
-		'reward': Enum.Item.WHEAT}}'''
+		'reward': Enum.Item.WHEAT},
+	Enum.Seed.CARROT: {
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/carrot_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/carrot_05.png",
+		'name':'Carrot',
+		'h_frames': 3,
+		'grow_speed': 0.3,
+		'death_max': 3,
+		'reward': Enum.Item.CARROT},
+	Enum.Seed.CAULIFLOWER: {
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/cauliflower_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/cauliflower_05.png",
+		'name':'Cauiflower',
+		'h_frames': 3,
+		'grow_speed': 0.3,
+		'death_max': 3,
+		'reward': Enum.Item.CAULIFLOWER},
+	Enum.Seed.POTATO: {
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/potato_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/potato_05.png",
+		'name':'Potato',
+		'h_frames': 3,
+		'grow_speed': 0.3,
+		'death_max': 3,
+		'reward': Enum.Item.POTATO},
+	Enum.Seed.RADISH: {
+		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/radish_spritesheet.png",
+		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/radish_05.png",
+		'name':'Radish',
+		'h_frames': 3,
+		'grow_speed': 0.3,
+		'death_max': 3,
+		'reward': Enum.Item.RADISH}
+	
+		}
 '''const MACHINE_UPGRADE_COST = {
 	Enum.Machine.SPRINKLER: {
 		'name': 'Sprinkler',
@@ -59,9 +93,9 @@ const TILE_SIZE = 16
 		'cost' : {Enum.Item.PUMPKIN: 15, Enum.Item.CORN: 15},
 		'icon': preload("res://graphics/icons/scarecrow.png"),
 		'color': Color.BURLYWOOD}}'''
-const HOUSE_COST = {
-	1: {Enum.Item.WOOD: 30, Enum.Item.APPLE: 20},
-	2: {Enum.Item.WOOD: 40, Enum.Item.APPLE: 30}}
+var HOUSE_COST = {
+	1: {Enum.Item.WOOD: 30},
+	2: {Enum.Item.WOOD: 40}}
 '''const STYLE_UPGRADES = {
 	Enum.Style.COWBOY: {
 		'name': 'Cowboy',

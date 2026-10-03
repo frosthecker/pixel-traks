@@ -68,8 +68,10 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 				print('fishing')
 		Enum.Tool.SEED:
 			if has_soil and grid_coord not in used_cells:
+				var plant_res = PlantResource.new()
+				plant_res.setup(player.current_seed)
 				var plant = plant_scene.instantiate()
-				plant.setup(grid_coord, $Objects)
+				plant.setup(grid_coord, $Objects, plant_res)
 				used_cells.append(grid_coord)
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('Objects'):

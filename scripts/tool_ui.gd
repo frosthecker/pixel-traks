@@ -22,7 +22,6 @@ const SEED_TEXTURES = {
 	Enum.Seed.POTATO: preload("res://assets/Sunnyside_World_Assets/Elements/Crops/potato_00.png"),
 	Enum.Seed.PUMPKIN: preload("res://assets/Sunnyside_World_Assets/Elements/Crops/pumpkin_00.png"),
 	Enum.Seed.RADISH: preload("res://assets/Sunnyside_World_Assets/Elements/Crops/radish_00.png"),
-	Enum.Seed.SUNFLOWER: preload("res://assets/Sunnyside_World_Assets/Elements/Crops/sunflower_00.png"),
 	Enum.Seed.WHEAT: preload("res://assets/Sunnyside_World_Assets/Elements/Crops/wheat_00.png")
 }
 var tool_texture_scene = preload("res://scenes/UI/tool_ui_texture.tscn")
