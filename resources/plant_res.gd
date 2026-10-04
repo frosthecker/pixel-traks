@@ -10,6 +10,10 @@ class_name PlantResource extends Resource
 
 var age: float
 var death_count: int
+var dead: bool:
+	set(value):
+		dead = value
+		emit_changed()
 
 func setup(seed_enum: Enum.Seed):
 	texture = load(Data.PLANT_DATA[seed_enum]['texture'])
@@ -26,7 +30,9 @@ func grow(sprite: Sprite2D):
 func decay(plant: StaticBody2D):
 	death_count +=1
 	if death_count >= death_max:
+		emit_changed()
 		plant.queue_free()
+		
 
 func get_complete():
 	return age >= h_frames

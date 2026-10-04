@@ -15,6 +15,6 @@ region_rect = Rect2(0, 0, 24, 13)
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
-Label/font_sizes/font_size = 30
+Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("1_d5qbn")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_7c7cj")

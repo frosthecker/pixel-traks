@@ -13,7 +13,7 @@ func setup(new_res: PlantResource):
 	growth_bar.max_value = res.h_frames
 	death_bar.max_value = res.death_max
 	update()
-	
+	res.connect('changed', queue_free)
 func update():
 	growth_bar.value = res.age
 	death_bar.value = res.death_count

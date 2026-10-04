@@ -75,6 +75,7 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 				var plant = plant_scene.instantiate()
 				plant.setup(grid_coord + tile_adjuster, $Objects, plant_res, plant_death)
 				used_cells.append(grid_coord)
+				print(used_cells)
 				
 				var plant_info = plant_info_scene.instantiate()
 				plant_info_container.add(plant_info)
@@ -109,3 +110,4 @@ func level_reset():
 
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)
+	print(used_cells)
