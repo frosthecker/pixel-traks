@@ -1,4 +1,5 @@
 extends Control
+@onready var nine_patch_rect: NinePatchRect = $NinePatchRect
 
 @onready var seed_container: HBoxContainer = $SeedContainer
 @onready var hide_timer: Timer = $HideTimer
@@ -26,9 +27,14 @@ const SEED_TEXTURES = {
 }
 var tool_texture_scene = preload("res://scenes/UI/tool_ui_texture.tscn")
 # Called when the node enters the scene tree for the first time.
+var seed_bg_x = 200
+var seed_bg_top = -47
+var seed_bg_bottom = -14
+var tool_bg_x = 150
 func _ready() -> void:
 	for container in [tool_container, seed_container]:
 		container.hide()
+		nine_patch_rect.hide()
 	texture_setup(Enum.Tool.values(),TOOL_TEXTURES, tool_container)
 	texture_setup(Enum.Seed.values(),SEED_TEXTURES, seed_container)
 func texture_setup(enum_list: Array, textures: Dictionary, container: HBoxContainer):
@@ -45,9 +51,18 @@ func reveal(tool: bool):
 	for container in [tool_container, seed_container]:
 		container.hide()
 	current_container.show()
+	var background_width := 170.0 if current_container == tool_container else 200.0
+	nine_patch_rect.custom_minimum_size.x = background_width
+	# NinePatchRect is not inside a Container, so its offsets determine its
+	# actual size. Keep it centered while applying the selected width.
+	nine_patch_rect.offset_left = -background_width / 2.0
+	nine_patch_rect.offset_right = background_width / 2.0
+	nine_patch_rect.show()
+	
 	for texture in current_container.get_children():
 		texture.highlight(target == texture.tool_enum)
 
 func _on_hide_timer_timeout() -> void:
 	for container in [tool_container, seed_container]:
 		container.hide()
+	nine_patch_rect.hide()

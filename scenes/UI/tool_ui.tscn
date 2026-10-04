@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b0b8cstbg0xhi"]
 
 [ext_resource type="Script" uid="uid://c75vsc15svxko" path="res://scripts/tool_ui.gd" id="1_5w4ni"]
+[ext_resource type="Texture2D" uid="uid://x7rwro5xl7a6" path="res://assets/Sunnyside_World_Assets/UI/label_middle.png" id="2_y0ilp"]
 
 [node name="ToolUI" type="Control" unique_id=1325860234]
 layout_mode = 3
@@ -12,6 +13,20 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5w4ni")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=539763291]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 1
+anchors_preset = -1
+offset_left = -100.0
+offset_top = -47.0
+offset_right = 100.0
+offset_bottom = -14.0
+texture = ExtResource("2_y0ilp")
+patch_margin_left = 2
+patch_margin_top = 2
+patch_margin_right = 2
+patch_margin_bottom = 2
 
 [node name="ToolContainer" type="HBoxContainer" parent="." unique_id=836112598]
 custom_minimum_size = Vector2(100, 30)
