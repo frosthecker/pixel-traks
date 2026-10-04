@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var direction: Vector2
 var last_direction: Vector2 = Vector2.DOWN
-var speed = 40
+var speed = 25
 var current_tool: Enum.Tool = Enum.Tool.AXE
 var current_seed: Enum.Seed
 var can_move: bool = true

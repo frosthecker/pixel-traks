@@ -2,6 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cf6jvuo18bnhp" path="res://scripts/tool_ui_texture.gd" id="1_5godu"]
 [ext_resource type="Texture2D" uid="uid://bp8e6kc0ya2wb" path="res://assets/Sunnyside_World_Assets/UI/pickaxe.png" id="1_x4u7f"]
+[ext_resource type="Shader" path="res://shaders/tool_outline.gdshader" id="2_outline"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tool_outline"]
+resource_local_to_scene = true
+shader = ExtResource("2_outline")
+shader_parameter/enabled = false
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 1.0
 
 [node name="ToolUITexture" type="Control" unique_id=1585584170]
 custom_minimum_size = Vector2(20, 20)
@@ -27,3 +35,4 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_x4u7f")
 expand_mode = 2
+material = SubResource("ShaderMaterial_tool_outline")

@@ -2,11 +2,15 @@
 
 [ext_resource type="Script" uid="uid://fhja4euu2kvm" path="res://scripts/plant.gd" id="1_fvfks"]
 [ext_resource type="Resource" uid="uid://by8f0m2m1rjke" path="res://resources/beetroot_res.tres" id="2_7bmar"]
-[ext_resource type="Texture2D" uid="uid://csml7dnt46tyk" path="res://assets/Sunnyside_World_Assets/Elements/Crops/beetroot_spritesheet.png" id="3_7bmar"]
+[ext_resource type="PackedScene" uid="uid://do5xtkhe0wewi" path="res://scenes/vfx/outline_sprite.tscn" id="3_0a33w"]
+[ext_resource type="Texture2D" uid="uid://csml7dnt46tyk" path="res://assets/Sunnyside_World_Assets/Elements/Crops/beetroot_spritesheet.png" id="5_whlcx"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ubixv"]
 radius = 2.0
 height = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ifi7"]
+radius = 9.0
 
 [node name="plant" type="StaticBody2D" unique_id=926497680 groups=["Plants"]]
 collision_layer = 4
@@ -14,11 +18,20 @@ collision_mask = 0
 script = ExtResource("1_fvfks")
 res = ExtResource("2_7bmar")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1288702707]
-position = Vector2(0, -2)
-texture = ExtResource("3_7bmar")
-hframes = 4
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1051485394]
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_ubixv")
+
+[node name="CollisionArea" type="Area2D" parent="." unique_id=1548297108]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea" unique_id=1783334867]
+shape = SubResource("CircleShape2D_4ifi7")
+
+[node name="outline_sprite" parent="." unique_id=138478170 instance=ExtResource("3_0a33w")]
+texture = ExtResource("5_whlcx")
+hframes = 4
+
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]
+[connection signal="body_exited" from="CollisionArea" to="." method="_on_collision_area_body_exited"]

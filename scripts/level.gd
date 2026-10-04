@@ -2,6 +2,7 @@ extends Node2D
 
 
 var plant_scene = preload("res://scenes/objects/plant.tscn")
+var plant_info_scene = preload("res://scenes/UI/panel_container.tscn")
 var used_cells: Array[Vector2i]
 @onready var player: CharacterBody2D = $Objects/Player
 @export var daytime_color: Gradient
@@ -9,6 +10,7 @@ var used_cells: Array[Vector2i]
 @onready var day_time_color: CanvasModulate = $Overlay/DayTimeColor
 @onready var day_transition_layer_material = $Overlay/CanvasLayer/DayTransitionLayer.material
 @onready var dark_dirt_layer: TileMapLayer = $Layers/DarkDirtLayer
+@onready var plant_info_container: Control = $Overlay/CanvasLayer/plant_info_container
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	var light_dirt_layer: TileMapLayer = $Layers/LightDirtLayer
@@ -16,9 +18,9 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	# var grid_coord: Vector2i = light_dirt_layer.local_to_map(light_dirt_layer.to_local(pos))
 	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE), int(pos.y / Data.TILE_SIZE))
 	grid_coord.x += -1 if pos.x < 0 else 0
-	grid_coord.y += -1 if pos.y < 0 else 0
+	#grid_coord.y += -1 if pos.y < 0 else 0
 	var has_soil = grid_coord in $Layers/GrassLayer.get_used_cells()
-	var tile_adjuster: Vector2i = Vector2i(1,0)
+	var tile_adjuster: Vector2i = Vector2i(0,0)
 	match tool:
 		Enum.Tool.HOE:
 			var cell = $Layers/GrassLayer.get_cell_tile_data(grid_coord)
@@ -71,8 +73,13 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 				var plant_res = PlantResource.new()
 				plant_res.setup(player.current_seed)
 				var plant = plant_scene.instantiate()
-				plant.setup(grid_coord, $Objects, plant_res)
+				plant.setup(grid_coord + tile_adjuster, $Objects, plant_res, plant_death)
 				used_cells.append(grid_coord)
+				
+				var plant_info = plant_info_scene.instantiate()
+				plant_info_container.add(plant_info)
+				plant_info.setup(plant_res)
+				
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.position.distance_to(pos) < 20:
@@ -96,5 +103,9 @@ func level_reset():
 	for plant in get_tree().get_nodes_in_group('Plants'):
 		plant.grow(plant.coord in dark_dirt_layer.get_used_cells())
 	dark_dirt_layer.clear()
+	plant_info_container.update_all()
 	print('level reset')
 	day_timer.start()
+
+func plant_death(coord: Vector2i):
+	used_cells.erase(coord)

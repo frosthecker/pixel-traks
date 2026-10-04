@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_xb4v1"]
 [ext_resource type="PackedScene" uid="uid://d11vhvv5pspkc" path="res://scenes/objects/simple_object.tscn" id="5_urvlt"]
 [ext_resource type="Shader" uid="uid://bpvr7bvak7ydr" path="res://shaders/circle_transition.gdshader" id="6_d4w6o"]
+[ext_resource type="PackedScene" uid="uid://vvabtrd83usx" path="res://scenes/UI/plant_info_container.tscn" id="6_mbbpy"]
 
 [sub_resource type="Gradient" id="Gradient_u86jo"]
 offsets = PackedFloat32Array(0, 0.35945946, 0.5162162, 1)
@@ -170,6 +171,8 @@ position = Vector2(409, 70)
 [node name="DayTimeColor" type="CanvasModulate" parent="Overlay" unique_id=167455733]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Overlay" unique_id=1487210503]
+
+[node name="plant_info_container" parent="Overlay/CanvasLayer" unique_id=1718360283 instance=ExtResource("6_mbbpy")]
 
 [node name="DayTransitionLayer" type="ColorRect" parent="Overlay/CanvasLayer" unique_id=2056137771]
 material = SubResource("ShaderMaterial_nqb67")

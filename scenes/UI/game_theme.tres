@@ -1,0 +1,20 @@
+[gd_resource type="Theme" format=3 uid="uid://dywbxg3hhdgio"]
+
+[ext_resource type="FontFile" uid="uid://uadc4tjam52n" path="res://assets/Sunnyside_World_Assets/Fonts/Kenney Pixel.ttf" id="1_d5qbn"]
+[ext_resource type="Texture2D" uid="uid://x7rwro5xl7a6" path="res://assets/Sunnyside_World_Assets/UI/label_middle.png" id="2_w2js3"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7c7cj"]
+texture = ExtResource("2_w2js3")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(0, 0, 24, 13)
+
+[resource]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0)
+Label/font_sizes/font_size = 30
+Label/fonts/font = ExtResource("1_d5qbn")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_7c7cj")
