@@ -16,7 +16,7 @@
 },
 "seeds": {
 "item_category": "Consumable",
-"stack_size": 99,
+"stack_size": 64,
 "description": "Plant these in tilled soil to grow crops over time."
 },
 "fishing rod": {
@@ -33,5 +33,10 @@
 "item_category": "Tool",
 "stack_size": 1,
 "description": "Used for building, upgrading, and repairing structures."
+},
+"wood": {
+"item_category": "Resource",
+"stack_size": 64,
+"description": "A useful natural resource used for building houses"
 }
 }

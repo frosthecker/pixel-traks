@@ -41,7 +41,7 @@ func putIntoSlot(new_item):
 	add_child(item)
 	refresh_style() 
 
-func initiaize_item(item_name, item_quantity):
+func initialize_item(item_name, item_quantity):
 	if item == null:
 		item = ItemClass.instantiate()
 		add_child(item)

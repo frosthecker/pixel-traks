@@ -8,6 +8,7 @@ func _ready() -> void:
 func _input(event):
 	if event.is_action_pressed("inventory"):
 		$inventory.visible = true
+		$inventory.initialize_inventory()
 		$inventory.popup_open()
 	elif event.is_action_pressed("back"):
 		$inventory.popup_close()

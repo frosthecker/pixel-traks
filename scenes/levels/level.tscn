@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bdbfnhevi22uh" path="res://scripts/level.gd" id="1_b2cq8"]
 [ext_resource type="TileSet" uid="uid://caenfd2q6s02v" path="res://assets/main_tileset.tres" id="1_bovvr"]
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="2_b2cq8"]
+[ext_resource type="PackedScene" uid="uid://xcvvujgqxboo" path="res://scenes/objects/log.tscn" id="3_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_xb4v1"]
 [ext_resource type="PackedScene" uid="uid://d11vhvv5pspkc" path="res://scenes/objects/simple_object.tscn" id="5_urvlt"]
 [ext_resource type="Shader" uid="uid://bpvr7bvak7ydr" path="res://shaders/circle_transition.gdshader" id="6_d4w6o"]
@@ -62,6 +63,9 @@ tile_set = ExtResource("1_bovvr")
 
 [node name="Objects" type="Node2D" parent="." unique_id=1000276393]
 y_sort_enabled = true
+
+[node name="log" parent="Objects" unique_id=2070477663 instance=ExtResource("3_rmjfq")]
+position = Vector2(40, 67)
 
 [node name="Player" parent="Objects" unique_id=2055263155 instance=ExtResource("2_b2cq8")]
 position = Vector2(-14, 47)
