@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://dbmbhotl3mjb4" path="res://scenes/characters/player.gd" id="2_76oj4"]
 [ext_resource type="Texture2D" uid="uid://dll3c0647oao1" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_spikey_hair.png" id="2_yewv4"]
 [ext_resource type="PackedScene" uid="uid://b0b8cstbg0xhi" path="res://scenes/UI/tool_ui.tscn" id="3_76oj4"]
+[ext_resource type="Texture2D" uid="uid://c5yp2qyklxhfx" path="res://assets/Sunnyside_World_Assets/UI/expression_working.png" id="4_dyp2m"]
+[ext_resource type="Texture2D" uid="uid://c8kx1ahuw854r" path="res://assets/Sunnyside_World_Assets/UI/greenbar_00.png" id="5_kqtwu"]
+[ext_resource type="Texture2D" uid="uid://cv4nrx5g4fqi2" path="res://assets/Sunnyside_World_Assets/UI/green_bar_progress.png" id="6_6eyoc"]
+[ext_resource type="Script" uid="uid://b8udj2lx4lwqu" path="res://scripts/pickup_slot.gd" id="7_6eyoc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
 radius = 4.0
@@ -1458,14 +1462,14 @@ animation = &"walk_down"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yewv4"]
 animation = &"walk_dright"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eojnx"]
-animation = &"walk_uleft"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_76oj4"]
+animation = &"walk_uright"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_atpat"]
 animation = &"walk_dright"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_76oj4"]
-animation = &"walk_uright"
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eojnx"]
+animation = &"walk_uleft"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qgnko"]
 animation = &"walk_dleft"
@@ -2054,9 +2058,72 @@ nodes/ToolOneShot/node = SubResource("AnimationNodeOneShot_yewv4")
 nodes/ToolOneShot/position = Vector2(596.75977, -117.60858)
 node_connections = [&"output", 0, &"ToolOneShot", &"ToolOneShot", 0, &"MoveStateMachine", &"ToolOneShot", 1, &"ToolStateMachine"]
 
+[sub_resource type="Animation" id="Animation_6rclf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("work:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("work:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9.000001, -15.999999)]
+}
+
+[sub_resource type="Animation" id="Animation_s0anf"]
+resource_name = "working"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("work:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("work:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.6, 0.8),
+"transitions": PackedFloat32Array(0.21763775, 1),
+"update": 0,
+"values": [Vector2(8, -16), Vector2(8, -8)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s1x7u"]
+_data = {
+&"RESET": SubResource("Animation_6rclf"),
+&"working": SubResource("Animation_s0anf")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ifi7"]
+radius = 12.0415945
+
 [node name="Player" type="CharacterBody2D" unique_id=1434011847 groups=["Player"]]
-collision_layer = 2
-collision_mask = 5
+collision_layer = 6
+collision_mask = 7
 script = ExtResource("2_76oj4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=439769137]
@@ -2098,3 +2165,35 @@ parameters/ToolOneShot/request = 0
 zoom = Vector2(5, 5)
 
 [node name="ToolUI" parent="." unique_id=1325860234 instance=ExtResource("3_76oj4")]
+
+[node name="emotions" type="Node2D" parent="." unique_id=729353800]
+visible = false
+
+[node name="work" type="Sprite2D" parent="emotions" unique_id=1500511259]
+position = Vector2(9.000001, -15.999999)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("4_dyp2m")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="emotions" unique_id=1375471670]
+libraries/ = SubResource("AnimationLibrary_s1x7u")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=2087850346]
+visible = false
+offset_left = -8.0
+offset_top = -20.0
+offset_right = 32.0
+offset_bottom = 20.0
+max_value = 3.0
+value = 3.0
+texture_under = ExtResource("5_kqtwu")
+texture_progress = ExtResource("6_6eyoc")
+
+[node name="PickupZone" type="Area2D" parent="." unique_id=910509196]
+collision_mask = 5
+script = ExtResource("7_6eyoc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupZone" unique_id=767080778]
+shape = SubResource("CircleShape2D_4ifi7")
+
+[connection signal="body_entered" from="PickupZone" to="PickupZone" method="_on_body_entered"]
+[connection signal="body_exited" from="PickupZone" to="PickupZone" method="_on_body_exited"]

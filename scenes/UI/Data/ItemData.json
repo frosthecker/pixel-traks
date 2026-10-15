@@ -1,0 +1,37 @@
+{
+"sword": {
+"item_category": "Weapon",
+"stack_size": 1,
+"description": "A sharp blade used for combat and defending against monsters."
+},
+"shovel": {
+"item_category": "Tool",
+"stack_size": 1,
+"description": "Used for digging holes and clearing dirt."
+},
+"axe": {
+"item_category": "Tool",
+"stack_size": 1,
+"description": "A heavy tool used for chopping down trees and gathering wood."
+},
+"seeds": {
+"item_category": "Consumable",
+"stack_size": 99,
+"description": "Plant these in tilled soil to grow crops over time."
+},
+"fishing rod": {
+"item_category": "Tool",
+"stack_size": 1,
+"description": "Cast it into bodies of water to catch fish."
+},
+"watering can": {
+"item_category": "Tool",
+"stack_size": 1,
+"description": "Fill with water to keep your planted crops hydrated."
+},
+"hammer": {
+"item_category": "Tool",
+"stack_size": 1,
+"description": "Used for building, upgrading, and repairing structures."
+}
+}

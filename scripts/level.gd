@@ -8,18 +8,26 @@ var used_cells: Array[Vector2i]
 @export var daytime_color: Gradient
 @onready var day_timer: Timer = $Timers/DayTimer
 @onready var day_time_color: CanvasModulate = $Overlay/DayTimeColor
-@onready var day_transition_layer_material = $Overlay/CanvasLayer/DayTransitionLayer.material
+@onready var day_transition_layer: ColorRect = $Overlay/CanvasLayer/DayTransitionLayer
+@onready var day_transition_layer_material: ShaderMaterial = day_transition_layer.material as ShaderMaterial
 @onready var dark_dirt_layer: TileMapLayer = $Layers/DarkDirtLayer
 @onready var plant_info_container: Control = $Overlay/CanvasLayer/plant_info_container
 
+var day_transition_tween: Tween
+
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
+	_apply_tool_use(tool, pos, dir, player.current_seed, true)
+
+func npc_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed) -> void:
+	_apply_tool_use(tool, pos, dir, seed, false)
+
+func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, show_plant_info: bool) -> void:
 	var light_dirt_layer: TileMapLayer = $Layers/LightDirtLayer
 	var dark_dirt_layer: TileMapLayer = $Layers/DarkDirtLayer
-	# var grid_coord: Vector2i = light_dirt_layer.local_to_map(light_dirt_layer.to_local(pos))
-	var grid_coord: Vector2i = Vector2i(int(pos.x / Data.TILE_SIZE), int(pos.y / Data.TILE_SIZE))
-	grid_coord.x += -1 if pos.x < 0 else 0
-	#grid_coord.y += -1 if pos.y < 0 else 0
-	var has_soil = grid_coord in $Layers/GrassLayer.get_used_cells()
+	# Use the tile layer's own coordinate conversion so NPC and player tool
+	# positions resolve to the same cell, including when the layer is offset.
+	var grid_coord: Vector2i = light_dirt_layer.local_to_map(light_dirt_layer.to_local(pos))
+	var has_soil: bool = light_dirt_layer.get_cell_source_id(grid_coord) != -1
 	var tile_adjuster: Vector2i = Vector2i(0,0)
 	match tool:
 		Enum.Tool.HOE:
@@ -70,16 +78,19 @@ func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 				print('fishing')
 		Enum.Tool.SEED:
 			if has_soil and grid_coord not in used_cells:
-				var plant_res = PlantResource.new()
-				plant_res.setup(player.current_seed)
-				var plant = plant_scene.instantiate()
-				plant.setup(grid_coord + tile_adjuster, $Objects, plant_res, plant_death)
-				used_cells.append(grid_coord)
-				print(used_cells)
+				var cell = $Layers/LightDirtLayer.get_cell_tile_data(grid_coord)
+				if cell and cell.get_custom_data('seedable'):
+					var plant_res = PlantResource.new()
+					plant_res.setup(seed)
+					var plant = plant_scene.instantiate()
+					plant.setup(grid_coord + tile_adjuster, $Objects, plant_res, plant_death)
+					used_cells.append(grid_coord)
+					print(used_cells)
 				
-				var plant_info = plant_info_scene.instantiate()
-				plant_info_container.add(plant_info)
-				plant_info.setup(plant_res)
+					if show_plant_info:
+						var plant_info = plant_info_scene.instantiate()
+						plant_info_container.add(plant_info)
+						plant_info.setup(plant_res)
 				
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('Objects'):
@@ -93,12 +104,24 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("day_change"):
 			day_restart()
 
-func day_restart():
-	var tween = create_tween()
-	tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 1.0, 1.0)	
-	tween.tween_interval(0.5)
-	tween.tween_callback(level_reset)
-	tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)	
+func day_restart() -> void:
+	if day_transition_tween and day_transition_tween.is_running():
+		return
+	if day_transition_layer_material == null:
+		push_error("DayTransitionLayer does not have a ShaderMaterial.")
+		return
+
+	day_transition_layer.visible = true
+	day_transition_layer_material.set_shader_parameter("progress", 0.0)
+	day_transition_tween = create_tween()
+	day_transition_tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 1.0, 1.0)
+	day_transition_tween.tween_interval(0.5)
+	day_transition_tween.tween_callback(level_reset)
+	day_transition_tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)
+	day_transition_tween.tween_callback(_finish_day_transition)
+
+func _finish_day_transition() -> void:
+	day_transition_layer.visible = false
 
 func level_reset():
 	for plant in get_tree().get_nodes_in_group('Plants'):

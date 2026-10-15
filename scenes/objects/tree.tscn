@@ -2,15 +2,40 @@
 
 [ext_resource type="Script" uid="uid://d3jt4a7cksvsa" path="res://scripts/tree.gd" id="1_5qchx"]
 [ext_resource type="Texture2D" uid="uid://0fxxeuy4gqnt" path="res://assets/Sunnyside_World_Assets/Elements/Plants/spr_deco_tree_01_strip4.png" id="1_r6wkp"]
+[ext_resource type="PackedScene" uid="uid://xcvvujgqxboo" path="res://scenes/objects/log.tscn" id="2_03oh1"]
 [ext_resource type="PackedScene" uid="uid://cm1w86qwgiw57" path="res://scenes/vfx/flash_sprite_2d.tscn" id="2_7yu6v"]
 [ext_resource type="Texture2D" uid="uid://c0nd2h5o5umkd" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png" id="2_mbbxw"]
-[ext_resource type="Shader" uid="uid://d1prripd71ba3" path="res://shaders/flash.tres" id="3_mbbxw"]
+[ext_resource type="Shader" uid="uid://dd7gjmfd7rj2a" path="res://shaders/tree_shake.gdshader" id="4_lg7fn"]
+[ext_resource type="Texture2D" uid="uid://3x4q8xd41bbo" path="res://assets/Sunnyside_World_Assets/Elements/VFX/leaves/leaf_spritesheet.png" id="6_lg7fn"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mbbxw"]
-resource_local_to_scene = true
-shader = ExtResource("3_mbbxw")
-shader_parameter/Color = Color(1, 1, 1, 1)
-shader_parameter/Progress = 0.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ubuo4"]
+shader = ExtResource("4_lg7fn")
+shader_parameter/shake_intensity = 1.0
+shader_parameter/shake_speed = 20.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ubuo4"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 4
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4ifi7"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -10, 0)
+emission_shape = 3
+emission_box_extents = Vector3(10, 2, 1)
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(0, -1, 0)
+spread = 180.0
+initial_velocity_min = 15.0
+initial_velocity_max = 35.0
+gravity = Vector3(0, 100, 0)
+damping_min = 2.0
+damping_max = 10.0
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+anim_offset_max = 0.5
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u86jo"]
 radius = 7.0
@@ -58,9 +83,9 @@ _data = {
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_5qchx")
+log_scene = ExtResource("2_03oh1")
 
 [node name="stump" type="Sprite2D" parent="." unique_id=1190719047]
-visible = false
 position = Vector2(0, 7)
 texture = ExtResource("2_mbbxw")
 hframes = 64
@@ -68,10 +93,21 @@ vframes = 64
 frame = 351
 
 [node name="FlashSprite2D" parent="." unique_id=710909796 instance=ExtResource("2_7yu6v")]
-material = SubResource("ShaderMaterial_mbbxw")
+material = SubResource("ShaderMaterial_ubuo4")
 texture = ExtResource("1_r6wkp")
 hframes = 4
 frame = 1
+
+[node name="leaf_particles" type="GPUParticles2D" parent="." unique_id=1633816365]
+material = SubResource("CanvasItemMaterial_ubuo4")
+emitting = false
+amount = 5
+texture = ExtResource("6_lg7fn")
+lifetime = 0.6
+one_shot = true
+explosiveness = 1.0
+visibility_rect = Rect2(-25, -25, 50, 50)
+process_material = SubResource("ParticleProcessMaterial_4ifi7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1815621470]
 visible = false
@@ -81,3 +117,6 @@ shape = SubResource("CapsuleShape2D_u86jo")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1863650655]
 libraries/ = SubResource("AnimationLibrary_0v8c2")
 autoplay = &"idle"
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=2125768874]
+vertices = PackedVector2Array(-9, 0, -9, 15, 8, 15, 8, 0)

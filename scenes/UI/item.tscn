@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://ds1rboov3hlux"]
+
+[ext_resource type="Script" uid="uid://wbs0l8ohvq7g" path="res://scripts/item.gd" id="1_wfbeu"]
+[ext_resource type="Texture2D" uid="uid://cih2tonffbwnx" path="res://assets/Sunnyside_World_Assets/UI/shovel.png" id="2_3guxc"]
+
+[node name="Item" type="Node2D" unique_id=557144568]
+script = ExtResource("1_wfbeu")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1803975619]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_3guxc")

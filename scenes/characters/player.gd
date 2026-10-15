@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var direction: Vector2
 var last_direction: Vector2 = Vector2.DOWN
-var speed = 25
+var speed = 50
 var current_tool: Enum.Tool = Enum.Tool.AXE
 var current_seed: Enum.Seed
 var can_move: bool = true
@@ -28,11 +28,10 @@ func _physics_process(delta: float) -> void:
 
 func get_basic_input():
 	if Input.is_action_just_pressed("style"):
-		current_style+=1
+		current_style = posmod(current_style + 1, Enum.Style.size()) as Enum.Style
 		sprite.texture = Data.PLAYER_SKINS[current_style] 
-	if Input.is_action_just_pressed("tool_backward") or Input.is_action_just_pressed("tool_forward"):
-		var dir = Input.get_axis("tool_backward", "tool_forward")
-		current_tool = posmod(current_tool + int(dir), Enum.Tool.size()) as Enum.Tool
+	if Input.is_action_just_pressed("tool_backward"):
+		current_tool = posmod(current_tool + 1, Enum.Tool.size()) as Enum.Tool
 		print(current_tool)
 		tool_ui.reveal(true)
 		
@@ -42,14 +41,20 @@ func get_basic_input():
 		print(current_seed)
 	
 	if Input.is_action_just_pressed("action"):
-		# The current tool sprites do not contain usable front/back actions.
-		# Ignore the input instead of starting an animation with no matching pose.
-		if last_direction == Vector2.UP or last_direction == Vector2.DOWN:
-			return
 		can_move = false
 		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		animation_tree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		
+	if Input.is_action_pressed("pick"):
+		for pickup_item in $PickupZone.items_in_range.values():
+			if pickup_item.has_method("hit"):
+				print("tree picked")
+				break
+			elif pickup_item.has_method("pick_up_item"):
+				pickup_item.pick_up_item(self)
+				$PickupZone.items_in_range.erase(pickup_item)
+				print('log picked')
+				break
 
 func move():
 	direction = Input.get_vector("left", "right", "down", "up")
@@ -74,5 +79,5 @@ func animate():
 func tool_use_emit():
 	# Tool placement is emitted when the action starts. This method remains for
 	# existing animation tracks but must not emit a second time.
-	var use_position := global_position if current_tool == Enum.Tool.WATER else global_position + last_direction * Data.TILE_SIZE
+	var use_position : Vector2 =  global_position if current_tool == Enum.Tool.WATER else global_position + last_direction * Data.TILE_SIZE
 	tool_use.emit(current_tool, use_position, sprite2d.flip_h)

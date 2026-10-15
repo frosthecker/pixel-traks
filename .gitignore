@@ -16,3 +16,12 @@ mono_crash_*.log
 # System/Editor specifics
 *.translation
 *.log
+
+# Secrets / AI API configurations
+groq_config.json
+*.env
+
+#addons
+addons/nobodywho/
+addons/limboai/
+addons/dialogic/
