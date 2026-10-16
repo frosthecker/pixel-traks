@@ -8,6 +8,8 @@ var default_tex = preload("res://assets/Sunnyside_World_Assets/UI/9slice_box_whi
 
 var default_style: StyleBoxTexture = null
 var empty_style: StyleBoxTexture = null
+var slot_index
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

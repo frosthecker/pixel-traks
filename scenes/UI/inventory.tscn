@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bixwag1fqfhhk" path="res://assets/Sunnyside_World_Assets/UI/9slice_box_white/It_full_box.png" id="2_lvvmf"]
 [ext_resource type="Texture2D" uid="uid://blxbarqeli6v3" path="res://assets/Sunnyside_World_Assets/UI/9slice_box_white/It_half_box.png" id="3_lvvmf"]
 [ext_resource type="Script" uid="uid://b6og31nec0waq" path="res://scripts/slot.gd" id="4_krngk"]
+[ext_resource type="FontFile" uid="uid://d1djxisfa7p2c" path="res://assets/Sunnyside_World_Assets/Fonts/editundo.ttf" id="6_qjyq4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4ifi7"]
 texture = ExtResource("1_egg3t")
@@ -26,6 +27,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("NinePatchRect3:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-258, -177)]
 }
 
 [sub_resource type="Animation" id="Animation_5nor7"]
@@ -77,8 +90,8 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -262.0
-offset_top = -172.0
-offset_bottom = 1.0
+offset_top = -181.0
+offset_bottom = -3.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
@@ -113,9 +126,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -258.0
-offset_top = -168.0
-offset_right = -222.0
-offset_bottom = -153.0
+offset_top = -177.0
+offset_right = -180.5
+offset_bottom = -157.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
@@ -224,6 +237,46 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
 script = ExtResource("4_krngk")
+
+[node name="Label" type="Label" parent="." unique_id=1394562470]
+offset_left = -221.0
+offset_top = -172.0
+offset_right = -140.0
+offset_bottom = -143.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_qjyq4")
+theme_override_font_sizes/font_size = 30
+text = "items"
+
+[node name="Label2" type="Label" parent="." unique_id=343046313]
+offset_left = -37.0
+offset_top = -172.0
+offset_right = 44.0
+offset_bottom = -143.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_qjyq4")
+theme_override_font_sizes/font_size = 30
+text = "tools"
+
+[node name="Label3" type="Label" parent="." unique_id=561516548]
+offset_left = 126.0
+offset_top = -172.0
+offset_right = 207.0
+offset_bottom = -143.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_qjyq4")
+theme_override_font_sizes/font_size = 30
+text = "people"
+
+[node name="Label4" type="Label" parent="." unique_id=1380916792]
+offset_left = 182.0
+offset_top = 103.0
+offset_right = 223.0
+offset_bottom = 132.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_qjyq4")
+theme_override_font_sizes/font_size = 30
+text = "1/3"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=567952236]
 libraries/ = SubResource("AnimationLibrary_5nor7")
