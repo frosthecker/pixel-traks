@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://vvabtrd83usx" path="res://scenes/UI/plant_info_container.tscn" id="6_mbbpy"]
 [ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="9_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="10_7pb6i"]
+[ext_resource type="PackedScene" uid="uid://phqnvra8w8b7" path="res://scenes/UI/hotbar.tscn" id="11_7pb6i"]
 
 [sub_resource type="Gradient" id="Gradient_u86jo"]
 offsets = PackedFloat32Array(0, 0.35945946, 0.5162162, 1)
@@ -202,6 +203,8 @@ script = ExtResource("9_rmjfq")
 
 [node name="inventory" parent="Overlay/UserInterface" unique_id=344952141 instance=ExtResource("10_7pb6i")]
 position = Vector2(633, 334)
+
+[node name="hotbar" parent="Overlay/UserInterface" unique_id=1581433299 instance=ExtResource("11_7pb6i")]
 
 [node name="Timers" type="Node" parent="." unique_id=386833648]
 

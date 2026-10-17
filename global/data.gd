@@ -54,7 +54,7 @@ var PLANT_DATA = {
 	Enum.Seed.CAULIFLOWER: {
 		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/cauliflower_spritesheet.png",
 		'icon_texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/cauliflower_05.png",
-		'name':'Cauiflower',
+		'name':'Cauliflower',
 		'h_frames': 3,
 		'grow_speed': 0.5,
 		'death_max': 3,

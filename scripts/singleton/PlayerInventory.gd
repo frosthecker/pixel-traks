@@ -4,8 +4,13 @@ const SlotClass = preload("res://scripts/slot.gd")
 const NUM_INVENTORY_SLOTS = 14
 const ItemClass = preload("res://scripts/item.gd")
 var inventory = {
-	0: ['sword', 1], # slot_index: [item name, item quantity]
-	1: ['sword', 1] # slot_index: [item name, item quantity]
+	#0: ['sword', 1], # slot_index: [item name, item quantity]
+	#1: ['sword', 1] # slot_index: [item name, item quantity]
+}
+
+var hotbar = {
+	#0: ['sword', 1], # slot_index: [item name, item quantity]
+	#1: ['sword', 1] # slot_index: [item name, item quantity]
 }
 
 func add_item(item_name, item_quantity):
