@@ -1,0 +1,32 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(0.72, 1, 0.62, 1),
+&"custom_info": {
+"prefix": "",
+"sound_mood_default": "",
+"sound_moods": {},
+"style": "visual_style",
+"suffix": ""
+},
+&"default_portrait": "portrait",
+&"description": "the island botanist",
+&"display_name": "Orin Moss",
+&"mirror": false,
+&"nicknames": ["Orin"],
+&"offset": Vector2(0, 0),
+&"portraits": {
+"portrait": {
+"export_overrides": {
+"image": "\"res://AI/portraits/john_portrait.png\""
+},
+"ignore_char_scale": false,
+"mirror": false,
+"offset": Vector2(60, 120),
+"scale": 1.0,
+"scene": ""
+}
+},
+&"scale": 1.0
+}

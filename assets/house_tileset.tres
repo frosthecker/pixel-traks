@@ -1,6 +1,9 @@
 [gd_resource type="TileSet" format=3 uid="uid://un7how0dpfy4"]
 
 [ext_resource type="Texture2D" uid="uid://ev27lhgftnbl" path="res://assets/Sunnyside_World_Assets/Tileset/house_tileset.png" id="1_oyq62"]
+[ext_resource type="PackedScene" uid="uid://xsbuhpgu3b0v" path="res://scenes/objects/houses/windows.tscn" id="2_n3t2f"]
+[ext_resource type="PackedScene" uid="uid://cjaqa7v8n5of8" path="res://scenes/objects/houses/stairs_up.tscn" id="3_o6sc2"]
+[ext_resource type="PackedScene" uid="uid://dvkfw80d7y4v1" path="res://scenes/objects/houses/stairs_down.tscn" id="4_0nb1c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n3t2f"]
 texture = ExtResource("1_oyq62")
@@ -644,6 +647,22 @@ texture = ExtResource("1_oyq62")
 0:2/0 = 0
 9:4/0 = 0
 8:6/0 = 0
+0:3/0 = 0
+8:5/0 = 0
+7:4/0 = 0
+3:2/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+5:7/0 = 0
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_d5hqj"]
+resource_name = "scenes"
+scenes/1/scene = ExtResource("2_n3t2f")
+scenes/3/scene = ExtResource("3_o6sc2")
+scenes/4/scene = ExtResource("4_0nb1c")
 
 [resource]
 sources/0 = SubResource("TileSetAtlasSource_n3t2f")
+sources/1 = SubResource("TileSetScenesCollectionSource_d5hqj")

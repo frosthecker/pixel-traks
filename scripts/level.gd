@@ -2,6 +2,7 @@ extends Node2D
 
 
 var plant_scene = preload("res://scenes/objects/plant.tscn")
+var log_scene = preload("res://scenes/objects/log.tscn")
 var plant_info_scene = preload("res://scenes/UI/panel_container.tscn")
 var used_cells: Array[Vector2i]
 @onready var player: CharacterBody2D = $Objects/Player
@@ -14,6 +15,21 @@ var used_cells: Array[Vector2i]
 @onready var plant_info_container: Control = $Overlay/CanvasLayer/plant_info_container
 
 var day_transition_tween: Tween
+
+func _ready() -> void:
+	# Restore before the loading scene hands visibility to the level. All scene
+	# children have entered the tree by the time the parent is ready.
+	SaveGame.load_game()
+	_play_startup_transition()
+
+func _play_startup_transition() -> void:
+	if day_transition_layer_material == null:
+		return
+	day_transition_layer.visible = true
+	day_transition_layer_material.set_shader_parameter("progress", 1.0)
+	var transition := create_tween()
+	transition.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)
+	transition.tween_callback(_finish_day_transition)
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	_apply_tool_use(tool, pos, dir, player.current_seed, true)
@@ -134,3 +150,171 @@ func level_reset():
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)
 	print(used_cells)
+
+func get_save_data() -> Dictionary:
+	var trees: Dictionary = {}
+	for tree in get_tree().get_nodes_in_group("Objects"):
+		if tree.get_script() != null and tree.get_script().resource_path == "res://scripts/tree.gd":
+			trees[str(tree.get_path())] = int(tree.health)
+
+	var npcs: Dictionary = {}
+	for npc in get_tree().get_nodes_in_group("NPC"):
+		npcs[str(npc.get_path())] = {
+			"position": _vector_to_data(npc.global_position),
+			"last_direction": _vector_to_data(npc.last_direction),
+			"behavior_state": npc.behavior_state
+		}
+
+	var plants: Array = []
+	for plant in get_tree().get_nodes_in_group("Plants"):
+		plants.append({
+			"coord": _vector_to_data(plant.coord),
+			"seed": _seed_for_plant(plant.res),
+			"age": plant.res.age,
+			"death_count": plant.res.death_count
+		})
+
+	var dropped_items: Array = []
+	for item in get_tree().get_nodes_in_group("DroppedItems"):
+		dropped_items.append({
+			"item_name": item.item_name,
+			"position": _vector_to_data(item.global_position)
+		})
+
+	return {
+		"player": {
+			"position": _vector_to_data(player.global_position),
+			"last_direction": _vector_to_data(player.last_direction),
+			"current_tool": int(player.current_tool),
+			"current_seed": int(player.current_seed),
+			"current_style": int(player.current_style)
+		},
+		"world_time": {
+			"minutes": WorldTime.get_current_minutes(),
+			"day_count": WorldTime.day_count,
+			"day_timer_remaining": day_timer.time_left
+		},
+		"light_dirt": _serialize_tile_layer($Layers/LightDirtLayer),
+		"dark_dirt": _serialize_tile_layer($Layers/DarkDirtLayer),
+		"plants": plants,
+		"dropped_items": dropped_items,
+		"trees": trees,
+		"npcs": npcs
+	}
+
+func apply_save_data(save_data: Dictionary) -> void:
+	var player_data: Variant = save_data.get("player", {})
+	if player_data is Dictionary:
+		player.global_position = _data_to_vector(player_data.get("position", []))
+		player.last_direction = _data_to_vector(player_data.get("last_direction", [0, 1]))
+		player.current_tool = int(player_data.get("current_tool", player.current_tool)) as Enum.Tool
+		player.current_seed = int(player_data.get("current_seed", player.current_seed)) as Enum.Seed
+		player.current_style = int(player_data.get("current_style", player.current_style)) as Enum.Style
+		if Data.PLAYER_SKINS.has(player.current_style):
+			player.sprite.texture = Data.PLAYER_SKINS[player.current_style]
+
+	var time_data: Variant = save_data.get("world_time", {})
+	if time_data is Dictionary:
+		WorldTime.day_count = max(1, int(time_data.get("day_count", 1)))
+		WorldTime.set_time(int(time_data.get("minutes", WorldTime.start_minutes)))
+		var remaining := float(time_data.get("day_timer_remaining", day_timer.wait_time))
+		day_timer.start(clampf(remaining, 0.01, day_timer.wait_time))
+
+	_restore_tile_layer($Layers/LightDirtLayer, save_data.get("light_dirt", []))
+	_restore_tile_layer($Layers/DarkDirtLayer, save_data.get("dark_dirt", []))
+	_restore_trees(save_data.get("trees", {}))
+	_restore_npcs(save_data.get("npcs", {}))
+	_restore_plants(save_data.get("plants", []))
+	_restore_dropped_items(save_data.get("dropped_items", []))
+
+func _serialize_tile_layer(layer: TileMapLayer) -> Array:
+	var cells: Array = []
+	for coord in layer.get_used_cells():
+		var atlas := layer.get_cell_atlas_coords(coord)
+		cells.append({
+			"coord": _vector_to_data(coord),
+			"source": layer.get_cell_source_id(coord),
+			"atlas": _vector_to_data(atlas),
+			"alternative": layer.get_cell_alternative_tile(coord)
+		})
+	return cells
+
+func _restore_tile_layer(layer: TileMapLayer, cell_data: Variant) -> void:
+	layer.clear()
+	if not (cell_data is Array):
+		return
+	for cell in cell_data:
+		if cell is Dictionary:
+			layer.set_cell(
+				Vector2i(_data_to_vector(cell.get("coord", []))),
+				int(cell.get("source", -1)),
+				Vector2i(_data_to_vector(cell.get("atlas", []))),
+				int(cell.get("alternative", 0))
+			)
+
+func _restore_trees(tree_data: Variant) -> void:
+	if not (tree_data is Dictionary):
+		return
+	for path in tree_data:
+		var tree := get_node_or_null(NodePath(path))
+		if tree != null and tree.get_script() != null and tree.get_script().resource_path == "res://scripts/tree.gd":
+			tree.health = int(tree_data[path])
+
+func _restore_npcs(npc_data: Variant) -> void:
+	if not (npc_data is Dictionary):
+		return
+	for path in npc_data:
+		var npc := get_node_or_null(NodePath(path))
+		var state: Variant = npc_data[path]
+		if npc != null and state is Dictionary:
+			npc.global_position = _data_to_vector(state.get("position", []))
+			npc.last_direction = _data_to_vector(state.get("last_direction", [0, 1]))
+			npc.behavior_state = str(state.get("behavior_state", npc.behavior_state))
+
+func _restore_plants(plants_data: Variant) -> void:
+	for plant in get_tree().get_nodes_in_group("Plants"):
+		plant.free()
+	used_cells.clear()
+	if not (plants_data is Array):
+		return
+	for plant_data in plants_data:
+		if not (plant_data is Dictionary):
+			continue
+		var seed := int(plant_data.get("seed", -1))
+		if not Data.PLANT_DATA.has(seed):
+			continue
+		var plant_res := PlantResource.new()
+		plant_res.setup(seed as Enum.Seed)
+		plant_res.age = float(plant_data.get("age", 0.0))
+		plant_res.death_count = int(plant_data.get("death_count", 0))
+		var plant = plant_scene.instantiate()
+		var coord := Vector2i(_data_to_vector(plant_data.get("coord", [])))
+		plant.setup(coord, $Objects, plant_res, plant_death)
+		plant.sprite_2d.frame = clampi(int(plant_res.age), 0, plant_res.h_frames)
+		used_cells.append(coord)
+
+func _restore_dropped_items(items_data: Variant) -> void:
+	for item in get_tree().get_nodes_in_group("DroppedItems"):
+		item.free()
+	if not (items_data is Array):
+		return
+	for item_data in items_data:
+		if not (item_data is Dictionary) or str(item_data.get("item_name", "")) != "wood":
+			continue
+		var item = log_scene.instantiate()
+		$Objects/trees.add_child(item)
+		item.global_position = _data_to_vector(item_data.get("position", []))
+
+func _seed_for_plant(plant_res: PlantResource) -> int:
+	for seed in Data.PLANT_DATA:
+		if Data.PLANT_DATA[seed].get("name", "") == plant_res.name:
+			return int(seed)
+	return -1
+
+func _vector_to_data(value: Vector2) -> Array:
+	return [value.x, value.y]
+
+func _data_to_vector(data: Variant) -> Vector2:
+	if data is Array and data.size() >= 2:
+		return Vector2(float(data[0]), float(data[1]))
+	return Vector2.ZERO

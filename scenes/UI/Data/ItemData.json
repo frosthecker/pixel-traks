@@ -42,41 +42,49 @@
   "beetroot": {
     "item_category": "Plant",
     "stack_size": 64,
+    "sell_price": 8,
     "description": "A vibrant root vegetable grown from seeds, useful for cooking or dyes."
   },
   "cabbage": {
     "item_category": "Plant",
     "stack_size": 32,
+    "sell_price": 12,
     "description": "A leafy green vegetable harvested from dense heads grown in rich soil."
   },
   "carrot": {
     "item_category": "Plant",
     "stack_size": 64,
+    "sell_price": 10,
     "description": "A crunchy, nutrient-rich orange root crop grown underground."
   },
   "cauliflower": {
     "item_category": "Plant",
     "stack_size": 32,
+    "sell_price": 16,
     "description": "A compact white head vegetable surrounded by protective green leaves."
   },
   "potato": {
     "item_category": "Plant",
     "stack_size": 64,
+    "sell_price": 9,
     "description": "A starchy underground tuber harvested from mature farming plants."
   },
   "pumpkin": {
     "item_category": "Plant",
     "stack_size": 16,
+    "sell_price": 24,
     "description": "A large, round orange gourd grown from vines on the farm."
   },
   "radish": {
     "item_category": "Plant",
     "stack_size": 64,
+    "sell_price": 7,
     "description": "A zesty, crisp root vegetable with a quick growth cycle."
   },
   "wheat": {
     "item_category": "Plant",
     "stack_size": 64,
+    "sell_price": 6,
     "description": "A mature grain crop harvested from grown stalks, ready for milling or crafting."
   }
 }

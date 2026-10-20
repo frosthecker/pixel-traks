@@ -1,0 +1,15 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(1, 0.78, 0.5, 1),
+&"custom_info": {"prefix": "", "sound_mood_default": "", "sound_moods": {}, "style": "visual_style", "suffix": ""},
+&"default_portrait": "portrait",
+&"description": "the island courier",
+&"display_name": "Kaia Flint",
+&"mirror": false,
+&"nicknames": ["Kaia"],
+&"offset": Vector2(0, 0),
+&"portraits": {"portrait": {"export_overrides": {"image": "\"res://AI/portraits/tile004.png\""}, "ignore_char_scale": false, "mirror": true, "offset": Vector2(60, 120), "scale": 1.0, "scene": ""}},
+&"scale": 1.0
+}

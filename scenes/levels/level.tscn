@@ -3,14 +3,21 @@
 [ext_resource type="Script" uid="uid://bdbfnhevi22uh" path="res://scripts/level.gd" id="1_b2cq8"]
 [ext_resource type="TileSet" uid="uid://caenfd2q6s02v" path="res://assets/main_tileset.tres" id="1_bovvr"]
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="2_b2cq8"]
-[ext_resource type="PackedScene" uid="uid://xcvvujgqxboo" path="res://scenes/objects/log.tscn" id="3_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_xb4v1"]
 [ext_resource type="PackedScene" uid="uid://d11vhvv5pspkc" path="res://scenes/objects/simple_object.tscn" id="5_urvlt"]
 [ext_resource type="Shader" uid="uid://bpvr7bvak7ydr" path="res://shaders/circle_transition.gdshader" id="6_d4w6o"]
 [ext_resource type="PackedScene" uid="uid://vvabtrd83usx" path="res://scenes/UI/plant_info_container.tscn" id="6_mbbpy"]
+[ext_resource type="PackedScene" uid="uid://cpm07of23fq6r" path="res://scenes/characters/seller.tscn" id="6_qogh7"]
+[ext_resource type="PackedScene" uid="uid://cvakiwj4a1x5n" path="res://AI/scenes/john.tscn" id="7_john"]
+[ext_resource type="Texture2D" uid="uid://dhsaihv6kjq6n" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="8_kaia_texture"]
+[ext_resource type="Resource" path="res://resources/kaia_biodata.tres" id="9_kaia_biodata"]
 [ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="9_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="10_7pb6i"]
+[ext_resource type="Texture2D" uid="uid://cagb0uq47yrn0" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_long_hair.png" id="10_mira_texture"]
 [ext_resource type="PackedScene" uid="uid://phqnvra8w8b7" path="res://scenes/UI/hotbar.tscn" id="11_7pb6i"]
+[ext_resource type="Resource" path="res://resources/mira_biodata.tres" id="11_mira_biodata"]
+[ext_resource type="Texture2D" uid="uid://b6o85d7o5jmyx" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_curly_hair.png" id="12_orin_texture"]
+[ext_resource type="Resource" path="res://resources/orin_biodata.tres" id="13_orin_biodata"]
 
 [sub_resource type="Gradient" id="Gradient_u86jo"]
 offsets = PackedFloat32Array(0, 0.35945946, 0.5162162, 1)
@@ -65,15 +72,44 @@ tile_set = ExtResource("1_bovvr")
 [node name="Objects" type="Node2D" parent="." unique_id=1000276393]
 y_sort_enabled = true
 
-[node name="log" parent="Objects" unique_id=2070477663 instance=ExtResource("3_rmjfq")]
-position = Vector2(40, 67)
-
 [node name="Player" parent="Objects" unique_id=2055263155 instance=ExtResource("2_b2cq8")]
 position = Vector2(-14, 47)
 
-[node name="ladder" type="TileMapLayer" parent="Objects" unique_id=1153631421]
-tile_map_data = PackedByteArray("AAD9/w8AAAAqAAsAAAD9/xAAAAAqAAwAAAD9/xEAAAAqAAwAAAD9/xIAAAAqAAwAAAD9/xMAAAAqAA0AAAA=")
-tile_set = ExtResource("1_bovvr")
+[node name="shop" parent="Objects" unique_id=1649823698 instance=ExtResource("6_qogh7")]
+position = Vector2(85, 140)
+
+[node name="John" parent="Objects" unique_id=13871660 instance=ExtResource("7_john")]
+position = Vector2(38, 47)
+
+[node name="Kaia" parent="Objects" unique_id=188550383 instance=ExtResource("7_john")]
+position = Vector2(100, 120)
+texture = ExtResource("8_kaia_texture")
+dialogue_character = "res://AI/characters/Kaia.dch"
+dialogue_timeline = "res://AI/timelines/kaia_fallback.dtl"
+intro_timeline = ""
+random_timelines = Array[String](["res://AI/timelines/kaia_fallback.dtl"])
+biodata = ExtResource("9_kaia_biodata")
+groq_character_id = "Kaia"
+
+[node name="Mira" parent="Objects" unique_id=1505955909 instance=ExtResource("7_john")]
+position = Vector2(-160, 20)
+texture = ExtResource("10_mira_texture")
+dialogue_character = "res://AI/characters/Mira.dch"
+dialogue_timeline = "res://AI/timelines/mira_fallback.dtl"
+intro_timeline = ""
+random_timelines = Array[String](["res://AI/timelines/mira_fallback.dtl"])
+biodata = ExtResource("11_mira_biodata")
+groq_character_id = "Mira"
+
+[node name="Orin" parent="Objects" unique_id=386319934 instance=ExtResource("7_john")]
+position = Vector2(-120, 110)
+texture = ExtResource("12_orin_texture")
+dialogue_character = "res://AI/characters/Orin.dch"
+dialogue_timeline = "res://AI/timelines/orin_fallback.dtl"
+intro_timeline = ""
+random_timelines = Array[String](["res://AI/timelines/orin_fallback.dtl"])
+biodata = ExtResource("13_orin_biodata")
+groq_character_id = "Orin"
 
 [node name="trees" type="Node2D" parent="Objects" unique_id=1965571586]
 
@@ -196,7 +232,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.08208982, 0.082089834, 0.08208982, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="UserInterface" type="CanvasLayer" parent="Overlay" unique_id=524568422]
 script = ExtResource("9_rmjfq")

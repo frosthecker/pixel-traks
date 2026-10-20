@@ -83,7 +83,9 @@ func _ready() -> void:
 			dialogic.connect("timeline_ended", Callable(self, "_on_dialogue_ended"))
 		if not dialogic.is_connected("signal_event", Callable(self, "_on_dialogic_signal")):
 			dialogic.connect("signal_event", Callable(self, "_on_dialogic_signal"))
-	if dialogic and not intro_timeline.is_empty():
+	# The intro is a first-run event. Once a save exists, loading the game should
+	# never restart John's opening conversation.
+	if dialogic and not intro_timeline.is_empty() and not SaveGame.has_save():
 		call_deferred("_play_startup_dialogue")
 	
 func _physics_process(delta: float) -> void:
@@ -192,13 +194,14 @@ func _start_groq_dialogue(groq_service: Node, player_prompt: String = "") -> voi
 		"mood": mood
 	}
 
-	var ai_text: String = await groq_service.generate_npc_dialogue(
+	var ai_turn: Dictionary = await groq_service.generate_npc_dialogue_turn(
 		groq_character_id,
 		personality,
 		context,
 		player_prompt,
 		conversation_history
 	)
+	var ai_text: String = str(ai_turn.get("dialogue", ""))
 
 	is_requesting_ai = false
 	if emoticon_player:
@@ -226,14 +229,16 @@ func _start_groq_dialogue(groq_service: Node, player_prompt: String = "") -> voi
 	if dialogic:
 		var choices: Array = []
 		if enable_interactive_choices:
-			choices = [
-				{"label": "How is the farm doing?", "signal": "groq_ask_farm"},
-				{"label": "Any tips for life on this island?", "signal": "groq_ask_tips"},
-				{"label": "What are you doing right now?", "signal": "groq_ask_now"},
-				{"label": "See you later!", "text": "Take care! Come back anytime."}
-			]
+			for choice in ai_turn.get("choices", []):
+				choices.append({
+					"label": str(choice.get("label", "")),
+					"signal": "groq_custom:%s" % str(choice.get("prompt", ""))
+				})
 		var timeline = groq_service.create_dialogic_timeline(groq_character_id, ai_text, choices)
 		dialogic.call("start", timeline)
+	else:
+		# Do not leave John frozen if the dialogue UI/autoload is unavailable.
+		_end_interaction()
 
 
 func _on_dialogic_signal(argument: Variant) -> void:
@@ -292,6 +297,10 @@ func _on_dialogic_signal(argument: Variant) -> void:
 
 		var timeline = groq_service.create_dialogic_timeline(groq_character_id, answer, [])
 		dialogic.call("start", timeline)
+	else:
+		# The previous timeline already ended while the request was in flight, so
+		# its timeline_ended signal cannot restore the NPC state for us.
+		_end_interaction()
 
 
 
@@ -337,12 +346,16 @@ func _on_dialogue_ended() -> void:
 	if is_requesting_ai:
 		return
 	if dialogue_running:
-		dialogue_running = false
-		can_move = true
-		behavior_state = previous_behavior_state
-		_resume_ai()
+		_end_interaction()
 		if player_in_range:
 			key_timer.start()
+
+
+func _end_interaction() -> void:
+	dialogue_running = false
+	can_move = true
+	behavior_state = previous_behavior_state
+	_resume_ai()
 func _pause_ai() -> void:
 	velocity = Vector2.ZERO
 	bt_player.set_process(false)

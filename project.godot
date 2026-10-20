@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Traks"
-run/main_scene="uid://dkaf0otbgtrp5"
+run/main_scene="uid://j17dw07f1l3i"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
@@ -24,16 +24,26 @@ WorldTime="*res://scripts/world_time.gd"
 GroqService="*res://scripts/groq_service.gd"
 JsonData="*uid://h0kdt251magh"
 PlayerInventory="*uid://dulpok11oldcd"
+SaveGame="*res://scripts/singleton/save_game.gd"
 
 [dialogic]
 
 directories/dch_directory={
-"John": "res://AI/characters/John.dch"
+"John": "res://AI/characters/John.dch",
+"Kaia": "res://AI/characters/Kaia.dch",
+"Mira": "res://AI/characters/Mira.dch",
+"Orin": "res://AI/characters/Orin.dch",
+"Seller": "res://AI/characters/Seller.dch"
 }
 directories/dtl_directory={
 "John_intro": "res://AI/timelines/John_intro.dtl",
 "john_random_1": "res://AI/timelines/john_random_1.dtl",
-"john_random_2": "res://AI/timelines/john_random_2.dtl"
+"john_random_2": "res://AI/timelines/john_random_2.dtl",
+"kaia_fallback": "res://AI/timelines/kaia_fallback.dtl",
+"mira_fallback": "res://AI/timelines/mira_fallback.dtl",
+"orin_fallback": "res://AI/timelines/orin_fallback.dtl",
+"seller_no_crops": "res://AI/timelines/seller_no_crops.dtl",
+"seller_sale": "res://AI/timelines/seller_sale.dtl"
 }
 layout/style_directory={
 "": "res://AI/styles/visual_style.tres",
@@ -84,6 +94,15 @@ window/stretch/aspect="expand"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://assets/": "red",
+"res://resources/": "green",
+"res://scenes/": "purple",
+"res://scripts/": "gray"
+}
 
 [filesystem]
 

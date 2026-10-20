@@ -6,6 +6,7 @@ var item_name
 
 func _ready() -> void:
 	item_name = 'wood'
+	add_to_group("DroppedItems")
 
 func _physics_process(delta: float) -> void:
 	if being_picked_up and is_instance_valid(player):

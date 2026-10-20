@@ -100,7 +100,7 @@ func has_valid_api_key() -> bool:
 	return not clean.is_empty() and clean != "YOUR_GROQ_API_KEY_HERE"
 
 ## Low-level async chat completion request to Groq API.
-func send_chat_request(messages: Array, model_override: String = "") -> Dictionary:
+func send_chat_request(messages: Array, model_override: String = "", response_format: Dictionary = {}) -> Dictionary:
 	if not has_valid_api_key():
 		var err := "Groq API key is not configured. Please add your key to groq_config.json."
 		request_failed.emit(err)
@@ -123,6 +123,8 @@ func send_chat_request(messages: Array, model_override: String = "") -> Dictiona
 		"temperature": temperature,
 		"max_tokens": max_tokens
 	}
+	if not response_format.is_empty():
+		payload["response_format"] = response_format
 
 	var json_body := JSON.stringify(payload)
 	request_started.emit()
@@ -221,6 +223,71 @@ func generate_npc_dialogue(
 	var raw_dialogue: String = result.get("content", "")
 	return sanitize_dialogue(raw_dialogue, character_name)
 
+
+## Generates one NPC line and contextual player prompts for a runtime choice menu.
+## The JSON response format keeps model output from becoming invalid Dialogic syntax.
+func generate_npc_dialogue_turn(
+	character_name: String,
+	personality: String,
+	context_info: Dictionary,
+	player_prompt: String = "",
+	conversation_history: Array = []
+) -> Dictionary:
+	var system_prompt := _build_system_prompt(character_name, personality, context_info)
+	system_prompt += """
+
+Respond with exactly one JSON object and no markdown:
+{"dialogue":"one short in-character response","choices":[{"label":"short player-facing option","prompt":"the player's full question or reply"}]}
+Include two or three choices that naturally follow this exact moment. Each label must be under 45 characters and each prompt must be safe, plain player dialogue. Do not include stage directions or dialogue commands."""
+
+	var messages: Array = [{"role": "system", "content": system_prompt}]
+	for turn in conversation_history:
+		messages.append(turn)
+
+	var user_content := player_prompt
+	if user_content.strip_edges().is_empty():
+		user_content = "The player approaches you while you are in the middle of your daily routine. Greet them in character and offer relevant conversation options."
+	messages.append({"role": "user", "content": user_content})
+
+	var result := await send_chat_request(messages, "", {"type": "json_object"})
+	if not result.get("success", false):
+		var status_code: int = int(result.get("status_code", 0))
+		var err_str: String = str(result.get("error", ""))
+		if status_code == 404 or "model" in err_str.to_lower():
+			for fallback_model in FALLBACK_MODELS:
+				if fallback_model != model:
+					var fallback_res := await send_chat_request(messages, fallback_model, {"type": "json_object"})
+					if fallback_res.get("success", false):
+						model = fallback_model
+						result = fallback_res
+						break
+
+	if not result.get("success", false):
+		printerr("[GroqService] Dialogue turn generation failed: ", result.get("error", "Unknown error"))
+		return {}
+
+	var parsed: Variant = JSON.parse_string(str(result.get("content", "")))
+	if typeof(parsed) != TYPE_DICTIONARY:
+		printerr("[GroqService] Dialogue turn was not valid JSON.")
+		return {}
+	var parsed_dict: Dictionary = parsed
+
+	var dialogue := sanitize_dialogue(str(parsed_dict.get("dialogue", "")), character_name)
+	if dialogue.is_empty():
+		return {}
+
+	var choices: Array = []
+	var raw_choices: Variant = parsed_dict.get("choices", [])
+	if raw_choices is Array:
+		for raw_choice in raw_choices:
+			if raw_choice is Dictionary and choices.size() < 3:
+				var label := _sanitize_choice_text(str(raw_choice.get("label", "")), 45)
+				var prompt := _sanitize_choice_text(str(raw_choice.get("prompt", "")), 160)
+				if not label.is_empty() and not prompt.is_empty():
+					choices.append({"label": label, "prompt": prompt})
+
+	return {"dialogue": dialogue, "choices": choices}
+
 ## Cleans AI response for Dialogic 2 text box presentation.
 func sanitize_dialogue(raw_text: String, character_name: String) -> String:
 	var cleaned := raw_text.strip_edges()
@@ -240,7 +307,18 @@ func sanitize_dialogue(raw_text: String, character_name: String) -> String:
 
 	# 4. Remove redundant newlines or whitespace
 	cleaned = cleaned.replace("\r\n", " ").replace("\n", " ").strip_edges()
+	# Dynamic text is parsed as a Dialogic timeline. Keep model output from being
+	# mistaken for a Dialogic shortcode such as [signal] or [jump].
+	cleaned = cleaned.replace("[", "(").replace("]", ")")
 
+	return cleaned
+
+
+func _sanitize_choice_text(value: String, max_length: int) -> String:
+	var cleaned := value.replace("\r\n", " ").replace("\n", " ").strip_edges()
+	cleaned = cleaned.replace("[", "(").replace("]", ")")
+	if cleaned.length() > max_length:
+		cleaned = cleaned.left(max_length).strip_edges()
 	return cleaned
 
 ## Builds the rich system prompt grounding the NPC in Pixel Traks island.
@@ -279,13 +357,14 @@ func create_dialogic_timeline(character_identifier: String, speech_text: String,
 
 		if not label.is_empty():
 			dtl_content += "- %s\n" % label
-			if not follow_arg(signal_arg).is_empty():
-				dtl_content += "\t[signal arg=\"%s\"]\n" % signal_arg
+			if not signal_arg.is_empty():
+				dtl_content += "\t[signal arg=\"%s\"]\n" % _escape_shortcode_value(signal_arg)
 			elif not follow_up.is_empty():
 				dtl_content += "\t%s: %s\n" % [character_identifier, follow_up]
 
 	timeline.from_text(dtl_content)
 	return timeline
 
-func follow_arg(s: String) -> String:
-	return s
+
+func _escape_shortcode_value(value: String) -> String:
+	return value.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", " ").replace("\r", " ")
