@@ -83,18 +83,23 @@ func _ready() -> void:
 			dialogic.connect("timeline_ended", Callable(self, "_on_dialogue_ended"))
 		if not dialogic.is_connected("signal_event", Callable(self, "_on_dialogic_signal")):
 			dialogic.connect("signal_event", Callable(self, "_on_dialogic_signal"))
+	if not WorldTime.time_changed.is_connected(_on_world_time_changed):
+		WorldTime.time_changed.connect(_on_world_time_changed)
+	_update_schedule_state()
 	# The intro is a first-run event. Once a save exists, loading the game should
 	# never restart John's opening conversation.
 	if dialogic and not intro_timeline.is_empty() and not SaveGame.has_save():
 		call_deferred("_play_startup_dialogue")
 	
 func _physics_process(delta: float) -> void:
-	_update_schedule_state()
 	if not can_move and not dialogue_running and not animation_tree.get("parameters/ToolOneShot/active"):
 		can_move = true
 	if can_move:
 		animate()
 		get_basic_input()
+
+func _on_world_time_changed(_minutes: int) -> void:
+	_update_schedule_state()
 
 func _update_schedule_state() -> void:
 	if biodata == null or biodata.daily_schedule.is_empty() or dialogue_running:

@@ -14,8 +14,8 @@
 [ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="9_rmjfq"]
 [ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="10_7pb6i"]
 [ext_resource type="Texture2D" uid="uid://cagb0uq47yrn0" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_long_hair.png" id="10_mira_texture"]
-[ext_resource type="PackedScene" uid="uid://phqnvra8w8b7" path="res://scenes/UI/hotbar.tscn" id="11_7pb6i"]
 [ext_resource type="Resource" path="res://resources/mira_biodata.tres" id="11_mira_biodata"]
+[ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="12_map"]
 [ext_resource type="Texture2D" uid="uid://b6o85d7o5jmyx" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_curly_hair.png" id="12_orin_texture"]
 [ext_resource type="Resource" path="res://resources/orin_biodata.tres" id="13_orin_biodata"]
 
@@ -74,6 +74,9 @@ y_sort_enabled = true
 
 [node name="Player" parent="Objects" unique_id=2055263155 instance=ExtResource("2_b2cq8")]
 position = Vector2(-14, 47)
+
+[node name="Camera2D2" type="Camera2D" parent="Objects/Player" unique_id=497935771]
+zoom = Vector2(4, 4)
 
 [node name="shop" parent="Objects" unique_id=1649823698 instance=ExtResource("6_qogh7")]
 position = Vector2(85, 140)
@@ -240,12 +243,13 @@ script = ExtResource("9_rmjfq")
 [node name="inventory" parent="Overlay/UserInterface" unique_id=344952141 instance=ExtResource("10_7pb6i")]
 position = Vector2(633, 334)
 
-[node name="hotbar" parent="Overlay/UserInterface" unique_id=1581433299 instance=ExtResource("11_7pb6i")]
+[node name="map" parent="Overlay/UserInterface" unique_id=685555245 instance=ExtResource("12_map")]
+position = Vector2(640, 350)
 
 [node name="Timers" type="Node" parent="." unique_id=386833648]
 
 [node name="DayTimer" type="Timer" parent="Timers" unique_id=1592096192]
-wait_time = 180.0
+wait_time = 21600.0
 one_shot = true
 autostart = true
 

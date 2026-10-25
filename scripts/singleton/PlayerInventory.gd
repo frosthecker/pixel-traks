@@ -15,6 +15,8 @@ var hotbar = {
 
 var money := 0
 
+signal money_changed(amount: int)
+
 func get_save_data() -> Dictionary:
 	return {
 		"inventory": _serialize_slots(inventory),
@@ -26,6 +28,7 @@ func load_save_data(save_data: Dictionary) -> void:
 	inventory = _deserialize_slots(save_data.get("inventory", {}))
 	hotbar = _deserialize_slots(save_data.get("hotbar", {}))
 	money = max(0, int(save_data.get("money", 0)))
+	money_changed.emit(money)
 	_refresh_inventory_ui()
 
 func _serialize_slots(slots: Dictionary) -> Dictionary:
@@ -81,7 +84,7 @@ func update_slot_visual(slot_index, item_name, new_quantity):
 	# The inventory UI may not have entered the scene tree yet (for example,
 	# when an item is picked up during level startup).  Keep the inventory data
 	# as the source of truth; inventory.gd will render it from _ready().
-	var slot_path = "Overlay/UserInterface/inventory/GridContainer/Slot" + str(slot_index + 1)
+	var slot_path = "Overlay/UserInterface/inventory/ScrollContainer/GridContainer/Slot" + str(slot_index + 1)
 	var slot = get_tree().current_scene.get_node_or_null(slot_path)
 	if slot == null:
 		return
@@ -119,5 +122,6 @@ func sell_all_crops() -> int:
 
 	if earnings > 0:
 		money += earnings
+		money_changed.emit(money)
 		_refresh_inventory_ui()
 	return earnings

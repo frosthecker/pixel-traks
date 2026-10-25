@@ -7,6 +7,10 @@ extends StaticBody2D
 @export var log_scene: PackedScene
 
 func _ready() -> void:
+	# PackedScene instances can share subresource materials. Make the shake
+	# material unique per tree so chopping one tree cannot animate every tree.
+	if sprite_2d.material != null:
+		sprite_2d.material = sprite_2d.material.duplicate()
 	sprite_2d.material.set_shader_parameter("shake_intensity", 0.0)
 
 

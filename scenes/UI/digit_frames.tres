@@ -1,0 +1,455 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://dexqvfckbsf3c"]
+
+[ext_resource type="Texture2D" uid="uid://ofijl2arg8o3" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/0.png" id="1_55o1v"]
+[ext_resource type="Texture2D" uid="uid://cnglgtfurr7lh" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/1.png" id="2_uvcej"]
+[ext_resource type="Texture2D" uid="uid://3fykpadjfg4x" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/2.png" id="3_6jbk1"]
+[ext_resource type="Texture2D" uid="uid://dyjhls0f64ebb" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/3.png" id="4_1ytpn"]
+[ext_resource type="Texture2D" uid="uid://debsy3ahmfm6b" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/4.png" id="5_qcxa6"]
+[ext_resource type="Texture2D" uid="uid://cxix05flrqsgo" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/5.png" id="6_rqon7"]
+[ext_resource type="Texture2D" uid="uid://c30lxitkrc34j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/6.png" id="7_ne3c7"]
+[ext_resource type="Texture2D" uid="uid://bbu4qxlekwh5m" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/7.png" id="8_70be0"]
+[ext_resource type="Texture2D" uid="uid://cjc8vms2hspn" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/8.png" id="9_5nl8x"]
+[ext_resource type="Texture2D" uid="uid://cjka15q4x5pos" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/9/9.png" id="10_blh8d"]
+[ext_resource type="Texture2D" uid="uid://cfqacvo7ps6tt" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/0.png" id="11_s4ro3"]
+[ext_resource type="Texture2D" uid="uid://c77snqg7vi0sf" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/1.png" id="12_fdabn"]
+[ext_resource type="Texture2D" uid="uid://dgaxs1q14v44y" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/2.png" id="13_3u226"]
+[ext_resource type="Texture2D" uid="uid://bd5ija1c3qapn" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/3.png" id="14_xdout"]
+[ext_resource type="Texture2D" uid="uid://c6xggh65arb8g" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/4.png" id="15_60ygh"]
+[ext_resource type="Texture2D" uid="uid://0wu37j2pf62h" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/5.png" id="16_wnslp"]
+[ext_resource type="Texture2D" uid="uid://b5c3iao6h1kjj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/6.png" id="17_ei0di"]
+[ext_resource type="Texture2D" uid="uid://xdm3mbum7lbb" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/7.png" id="18_6wrpt"]
+[ext_resource type="Texture2D" uid="uid://om1wpgna3q57" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/8.png" id="19_dhs2t"]
+[ext_resource type="Texture2D" uid="uid://s2xg5tjd5tdf" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/0/9.png" id="20_8qutm"]
+[ext_resource type="Texture2D" uid="uid://1jho6yuwc67i" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/0.png" id="21_lb4rh"]
+[ext_resource type="Texture2D" uid="uid://c1y0dlew8imc2" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/1.png" id="22_o7b5a"]
+[ext_resource type="Texture2D" uid="uid://b88fxmxe4l47u" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/2.png" id="23_8lsqs"]
+[ext_resource type="Texture2D" uid="uid://ckte471qksot6" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/3.png" id="24_kywgq"]
+[ext_resource type="Texture2D" uid="uid://dehn1k2oje45k" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/4.png" id="25_efj66"]
+[ext_resource type="Texture2D" uid="uid://dry4kntr3rup1" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/5.png" id="26_qtds2"]
+[ext_resource type="Texture2D" uid="uid://b05dnhmvy60fl" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/6.png" id="27_0gqdr"]
+[ext_resource type="Texture2D" uid="uid://cbl0dn5tuoptj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/7.png" id="28_jxsxa"]
+[ext_resource type="Texture2D" uid="uid://cdpcl8pybm2w4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/8.png" id="29_5ujdj"]
+[ext_resource type="Texture2D" uid="uid://rxdb8vs2kecj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/1/9.png" id="30_2njc1"]
+[ext_resource type="Texture2D" uid="uid://b22ssujsc37f2" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/0.png" id="31_mbccu"]
+[ext_resource type="Texture2D" uid="uid://djwyhig101f6r" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/1.png" id="32_qlc28"]
+[ext_resource type="Texture2D" uid="uid://5tjemtcs6wpx" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/2.png" id="33_8ihwa"]
+[ext_resource type="Texture2D" uid="uid://rtn1jqwuimrq" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/3.png" id="34_5hj6f"]
+[ext_resource type="Texture2D" uid="uid://dltm1naqcoqvw" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/4.png" id="35_c0b72"]
+[ext_resource type="Texture2D" uid="uid://kkyj04m52xr6" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/5.png" id="36_r2for"]
+[ext_resource type="Texture2D" uid="uid://ma5m28c0v2d4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/6.png" id="37_ecmdu"]
+[ext_resource type="Texture2D" uid="uid://crued2f527ql8" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/7.png" id="38_1uud0"]
+[ext_resource type="Texture2D" uid="uid://8rf7xtjj3eab" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/8.png" id="39_hwuox"]
+[ext_resource type="Texture2D" uid="uid://bl4sk01jfoce3" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/2/9.png" id="40_ba6ph"]
+[ext_resource type="Texture2D" uid="uid://bw5gbwyi8rypw" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/0.png" id="41_ysrw7"]
+[ext_resource type="Texture2D" uid="uid://b5olj48v32xm" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/1.png" id="42_ghl6c"]
+[ext_resource type="Texture2D" uid="uid://c1u8dvatm6yws" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/2.png" id="43_1dwqr"]
+[ext_resource type="Texture2D" uid="uid://bg3gjxaso3hf3" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/3.png" id="44_167jo"]
+[ext_resource type="Texture2D" uid="uid://cl116fa3bb83y" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/4.png" id="45_ubmnt"]
+[ext_resource type="Texture2D" uid="uid://bv2fmniqagxm1" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/5.png" id="46_sks1j"]
+[ext_resource type="Texture2D" uid="uid://c0jcemclkofx4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/6.png" id="47_vd2wh"]
+[ext_resource type="Texture2D" uid="uid://bq3qpjk7gih2a" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/7.png" id="48_dyfu5"]
+[ext_resource type="Texture2D" uid="uid://chka4ajwpboi6" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/8.png" id="49_wirss"]
+[ext_resource type="Texture2D" uid="uid://b7qm2n0debgc6" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/3/9.png" id="50_2qg2j"]
+[ext_resource type="Texture2D" uid="uid://dd3l2ibqbxtp5" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/0.png" id="51_ikf1k"]
+[ext_resource type="Texture2D" uid="uid://ka63dxctejv2" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/1.png" id="52_1wwhd"]
+[ext_resource type="Texture2D" uid="uid://be70xr0sb6dxs" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/2.png" id="53_xplrk"]
+[ext_resource type="Texture2D" uid="uid://sod2071xakem" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/3.png" id="54_mthwc"]
+[ext_resource type="Texture2D" uid="uid://duaa5l2ijoyve" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/4.png" id="55_jnuj8"]
+[ext_resource type="Texture2D" uid="uid://y38gav8nxlev" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/5.png" id="56_o4m4l"]
+[ext_resource type="Texture2D" uid="uid://b81xtxd1vw6ku" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/6.png" id="57_cvjui"]
+[ext_resource type="Texture2D" uid="uid://d3v2ju18xycd6" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/7.png" id="58_u3yt3"]
+[ext_resource type="Texture2D" uid="uid://b4yami854syjp" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/8.png" id="59_sgr4m"]
+[ext_resource type="Texture2D" uid="uid://dx0cxfj02nf1f" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/4/9.png" id="60_pmg0i"]
+[ext_resource type="Texture2D" uid="uid://ch0r7xkq7axq5" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/0.png" id="61_b21kw"]
+[ext_resource type="Texture2D" uid="uid://cq4v0quwi42vp" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/1.png" id="62_6r21y"]
+[ext_resource type="Texture2D" uid="uid://1ev58qkunv0e" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/2.png" id="63_5y4jq"]
+[ext_resource type="Texture2D" uid="uid://c52ag5i6mn5mw" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/3.png" id="64_4h6ke"]
+[ext_resource type="Texture2D" uid="uid://ek51hyaviink" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/4.png" id="65_krnsu"]
+[ext_resource type="Texture2D" uid="uid://cpbnpbe1fkij4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/5.png" id="66_ejq7l"]
+[ext_resource type="Texture2D" uid="uid://odl7ovkd0l5i" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/6.png" id="67_5jns2"]
+[ext_resource type="Texture2D" uid="uid://0ook5abcnoq7" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/7.png" id="68_qlmdo"]
+[ext_resource type="Texture2D" uid="uid://bript3h7gp38u" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/8.png" id="69_tb0g4"]
+[ext_resource type="Texture2D" uid="uid://bogpw2cn55mt3" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/5/9.png" id="70_jmco0"]
+[ext_resource type="Texture2D" uid="uid://bhjotgy52vobe" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/0.png" id="71_5osk1"]
+[ext_resource type="Texture2D" uid="uid://dcoqvgy3me42" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/1.png" id="72_hi336"]
+[ext_resource type="Texture2D" uid="uid://shbptwoyx7ff" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/2.png" id="73_7aryu"]
+[ext_resource type="Texture2D" uid="uid://0ol2b64youvv" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/3.png" id="74_upehk"]
+[ext_resource type="Texture2D" uid="uid://co525e73ha6am" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/4.png" id="75_1ge1l"]
+[ext_resource type="Texture2D" uid="uid://c0vh5j2qb1g0p" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/5.png" id="76_hob7x"]
+[ext_resource type="Texture2D" uid="uid://bqi6g4l3ktmph" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/6.png" id="77_uitye"]
+[ext_resource type="Texture2D" uid="uid://5g3328p2kuy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/7.png" id="78_0ifh2"]
+[ext_resource type="Texture2D" uid="uid://wpxga4akl2rh" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/8.png" id="79_0o2v6"]
+[ext_resource type="Texture2D" uid="uid://87iwctsl1smn" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/6/9.png" id="80_4nrp6"]
+[ext_resource type="Texture2D" uid="uid://owemp8630vto" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/0.png" id="81_l2aau"]
+[ext_resource type="Texture2D" uid="uid://ceyuw5kvpva1s" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/1.png" id="82_uex4o"]
+[ext_resource type="Texture2D" uid="uid://vkn3ohe30nxq" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/2.png" id="83_3yc7y"]
+[ext_resource type="Texture2D" uid="uid://b5jt0m3hn7lv4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/3.png" id="84_64jwb"]
+[ext_resource type="Texture2D" uid="uid://bjvbidwgng4nk" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/4.png" id="85_oocbu"]
+[ext_resource type="Texture2D" uid="uid://bwfvyiafqd5fj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/5.png" id="86_i2mjj"]
+[ext_resource type="Texture2D" uid="uid://dvfooookemp1r" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/6.png" id="87_s1hvr"]
+[ext_resource type="Texture2D" uid="uid://wbhp3sspf3o5" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/7.png" id="88_rxwmn"]
+[ext_resource type="Texture2D" uid="uid://6t6dfflidn7p" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/8.png" id="89_ys8a3"]
+[ext_resource type="Texture2D" uid="uid://cycjmgq81fwx6" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/7/9.png" id="90_88iyl"]
+[ext_resource type="Texture2D" uid="uid://clig5xy3p0dhy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/0.png" id="91_euiwr"]
+[ext_resource type="Texture2D" uid="uid://g6ajwumi7rqj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/1.png" id="92_43myk"]
+[ext_resource type="Texture2D" uid="uid://c1yflp6cjfaqp" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/2.png" id="93_ob3we"]
+[ext_resource type="Texture2D" uid="uid://b357ixp03g15n" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/3.png" id="94_1uyi8"]
+[ext_resource type="Texture2D" uid="uid://bvmsj4nysu5cf" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/4.png" id="95_yjdbk"]
+[ext_resource type="Texture2D" uid="uid://ckxd01ikqaqfk" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/5.png" id="96_27ask"]
+[ext_resource type="Texture2D" uid="uid://cm4dgifvqcfoe" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/6.png" id="97_8nmpm"]
+[ext_resource type="Texture2D" uid="uid://d1c1k2hsqub4e" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/7.png" id="98_oc748"]
+[ext_resource type="Texture2D" uid="uid://dqbkltnxr6m86" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/8.png" id="99_sjwti"]
+[ext_resource type="Texture2D" uid="uid://cahgmpthxwnod" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Clock/Clock Digits/8/9.png" id="100_lphxf"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_55o1v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_uvcej")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6jbk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1ytpn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qcxa6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rqon7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ne3c7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_70be0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5nl8x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_blh8d")
+}],
+"loop": 0,
+"name": &"0",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_s4ro3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_fdabn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_3u226")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_xdout")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_60ygh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_wnslp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ei0di")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_6wrpt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_dhs2t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_8qutm")
+}],
+"loop": 0,
+"name": &"1",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_lb4rh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_o7b5a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_8lsqs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_kywgq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_efj66")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_qtds2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_0gqdr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_jxsxa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_5ujdj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_2njc1")
+}],
+"loop": 0,
+"name": &"2",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("31_mbccu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_qlc28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_8ihwa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_5hj6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_c0b72")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_r2for")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_ecmdu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_1uud0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_hwuox")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_ba6ph")
+}],
+"loop": 0,
+"name": &"3",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("41_ysrw7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_ghl6c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_1dwqr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_167jo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_ubmnt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_sks1j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_vd2wh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_dyfu5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_wirss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_2qg2j")
+}],
+"loop": 0,
+"name": &"4",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("51_ikf1k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_1wwhd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_xplrk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_mthwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_jnuj8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_o4m4l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_cvjui")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_u3yt3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_sgr4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_pmg0i")
+}],
+"loop": 0,
+"name": &"5",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("61_b21kw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_6r21y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_5y4jq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_4h6ke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_krnsu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_ejq7l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_5jns2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_qlmdo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_tb0g4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_jmco0")
+}],
+"loop": 0,
+"name": &"6",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("71_5osk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_hi336")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_7aryu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_upehk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_1ge1l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_hob7x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_uitye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_0ifh2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_0o2v6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_4nrp6")
+}],
+"loop": 0,
+"name": &"7",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("81_l2aau")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_uex4o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_3yc7y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_64jwb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_oocbu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_i2mjj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_s1hvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_rxwmn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_ys8a3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_88iyl")
+}],
+"loop": 0,
+"name": &"8",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("91_euiwr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_43myk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_ob3we")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_1uyi8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_yjdbk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_27ask")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_8nmpm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_oc748")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_sjwti")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_lphxf")
+}],
+"loop": 0,
+"name": &"9",
+"speed": 20.0
+}]

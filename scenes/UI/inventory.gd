@@ -1,7 +1,8 @@
 extends Node2D
 
 const SlotClass = preload("res://scripts/slot.gd")
-@onready var inventory_slots = $GridContainer
+@onready var inventory_slots = $ScrollContainer/GridContainer
+@onready var item_name_label: Label = $HBoxContainer2/Label
 var holding_item = null
 
 # Called when the node enters the scene tree for the first time.
@@ -10,8 +11,20 @@ func _ready() -> void:
 	var slots = inventory_slots.get_children()
 	for i in range(slots.size()):
 		slots[i].connect("gui_input", slot_gui_input.bind(slots[i]))
+		slots[i].mouse_entered.connect(show_slot_item_name.bind(slots[i]))
+		slots[i].mouse_exited.connect(clear_item_name)
 		slots[i].slot_index = i
 	initialize_inventory()
+
+func show_slot_item_name(slot: SlotClass) -> void:
+	if slot.item == null:
+		clear_item_name()
+		return
+
+	item_name_label.text = str(slot.item.item_name).capitalize()
+
+func clear_item_name() -> void:
+	item_name_label.text = ""
 	
 func initialize_inventory():
 	var slots = inventory_slots.get_children()
@@ -38,6 +51,11 @@ func slot_gui_input(event: InputEvent, slot: SlotClass):
 				left_click_not_holding(slot)
 				
 func _input(event: InputEvent) -> void:
+	if visible and event.is_action_pressed("ui_cancel"):
+		popup_close()
+		get_viewport().set_input_as_handled()
+		return
+
 	if holding_item:
 		holding_item.global_position = get_global_mouse_position()
 
@@ -76,8 +94,16 @@ func left_click_not_holding(slot: SlotClass):
 
 
 func popup_open():
-	$AnimationPlayer.play("popup_open")
+	visible = true
+	var animation_player := get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if animation_player != null and animation_player.has_animation("popup_open"):
+		animation_player.play("popup_open")
 
 func popup_close():
-	$AnimationPlayer.play("popup_close")
+	# Hide immediately so closing works even when no close animation is present
+	# (or when this inventory is opened outside the map panel).
+	visible = false
+	var animation_player := get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if animation_player != null and animation_player.has_animation("popup_close"):
+		animation_player.play("popup_close")
 	

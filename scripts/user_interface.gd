@@ -6,9 +6,6 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _input(event):
-	if event.is_action_pressed("inventory"):
-		$inventory.visible = true
-		$inventory.initialize_inventory()
-		$inventory.popup_open()
-	elif event.is_action_pressed("back"):
-		$inventory.popup_close()
+	if event.is_action_pressed("back") and $map.is_open:
+		$map.close()
+		get_viewport().set_input_as_handled()

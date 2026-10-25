@@ -1,0 +1,14 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://cnhtfthm1ic4b"]
+
+[ext_resource type="Texture2D" uid="uid://vqmo1q42afna" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/15.png" id="1_hoack"]
+
+[resource]
+texture = ExtResource("1_hoack")
+texture_margin_left = 5.0
+texture_margin_top = 6.0
+texture_margin_right = 5.0
+texture_margin_bottom = 6.0
+expand_margin_top = 3.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(3, 1, 122, 15)

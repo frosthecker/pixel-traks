@@ -1,0 +1,386 @@
+[gd_scene format=3 uid="uid://cuydy7velp8pq"]
+
+[ext_resource type="Texture2D" uid="uid://cou8b3vr82ois" path="res://AI/portraits/john_portrait.png" id="1_m7rn7"]
+[ext_resource type="Texture2D" uid="uid://cx5516rfedk5d" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/8.png" id="2_ydb8n"]
+[ext_resource type="Texture2D" uid="uid://blnq8rw405i7j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/0.png" id="3_yjyyk"]
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="4_jy8kg"]
+[ext_resource type="Texture2D" uid="uid://bj1o5w6pvs7h1" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/green_progress_bar.png" id="5_7r2ko"]
+[ext_resource type="Texture2D" uid="uid://6er3nfpp2a3o" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/green_progress.png" id="6_848fq"]
+[ext_resource type="Texture2D" uid="uid://d1rtykwjjfaep" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/12.png" id="7_fxa2u"]
+[ext_resource type="Texture2D" uid="uid://bb0a4ebhqv2sb" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/blue_progress_bar.png" id="8_tqa36"]
+[ext_resource type="Texture2D" uid="uid://xeqj6cegjokh" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/blue_progress.png" id="9_3wxcc"]
+[ext_resource type="Texture2D" uid="uid://bn75lixcwqwl0" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Items/8.png" id="10_wf31h"]
+[ext_resource type="Texture2D" uid="uid://b4ejl1ssn4438" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP1.png" id="11_3wxcc"]
+[ext_resource type="Texture2D" uid="uid://03viuqvjlypn" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP2.png" id="12_wf31h"]
+[ext_resource type="Texture2D" uid="uid://c8alfla1wwnvn" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP3.png" id="13_xq7sh"]
+[ext_resource type="Texture2D" uid="uid://cjb32hhmi6yix" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP4.png" id="14_pevtw"]
+[ext_resource type="Texture2D" uid="uid://cv0pafhkrxd0g" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP5.png" id="15_kfwlm"]
+[ext_resource type="Texture2D" uid="uid://dberumjbdtsms" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP6.png" id="16_5cla8"]
+[ext_resource type="Texture2D" uid="uid://det253tsnigi2" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP7.png" id="17_1341y"]
+[ext_resource type="Texture2D" uid="uid://n12ewhym5tg3" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/XP/XP8.png" id="18_eh6ru"]
+[ext_resource type="Texture2D" uid="uid://6druyme7u1a7" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/coin/coin4_16x16.png" id="19_wf31h"]
+[ext_resource type="Texture2D" uid="uid://c1yplflwusknk" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/gems/spr_coin_roj.png" id="20_xq7sh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ifi7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_3wxcc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_wf31h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_xq7sh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_pevtw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_kfwlm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_5cla8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_1341y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_eh6ru")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xq7sh"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pevtw"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfwlm"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5cla8"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1341y"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh6ru"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6t2ku"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkqgc"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6f6li"]
+atlas = ExtResource("19_wf31h")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u86jo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xq7sh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pevtw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfwlm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5cla8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1341y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eh6ru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6t2ku")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkqgc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6f6li")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kwmc"]
+atlas = ExtResource("20_xq7sh")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjfdm"]
+atlas = ExtResource("20_xq7sh")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_venwh"]
+atlas = ExtResource("20_xq7sh")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ku57m"]
+atlas = ExtResource("20_xq7sh")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k1y4t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kwmc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjfdm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_venwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ku57m")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="profile" type="Node2D" unique_id=51121445]
+
+[node name="profile_pic" type="Node2D" parent="." unique_id=681955412]
+position = Vector2(48, 48)
+
+[node name="character" type="Sprite2D" parent="profile_pic" unique_id=1655438018]
+position = Vector2(0, -5)
+texture = ExtResource("1_m7rn7")
+
+[node name="border" type="Sprite2D" parent="profile_pic" unique_id=1919216903]
+position = Vector2(0, 1)
+texture = ExtResource("2_ydb8n")
+
+[node name="status" type="Node2D" parent="." unique_id=1610674183]
+
+[node name="name" type="HBoxContainer" parent="status" unique_id=1351264843]
+offset_left = 84.0
+offset_top = -9.0
+offset_right = 230.0
+offset_bottom = 31.0
+
+[node name="TextureRect2" type="TextureRect" parent="status/name" unique_id=391576955]
+layout_mode = 2
+texture = ExtResource("3_yjyyk")
+
+[node name="Label" type="Label" parent="status/name" unique_id=538614017]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "Navanit"
+horizontal_alignment = 1
+
+[node name="health" type="Node2D" parent="status" unique_id=2004927526]
+position = Vector2(-1, 3)
+
+[node name="healthbar" type="TextureProgressBar" parent="status/health" unique_id=1804349899]
+offset_left = 108.0
+offset_top = 37.0
+offset_right = 196.0
+offset_bottom = 43.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("5_7r2ko")
+texture_progress = ExtResource("6_848fq")
+
+[node name="heart_icon" type="Sprite2D" parent="status/health" unique_id=1667103443]
+position = Vector2(101, 40)
+texture = ExtResource("7_fxa2u")
+
+[node name="health_percent" type="HBoxContainer" parent="status/health" unique_id=2041700983]
+offset_left = 106.0
+offset_top = 10.0
+offset_right = 252.0
+offset_bottom = 50.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect2" type="TextureRect" parent="status/health/health_percent" unique_id=77824681]
+layout_mode = 2
+texture = ExtResource("3_yjyyk")
+
+[node name="Label" type="Label" parent="status/health/health_percent" unique_id=1704485225]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "85/100"
+horizontal_alignment = 1
+
+[node name="hunger" type="Node2D" parent="status" unique_id=238585947]
+position = Vector2(-3, 29)
+
+[node name="hungerbar" type="TextureProgressBar" parent="status/hunger" unique_id=474235238]
+offset_left = 106.0
+offset_top = 37.0
+offset_right = 194.0
+offset_bottom = 43.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("8_tqa36")
+texture_progress = ExtResource("9_3wxcc")
+
+[node name="hunger_icon" type="Sprite2D" parent="status/hunger" unique_id=1323875261]
+position = Vector2(101, 39)
+texture = ExtResource("10_wf31h")
+
+[node name="hunger_percent" type="HBoxContainer" parent="status/hunger" unique_id=446052791]
+offset_left = 103.0
+offset_top = 10.0
+offset_right = 249.0
+offset_bottom = 50.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect2" type="TextureRect" parent="status/hunger/hunger_percent" unique_id=542894314]
+layout_mode = 2
+texture = ExtResource("3_yjyyk")
+
+[node name="Label" type="Label" parent="status/hunger/hunger_percent" unique_id=568987693]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "85/100"
+horizontal_alignment = 1
+
+[node name="game_data" type="Node2D" parent="." unique_id=1852989146]
+position = Vector2(0, 31)
+
+[node name="game_data" type="HBoxContainer" parent="game_data" unique_id=1933267354]
+offset_left = -30.0
+offset_top = 50.0
+offset_right = 116.0
+offset_bottom = 90.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect2" type="TextureRect" parent="game_data/game_data" unique_id=240801549]
+layout_mode = 2
+texture = ExtResource("3_yjyyk")
+
+[node name="Label" type="Label" parent="game_data/game_data" unique_id=794411557]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "Game Data"
+horizontal_alignment = 1
+
+[node name="level_xp" type="Node2D" parent="game_data" unique_id=587704228]
+position = Vector2(21, -2)
+
+[node name="level" type="HBoxContainer" parent="game_data/level_xp" unique_id=1932323378]
+offset_left = -22.0
+offset_top = 74.0
+offset_right = 124.0
+offset_bottom = 114.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.5, 0.5)
+
+[node name="Label" type="Label" parent="game_data/level_xp/level" unique_id=1957990240]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "Lv. 1"
+horizontal_alignment = 1
+
+[node name="xp_icon" type="AnimatedSprite2D" parent="game_data/level_xp" unique_id=567611639]
+position = Vector2(0, 96)
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+autoplay = "default"
+frame_progress = 0.41952002
+
+[node name="currency" type="Node2D" parent="game_data" unique_id=1726326404]
+position = Vector2(-24, -8)
+
+[node name="coin" type="AnimatedSprite2D" parent="game_data/currency" unique_id=620188229]
+position = Vector2(120, 102)
+sprite_frames = SubResource("SpriteFrames_u86jo")
+autoplay = "default"
+frame_progress = 0.48118895
+
+[node name="coinContainer" type="HBoxContainer" parent="game_data/currency" unique_id=1876204586]
+offset_left = 128.0
+offset_top = 81.0
+offset_right = 168.0
+offset_bottom = 121.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.5, 0.5)
+
+[node name="Label" type="Label" parent="game_data/currency/coinContainer" unique_id=2006244589]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "0 TC"
+horizontal_alignment = 1
+
+[node name="gems" type="AnimatedSprite2D" parent="game_data/currency" unique_id=531855050]
+position = Vector2(192, 102)
+sprite_frames = SubResource("SpriteFrames_k1y4t")
+autoplay = "default"
+frame_progress = 0.1519186
+
+[node name="gemContainer" type="HBoxContainer" parent="game_data/currency/gems" unique_id=927602835]
+offset_left = 5.0
+offset_top = -21.0
+offset_right = 45.0
+offset_bottom = 19.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.5, 0.5)
+
+[node name="Label" type="Label" parent="game_data/currency/gems/gemContainer" unique_id=669583057]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "0 TG"
+horizontal_alignment = 1
+
+[node name="description" type="Node2D" parent="." unique_id=605639710]
+
+[node name="description" type="HBoxContainer" parent="description" unique_id=1062150256]
+offset_left = -30.0
+offset_top = 154.0
+offset_right = 120.0
+offset_bottom = 194.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.5, 0.5)
+
+[node name="TextureRect2" type="TextureRect" parent="description/description" unique_id=836203917]
+layout_mode = 2
+texture = ExtResource("3_yjyyk")
+
+[node name="Label" type="Label" parent="description/description" unique_id=74297231]
+layout_mode = 2
+theme = ExtResource("4_jy8kg")
+text = "Description"
+horizontal_alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="description" unique_id=74062626]
+custom_minimum_size = Vector2(340, 60)
+offset_left = 13.0
+offset_top = 192.0
+offset_right = 53.0
+offset_bottom = 232.0
+theme = ExtResource("4_jy8kg")
+theme_override_colors/font_placeholder_color = Color(0, 0, 0, 0.6)
+placeholder_text = "descibe yourself"

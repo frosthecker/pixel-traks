@@ -1,6 +1,6 @@
 extends Control
 
-const LEVEL_SCENE_PATH := "res://scenes/levels/level.tscn"
+const LEVEL_SCENE_PATH := "res://scenes/levels/proc_level.tscn"
 const MINIMUM_DISPLAY_SECONDS := 5.0
 
 func _ready() -> void:
@@ -31,6 +31,10 @@ func _load_level() -> void:
 	var scene_tree := get_tree()
 	scene_tree.root.add_child(level)
 	scene_tree.current_scene = level
+	# Procedural generation yields over multiple frames so this animation stays
+	# responsive. Keep the loading scene visible until that work is complete.
+	if not bool(level.get("world_boot_complete")) and level.has_signal("world_boot_completed"):
+		await level.world_boot_completed
 
 	await RenderingServer.frame_post_draw
 	queue_free()

@@ -2,6 +2,17 @@
 
 [ext_resource type="FontFile" uid="uid://uadc4tjam52n" path="res://assets/Sunnyside_World_Assets/Fonts/Kenney Pixel.ttf" id="1_d5qbn"]
 [ext_resource type="Texture2D" uid="uid://x7rwro5xl7a6" path="res://assets/Sunnyside_World_Assets/UI/label_middle.png" id="2_w2js3"]
+[ext_resource type="StyleBox" uid="uid://cjg6kt701pmrj" path="res://scenes/UI/button_tex_pressed.tres" id="2_wpuj5"]
+[ext_resource type="Texture2D" uid="uid://bjuxsjtj7cbhe" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/14.png" id="3_rti5b"]
+[ext_resource type="StyleBox" uid="uid://djbswrh6ms57e" path="res://scenes/UI/button_tex.tres" id="3_uor6m"]
+[ext_resource type="Texture2D" uid="uid://bub0p0j5j63if" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/13.png" id="4_ve61g"]
+[ext_resource type="StyleBox" uid="uid://cnhtfthm1ic4b" path="res://scenes/UI/hscrollbar_border.tres" id="5_4ngxh"]
+[ext_resource type="StyleBox" uid="uid://pvuu7vi4vo0a" path="res://scenes/UI/scrollbar.tres" id="9_g55ao"]
+[ext_resource type="StyleBox" uid="uid://b46beo4mknuxp" path="res://scenes/UI/scrollbar_border.tres" id="10_pughy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cyfn6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f6cn4"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7c7cj"]
 texture = ExtResource("2_w2js3")
@@ -11,10 +22,53 @@ texture_margin_right = 2.0
 texture_margin_bottom = 2.0
 region_rect = Rect2(0, 0, 24, 13)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pevtw"]
+texture = ExtResource("3_rti5b")
+texture_margin_left = 5.0
+texture_margin_top = 8.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(8, 6, 176, 20)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xq7sh"]
+texture = ExtResource("4_ve61g")
+texture_margin_left = 5.0
+texture_margin_top = 8.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(8, 6, 176, 20)
+
 [resource]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_focus_color = Color(0.59607846, 0.4745098, 0.3764706, 1)
+Button/colors/font_hover_color = Color(0.59607846, 0.4745098, 0.3764706, 1)
+Button/colors/font_hover_pressed_color = Color(0.59607846, 0.4745098, 0.3764706, 1)
+Button/colors/font_pressed_color = Color(0.4943753, 0.37876356, 0.2967774, 1)
+Button/fonts/font = ExtResource("1_d5qbn")
+Button/styles/disabled = SubResource("StyleBoxEmpty_cyfn6")
+Button/styles/focus = SubResource("StyleBoxEmpty_f6cn4")
+Button/styles/hover = ExtResource("2_wpuj5")
+Button/styles/normal = ExtResource("3_uor6m")
+Button/styles/pressed = ExtResource("2_wpuj5")
+HScrollBar/styles/grabber = ExtResource("9_g55ao")
+HScrollBar/styles/grabber_highlight = ExtResource("9_g55ao")
+HScrollBar/styles/grabber_pressed = ExtResource("9_g55ao")
+HScrollBar/styles/scroll = ExtResource("5_4ngxh")
+HScrollBar/styles/scroll_focus = ExtResource("5_4ngxh")
 Label/colors/font_color = Color(0, 0, 0, 1)
 Label/colors/font_outline_color = Color(0, 0, 0, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0)
 Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("1_d5qbn")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_7c7cj")
+TextEdit/colors/font_color = Color(0, 0, 0, 1)
+TextEdit/fonts/font = ExtResource("1_d5qbn")
+TextEdit/styles/focus = SubResource("StyleBoxTexture_pevtw")
+TextEdit/styles/normal = SubResource("StyleBoxTexture_xq7sh")
+VScrollBar/constants/padding_left = 3
+VScrollBar/constants/padding_right = 3
+VScrollBar/styles/grabber = ExtResource("9_g55ao")
+VScrollBar/styles/grabber_highlight = ExtResource("9_g55ao")
+VScrollBar/styles/grabber_pressed = ExtResource("9_g55ao")
+VScrollBar/styles/scroll = ExtResource("10_pughy")
+VScrollBar/styles/scroll_focus = ExtResource("10_pughy")

@@ -3,8 +3,8 @@ extends Panel
 var ItemClass = preload("res://scenes/UI/item.tscn")
 var item = null 
 
-var empty_tex = preload("res://assets/Sunnyside_World_Assets/UI/9slice_box_white/It_full_box.png")
-var default_tex = preload("res://assets/Sunnyside_World_Assets/UI/9slice_box_white/dt_full_box.png")
+var empty_tex = preload("res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/3.png")
+var default_tex = preload("res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/4.png")
 
 var default_style: StyleBoxTexture = null
 var empty_style: StyleBoxTexture = null

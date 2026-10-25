@@ -1,0 +1,145 @@
+[gd_scene load_steps=13 format=3 uid="uid://j3q3qd8vukl8"]
+
+[ext_resource type="Script" path="res://scripts/settings_menu.gd" id="1_settings_menu"]
+[ext_resource type="Texture2D" uid="uid://b3uuw42721vtl" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/3.png" id="1_tv14d"]
+[ext_resource type="Texture2D" uid="uid://3sle7o34pbb4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/4.png" id="2_c5o1q"]
+[ext_resource type="Texture2D" uid="uid://80byx0200744" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/0.png" id="3_uxg4l"]
+[ext_resource type="Texture2D" uid="uid://cn57wkvyx6ack" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/1.png" id="4_1en5i"]
+[ext_resource type="Texture2D" uid="uid://b7l3hh6xx55c2" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/2.png" id="5_6jt7n"]
+[ext_resource type="Texture2D" uid="uid://bfu0firp1l685" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/3.png" id="6_878o3"]
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="7_878o3"]
+[ext_resource type="Texture2D" uid="uid://bub0p0j5j63if" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/13.png" id="8_3i1ia"]
+[ext_resource type="Texture2D" uid="uid://bjuxsjtj7cbhe" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/14.png" id="9_jl7gk"]
+[ext_resource type="Texture2D" uid="uid://dgn60yvyul47k" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/11.png" id="10_ecjli"]
+[ext_resource type="Texture2D" uid="uid://rryybsagv5ym" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/12.png" id="11_jfsmy"]
+
+[node name="SettingsMenu" type="Node2D" unique_id=1728714023]
+script = ExtResource("1_settings_menu")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=666509070]
+offset_left = 24.0
+offset_right = 182.0
+offset_bottom = 40.0
+theme_override_constants/separation = 10
+
+[node name="video" type="TextureButton" parent="HBoxContainer" unique_id=1893704240]
+layout_mode = 2
+texture_normal = ExtResource("1_tv14d")
+texture_pressed = ExtResource("2_c5o1q")
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/video" unique_id=1485552834]
+position = Vector2(15, 17)
+texture = ExtResource("3_uxg4l")
+
+[node name="accessibility" type="TextureButton" parent="HBoxContainer" unique_id=288050540]
+layout_mode = 2
+texture_normal = ExtResource("1_tv14d")
+texture_pressed = ExtResource("2_c5o1q")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HBoxContainer/accessibility" unique_id=936903638]
+position = Vector2(15, 17)
+texture = ExtResource("4_1en5i")
+
+[node name="controls" type="TextureButton" parent="HBoxContainer" unique_id=177147320]
+layout_mode = 2
+texture_normal = ExtResource("1_tv14d")
+texture_pressed = ExtResource("2_c5o1q")
+
+[node name="Sprite2D3" type="Sprite2D" parent="HBoxContainer/controls" unique_id=214903213]
+position = Vector2(15, 17)
+texture = ExtResource("5_6jt7n")
+
+[node name="audio" type="TextureButton" parent="HBoxContainer" unique_id=1677392762]
+layout_mode = 2
+texture_normal = ExtResource("1_tv14d")
+texture_pressed = ExtResource("2_c5o1q")
+
+[node name="Sprite2D4" type="Sprite2D" parent="HBoxContainer/audio" unique_id=30973583]
+position = Vector2(16, 17)
+texture = ExtResource("6_878o3")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=506820283]
+offset_top = 44.0
+offset_right = 210.0
+offset_bottom = 148.0
+theme = ExtResource("7_878o3")
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=2106819425]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=1854556046]
+layout_mode = 2
+texture_normal = ExtResource("8_3i1ia")
+texture_pressed = ExtResource("9_jl7gk")
+
+[node name="TextureButton2" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=353179594]
+layout_mode = 2
+texture_normal = ExtResource("8_3i1ia")
+texture_pressed = ExtResource("9_jl7gk")
+
+[node name="TextureButton3" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=485393149]
+layout_mode = 2
+texture_normal = ExtResource("8_3i1ia")
+texture_pressed = ExtResource("9_jl7gk")
+
+[node name="TextureButton4" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=1263615654]
+layout_mode = 2
+texture_normal = ExtResource("8_3i1ia")
+texture_pressed = ExtResource("9_jl7gk")
+
+[node name="TextureButton5" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=1537681459]
+layout_mode = 2
+texture_normal = ExtResource("8_3i1ia")
+texture_pressed = ExtResource("9_jl7gk")
+
+[node name="TextureButton6" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=156437744]
+layout_mode = 2
+texture_normal = ExtResource("8_3i1ia")
+texture_pressed = ExtResource("9_jl7gk")
+
+[node name="TextureButton7" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=939449536]
+layout_mode = 2
+texture_normal = ExtResource("8_3i1ia")
+texture_pressed = ExtResource("9_jl7gk")
+
+[node name="save" type="Control" parent="." unique_id=171797076]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 224.0
+offset_top = 24.0
+offset_right = 264.0
+offset_bottom = 64.0
+
+[node name="save" type="TextureButton" parent="save" unique_id=401505529]
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 32.0
+texture_normal = ExtResource("10_ecjli")
+texture_pressed = ExtResource("11_jfsmy")
+
+[node name="Label" type="Label" parent="save/save" unique_id=143286451]
+layout_mode = 0
+offset_left = 70.0
+offset_top = 9.0
+offset_right = 118.0
+offset_bottom = 33.0
+theme = ExtResource("7_878o3")
+text = "save"
+
+[node name="reset" type="TextureButton" parent="save" unique_id=2141703380]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 192.0
+offset_bottom = 72.0
+texture_normal = ExtResource("10_ecjli")
+texture_pressed = ExtResource("11_jfsmy")
+
+[node name="Label" type="Label" parent="save/reset" unique_id=232000245]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 9.0
+offset_right = 124.0
+offset_bottom = 33.0
+theme = ExtResource("7_878o3")
+text = "reset"

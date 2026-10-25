@@ -947,6 +947,37 @@ tracks/1/keys = {
 "values": [259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 259]
 }
 
+[sub_resource type="Animation" id="Animation_lvr6b"]
+resource_name = "swim_down"
+length = 0.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.1998, 0.2997),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [278, 279, 280, 281]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"tool_use_emit"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_v1y1o"]
 resource_name = "swim_left"
 length = 0.6
@@ -1005,6 +1036,123 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [174, 175, 176, 177]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"tool_use_emit"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_nktl3"]
+resource_name = "swim_uleft"
+length = 0.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.1998, 0.2997),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [274, 275, 276, 277]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"tool_use_emit"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:flip_h")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_s1x7u"]
+resource_name = "swim_up"
+length = 0.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.1998, 0.2997),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [270, 271, 272, 273]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"tool_use_emit"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_c3kfx"]
+resource_name = "swim_uright"
+length = 0.6
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.1998, 0.2997),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [274, 275, 276, 277]
 }
 tracks/1/type = "method"
 tracks/1/imported = false
@@ -1380,8 +1528,12 @@ _data = {
 &"seed_right": SubResource("Animation_inhyd"),
 &"shovel_left": SubResource("Animation_wqk1x"),
 &"shovel_right": SubResource("Animation_xrqxk"),
+&"swim_down": SubResource("Animation_lvr6b"),
 &"swim_left": SubResource("Animation_v1y1o"),
 &"swim_right": SubResource("Animation_hnvwh"),
+&"swim_uleft": SubResource("Animation_nktl3"),
+&"swim_up": SubResource("Animation_s1x7u"),
+&"swim_uright": SubResource("Animation_c3kfx"),
 &"sword_left": SubResource("Animation_qgnko"),
 &"sword_right": SubResource("Animation_vwwfy"),
 &"walk_dleft": SubResource("Animation_rfou0"),
@@ -1450,6 +1602,62 @@ blend_point_8/node = SubResource("AnimationNodeAnimation_d6tgn")
 blend_point_8/pos = Vector2(0, 0)
 blend_point_8/name = &"idle_down 2"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_lvr6b"]
+animation = &"swim_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nktl3"]
+animation = &"swim_down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yyjep"]
+animation = &"swim_up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6aj6e"]
+animation = &"swim_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w5sjy"]
+animation = &"swim_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_b50a2"]
+animation = &"swim_left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m3gdl"]
+animation = &"swim_right"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l38cc"]
+animation = &"swim_uright"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0prtj"]
+animation = &"swim_uleft"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_n7k00"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_lvr6b")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_0/name = &"swim_down"
+blend_point_1/node = SubResource("AnimationNodeAnimation_nktl3")
+blend_point_1/pos = Vector2(0, 0)
+blend_point_1/name = &"swim_down 2"
+blend_point_2/node = SubResource("AnimationNodeAnimation_yyjep")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_2/name = &"swim_up"
+blend_point_3/node = SubResource("AnimationNodeAnimation_6aj6e")
+blend_point_3/pos = Vector2(-1, 0)
+blend_point_3/name = &"swim_left"
+blend_point_4/node = SubResource("AnimationNodeAnimation_w5sjy")
+blend_point_4/pos = Vector2(1, 0)
+blend_point_4/name = &"swim_right"
+blend_point_5/node = SubResource("AnimationNodeAnimation_b50a2")
+blend_point_5/pos = Vector2(-0.7, 0.8)
+blend_point_5/name = &"swim_left 2"
+blend_point_6/node = SubResource("AnimationNodeAnimation_m3gdl")
+blend_point_6/pos = Vector2(0.7, 0.8)
+blend_point_6/name = &"swim_right 2"
+blend_point_7/node = SubResource("AnimationNodeAnimation_l38cc")
+blend_point_7/pos = Vector2(0.7, -0.8)
+blend_point_7/name = &"swim_uright"
+blend_point_8/node = SubResource("AnimationNodeAnimation_0prtj")
+blend_point_8/pos = Vector2(-0.7, -0.8)
+blend_point_8/name = &"swim_uleft"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dyp2m"]
 animation = &"walk_dleft"
 
@@ -1508,15 +1716,21 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_76oj4"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uvbm0"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4ttjg"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_atpat"]
-states/End/position = Vector2(717, 100)
+states/End/position = Vector2(367.6667, 143.55556)
 states/Start/position = Vector2(148, 81.333336)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_g66nw")
 states/idle/position = Vector2(250.12889, 81.44444)
+states/swim/node = SubResource("AnimationNodeBlendSpace2D_n7k00")
+states/swim/position = Vector2(220.46223, 160.66666)
 states/walk/node = SubResource("AnimationNodeBlendSpace2D_76oj4")
 states/walk/position = Vector2(249.90666, -8.333336)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_rpnd8"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_yewv4"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_76oj4")]
-graph_offset = Vector2(-16.204437, -99)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_rpnd8"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_yewv4"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_76oj4"), "idle", "swim", SubResource("AnimationNodeStateMachineTransition_uvbm0"), "swim", "idle", SubResource("AnimationNodeStateMachineTransition_4ttjg")]
+graph_offset = Vector2(3.7955627, -114)
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_yewv4"]
 
@@ -2048,7 +2262,7 @@ transitions = ["Start", "Axe", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(124, 196.30896)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_inhyd"]
-graph_offset = Vector2(-198.66667, -421.33334)
+graph_offset = Vector2(-101.51697, -351.573)
 nodes/output/position = Vector2(960, -80)
 nodes/ToolStateMachine/node = SubResource("AnimationNodeStateMachine_w5sjy")
 nodes/ToolStateMachine/position = Vector2(120, -140)
@@ -2130,7 +2344,7 @@ script = ExtResource("2_76oj4")
 texture = ExtResource("2_yewv4")
 flip_h = true
 hframes = 17
-vframes = 16
+vframes = 17
 frame = 140
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=829021822]
@@ -2156,13 +2370,11 @@ parameters/ToolStateMachine/Seed/blend_position = Vector2(0, 0)
 parameters/ToolStateMachine/Sword/blend_position = Vector2(0, 0)
 parameters/ToolStateMachine/Water/blend_position = Vector2(0, 0)
 parameters/MoveStateMachine/idle/blend_position = Vector2(0, 0)
+parameters/MoveStateMachine/swim/blend_position = Vector2(0, 0)
 parameters/MoveStateMachine/walk/blend_position = Vector2(0, 0)
 parameters/ToolOneShot/active = false
 parameters/ToolOneShot/internal_active = false
 parameters/ToolOneShot/request = 0
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=431958372]
-zoom = Vector2(5, 5)
 
 [node name="ToolUI" parent="." unique_id=1325860234 instance=ExtResource("3_76oj4")]
 

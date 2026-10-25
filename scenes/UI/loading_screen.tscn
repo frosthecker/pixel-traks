@@ -148,7 +148,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_loading")
 
-[node name="TextureRect" type="ColorRect" parent="." unique_id=1852170936]
+[node name="LoadingLayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="TextureRect" type="ColorRect" parent="LoadingLayer" unique_id=1852170936]
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
 anchors_preset = 15
@@ -158,14 +161,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1866002936]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="LoadingLayer" unique_id=1866002936]
 position = Vector2(1137, 638)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_4ifi7")
 autoplay = "default"
 frame_progress = 0.5455492
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="." unique_id=2037523209]
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="LoadingLayer" unique_id=2037523209]
 position = Vector2(1124, 643)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_u86jo")

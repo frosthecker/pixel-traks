@@ -116,7 +116,6 @@ shape = SubResource("CapsuleShape2D_u86jo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1863650655]
 libraries/ = SubResource("AnimationLibrary_0v8c2")
-autoplay = &"idle"
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=2125768874]
 vertices = PackedVector2Array(-9, 0, -9, 15, 8, 15, 8, 0)

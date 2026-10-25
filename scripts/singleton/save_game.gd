@@ -31,8 +31,8 @@ func _notification(what: int) -> void:
 func has_save() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
 
-func save_game() -> bool:
-	var level := _get_level()
+func save_game(level_override: Node = null) -> bool:
+	var level := level_override if level_override != null else _get_level()
 	if level == null:
 		return false
 
@@ -52,7 +52,7 @@ func save_game() -> bool:
 	print("Game saved to ", SAVE_PATH)
 	return true
 
-func load_game() -> bool:
+func load_game(level_override: Node = null) -> bool:
 	if not has_save():
 		return false
 
@@ -75,7 +75,7 @@ func load_game() -> bool:
 	if inventory_data is Dictionary:
 		PlayerInventory.load_save_data(inventory_data)
 
-	var level := _get_level()
+	var level := level_override if level_override != null else _get_level()
 	var level_data: Variant = save_data.get("level", {})
 	if level != null and level_data is Dictionary:
 		level.apply_save_data(level_data)
