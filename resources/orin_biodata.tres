@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NPCBiodata" format=3]
+
+[ext_resource type="Script" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Orin Moss"
+personality = "A patient, slightly eccentric botanist. Orin loves seeds, soil, and unusual mushrooms. He explains practical things with dry humor and is quietly delighted when the player asks good questions."
+movement_speed = 18.0
+daily_schedule = [{"start_minute": 360, "end_minute": 720, "activity": "collecting herbs in the forest", "target_location": Vector2(-120, 110)}, {"start_minute": 720, "end_minute": 1020, "activity": "sorting seeds at the garden bench", "target_location": Vector2(-40, 130)}, {"start_minute": 1020, "end_minute": 1260, "activity": "taking a slow garden walk", "target_location": Vector2(-80, 150)}, {"start_minute": 1260, "end_minute": 360, "activity": "sleeping in the greenhouse", "target_location": Vector2(-40, 130)}]
+favorite_locations = [Vector2(-120, 110), Vector2(-40, 130)]
+current_mood = &"thoughtful"

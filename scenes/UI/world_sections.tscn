@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://cwmduvxhdck53"]
+
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="1_r3gav"]
+[ext_resource type="Texture2D" uid="uid://dpghvy716i5is" path="res://assets/Sunnyside_World_Assets/UI/plan alt.png" id="2_ubv7i"]
+[ext_resource type="Texture2D" uid="uid://c4am4kpqxhpwq" path="res://assets/Sunnyside_World_Assets/UI/playercount.png" id="3_6ccqn"]
+[ext_resource type="Texture2D" uid="uid://bp8e6kc0ya2wb" path="res://assets/Sunnyside_World_Assets/UI/pickaxe.png" id="4_oxkx6"]
+[ext_resource type="Script" path="res://scripts/world_sections.gd" id="5_world_sections"]
+[ext_resource type="PackedScene" uid="uid://vvabtrd83usx" path="res://scenes/UI/plant_info_container.tscn" id="6_plant_info"]
+
+[node name="WorldSections" type="VBoxContainer" unique_id=878674231]
+offset_left = -88.0
+offset_top = -88.0
+offset_right = 92.0
+offset_bottom = 84.0
+theme_override_constants/separation = 3
+script = ExtResource("5_world_sections")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1596632406]
+custom_minimum_size = Vector2(230, 60)
+layout_mode = 2
+theme = ExtResource("1_r3gav")
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer" unique_id=636323]
+custom_minimum_size = Vector2(460, 40)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="crops" type="Button" parent="ScrollContainer/HBoxContainer" unique_id=893779285]
+layout_mode = 2
+theme = ExtResource("1_r3gav")
+text = "crops"
+icon = ExtResource("2_ubv7i")
+
+[node name="traders" type="Button" parent="ScrollContainer/HBoxContainer" unique_id=967762577]
+layout_mode = 2
+theme = ExtResource("1_r3gav")
+text = "traders"
+icon = ExtResource("3_6ccqn")
+
+[node name="friends" type="Button" parent="ScrollContainer/HBoxContainer" unique_id=382146554]
+layout_mode = 2
+theme = ExtResource("1_r3gav")
+text = "friends"
+icon = ExtResource("2_ubv7i")
+
+[node name="tasks" type="Button" parent="ScrollContainer/HBoxContainer" unique_id=758461542]
+layout_mode = 2
+theme = ExtResource("1_r3gav")
+text = "tasks
+"
+icon = ExtResource("4_oxkx6")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=906885294]
+
+[node name="pages" type="Control" parent="." unique_id=22660130]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="plant_info_container" parent="pages" unique_id=1718360283 instance=ExtResource("6_plant_info")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.6, 0.6)
+
+[node name="traders" type="Label" parent="pages" unique_id=1738360283]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_r3gav")
+text = "No traders discovered yet."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="friends" type="Label" parent="pages" unique_id=1738360284]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_r3gav")
+text = "Your friends will appear here."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="tasks" type="Label" parent="pages" unique_id=1738360285]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_r3gav")
+text = "No active tasks."
+horizontal_alignment = 1
+vertical_alignment = 1

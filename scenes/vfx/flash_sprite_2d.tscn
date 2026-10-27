@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cm1w86qwgiw57"]
+
+[ext_resource type="Shader" uid="uid://d1prripd71ba3" path="res://shaders/flash.tres" id="1_6twfp"]
+[ext_resource type="Texture2D" uid="uid://vlmxtx61ei4p" path="res://assets/Sunnyside_World_Assets/Elements/Crops/beetroot_00.png" id="2_ak7js"]
+[ext_resource type="Script" uid="uid://qihrnyvxjqjc" path="res://scripts/flash_sprite_2d.gd" id="3_1h30i"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3juoc"]
+resource_local_to_scene = true
+shader = ExtResource("1_6twfp")
+shader_parameter/Color = Color(1, 1, 1, 1)
+shader_parameter/Progress = 0.0
+
+[node name="FlashSprite2D" type="Sprite2D" unique_id=710909796]
+material = SubResource("ShaderMaterial_3juoc")
+texture = ExtResource("2_ak7js")
+script = ExtResource("3_1h30i")
