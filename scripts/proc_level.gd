@@ -32,6 +32,7 @@ var tree_noise: Noise
 var width: int = 256
 var height: int = 256
 var noise_val_arr = []
+var world_seed: int
 
 @onready var water: TileMapLayer = $Layers/water
 @onready var ground_1: TileMapLayer = $Layers/ground_1
@@ -192,8 +193,10 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 					object.hit(tool)
 			
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("day_change"):
+		day_restart()
+
 	# The procedural level scene may not have a day-color gradient assigned yet.
-	# Skip the visual update until it does instead of calling sample() on null.
 	if daytime_color == null or day_timer == null or day_time_color == null:
 		return
 	_daylight_update_elapsed += delta
@@ -201,10 +204,7 @@ func _process(delta: float) -> void:
 		return
 	_daylight_update_elapsed = 0.0
 	var daytime_point = 1 - (day_timer.time_left / day_timer.wait_time)
-	var color = daytime_color.sample(daytime_point)
-	day_time_color.color = color
-	if Input.is_action_just_pressed("day_change"):
-		day_restart()
+	day_time_color.color = daytime_color.sample(daytime_point)
 
 func day_restart() -> void:
 	if day_transition_tween and day_transition_tween.is_running():
@@ -428,6 +428,8 @@ func _data_to_vector(data: Variant) -> Vector2:
 
 
 func generate_world() -> void:
+	world_seed = randi()
+	noise.seed = world_seed
 	sand_tiles_arr.clear()
 	grass_tiles_arr.clear()
 	water.clear()

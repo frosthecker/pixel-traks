@@ -41,6 +41,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-287, -93, -285, 235, 4
 script = ExtResource("1_3jh03")
 noise_height_text = SubResource("NoiseTexture2D_ubuo4")
 noise_tree_text = SubResource("NoiseTexture2D_7iper")
+max_tree_count = 1000
 
 [node name="Layers" type="Node2D" parent="." unique_id=991742646]
 
@@ -78,7 +79,7 @@ y_sort_enabled = true
 position = Vector2(-14, 47)
 
 [node name="Camera2D2" type="Camera2D" parent="Objects/Player" unique_id=29486257]
-zoom = Vector2(4, 4)
+zoom = Vector2(0.3, 0.3)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
