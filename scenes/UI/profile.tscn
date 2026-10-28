@@ -185,11 +185,13 @@ offset_bottom = 31.0
 layout_mode = 2
 texture = ExtResource("3_yjyyk")
 
-[node name="Label" type="Label" parent="status/name" unique_id=538614017]
+[node name="TextEdit" type="TextEdit" parent="status/name" unique_id=1211651038]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 30)
 layout_mode = 2
 theme = ExtResource("4_jy8kg")
-text = "Navanit"
-horizontal_alignment = 1
+theme_override_colors/font_placeholder_color = Color(0, 0, 0, 0.6)
+placeholder_text = "type username"
 
 [node name="health" type="Node2D" parent="status" unique_id=2004927526]
 position = Vector2(-1, 3)
