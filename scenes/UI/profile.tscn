@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cuydy7velp8pq"]
 
-[ext_resource type="Texture2D" uid="uid://dms7jr7guiuh6" path="res://AI/portraits/john_portrait.png" id="1_m7rn7"]
+[ext_resource type="Texture2D" uid="uid://cou8b3vr82ois" path="res://AI/portraits/john_portrait.png" id="1_m7rn7"]
 [ext_resource type="Texture2D" uid="uid://cx5516rfedk5d" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/8.png" id="2_ydb8n"]
 [ext_resource type="Texture2D" uid="uid://blnq8rw405i7j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/0.png" id="3_yjyyk"]
 [ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="4_jy8kg"]
-[ext_resource type="Texture2D" uid="uid://bkhox5kitjsee" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/green_progress_bar.png" id="5_7r2ko"]
+[ext_resource type="Texture2D" uid="uid://bj1o5w6pvs7h1" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/green_progress_bar.png" id="5_7r2ko"]
 [ext_resource type="Texture2D" uid="uid://6er3nfpp2a3o" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/green_progress.png" id="6_848fq"]
 [ext_resource type="Texture2D" uid="uid://d1rtykwjjfaep" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/12.png" id="7_fxa2u"]
 [ext_resource type="Texture2D" uid="uid://bb0a4ebhqv2sb" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/blue_progress_bar.png" id="8_tqa36"]
@@ -177,16 +177,17 @@ texture = ExtResource("2_ydb8n")
 
 [node name="name" type="HBoxContainer" parent="status" unique_id=1351264843]
 offset_left = 84.0
-offset_top = -16.0
+offset_top = -9.0
 offset_right = 230.0
-offset_bottom = 24.0
+offset_bottom = 31.0
 
 [node name="TextureRect2" type="TextureRect" parent="status/name" unique_id=391576955]
 layout_mode = 2
 texture = ExtResource("3_yjyyk")
 
-[node name="TextEdit" type="TextEdit" parent="status/name" unique_id=93479160]
-custom_minimum_size = Vector2(100, 40)
+[node name="TextEdit" type="TextEdit" parent="status/name" unique_id=1211651038]
+custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(-1, 30)
 layout_mode = 2
 theme = ExtResource("4_jy8kg")
 theme_override_colors/font_placeholder_color = Color(0, 0, 0, 0.6)

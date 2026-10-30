@@ -21,13 +21,13 @@
 [ext_resource type="Texture2D" uid="uid://b4bjold7m6ftj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/9.png" id="14_t87of"]
 [ext_resource type="Texture2D" uid="uid://dnwsghwdpihsy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/11.png" id="14_ujkxp"]
 [ext_resource type="Texture2D" uid="uid://keiduq81at75" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/10.png" id="15_1l3pj"]
-[ext_resource type="Texture2D" uid="uid://dsevta8j2ssgu" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/1.png" id="15_t87of"]
+[ext_resource type="Texture2D" uid="uid://bp2vpkt7o7cur" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/1.png" id="15_t87of"]
 [ext_resource type="Texture2D" uid="uid://b2q1ax1aflbo4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/9.png" id="16_6313l"]
-[ext_resource type="Texture2D" uid="uid://c3v1vw3b8q353" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/0.png" id="16_hadfg"]
-[ext_resource type="Texture2D" uid="uid://cjyastfve1vc7" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/3.png" id="17_qp07s"]
+[ext_resource type="Texture2D" uid="uid://dhm580t54if28" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/0.png" id="16_hadfg"]
+[ext_resource type="Texture2D" uid="uid://oi8f46l0iqmo" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/3.png" id="17_qp07s"]
 [ext_resource type="Texture2D" uid="uid://b0looi1nolmxy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/8.png" id="17_tlrkf"]
 [ext_resource type="Texture2D" uid="uid://c5ymkowkl4515" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/7.png" id="18_ffbl4"]
-[ext_resource type="Texture2D" uid="uid://bclodfi873chy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/2.png" id="18_ujkxp"]
+[ext_resource type="Texture2D" uid="uid://b2pkysor6x2fn" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/2.png" id="18_ujkxp"]
 [ext_resource type="Texture2D" uid="uid://criilnk7a81c4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/6.png" id="19_lckcl"]
 [ext_resource type="Texture2D" uid="uid://c4y53me5yrsir" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/5.png" id="20_kdiaf"]
 [ext_resource type="Texture2D" uid="uid://15fl41mkj6l7" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/4.png" id="21_537i7"]
@@ -37,7 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://cwmduvxhdck53" path="res://scenes/UI/world_sections.tscn" id="24_0p0hx"]
 [ext_resource type="PackedScene" uid="uid://b502i2647p4ef" path="res://scenes/UI/save_load.tscn" id="24_6313l"]
 [ext_resource type="Texture2D" uid="uid://5qocvdrjklyi" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/1.png" id="24_acnug"]
-[ext_resource type="Texture2D" uid="uid://bs4dab72h6mug" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/0.png" id="25_rpo2n"]
+[ext_resource type="Texture2D" uid="uid://0pjd1ryj0vk5" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/0.png" id="25_rpo2n"]
 [ext_resource type="PackedScene" uid="uid://j3q3qd8vukl8" path="res://scenes/UI/settings_menu.tscn" id="25_tlrkf"]
 [ext_resource type="Texture2D" uid="uid://blnq8rw405i7j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/0.png" id="36_ujkxp"]
 [ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="37_1l3pj"]
@@ -1242,6 +1242,7 @@ scale = Vector2(0.5, 0.5)
 [node name="save_load" parent="pages/save" unique_id=424082628 instance=ExtResource("24_6313l")]
 visible = false
 position = Vector2(-84, -80.5)
+script = null
 
 [node name="settings" type="Node2D" parent="pages" unique_id=1504587071]
 position = Vector2(0, -4)

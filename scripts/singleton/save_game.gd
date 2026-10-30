@@ -3,17 +3,16 @@ extends Node
 ## Central persistence service. Level scenes provide their own serializable state
 ## through get_save_data() and apply_save_data().
 
-const SLOT_COUNT := 3
-const SAVE_PATH_TEMPLATE := "user://world_slot_%d.save"
-const META_PATH := "user://save_meta.cfg"
+const SAVE_PATH := "user://savegame.json"
+const AUTOSAVE_INTERVAL_SECONDS := 60.0
 
-var current_slot := 1
-var new_world_requested := false
+var _autosave_elapsed := 0.0
 
-func _ready() -> void:
-	var config := ConfigFile.new()
-	if config.load(META_PATH) == OK:
-		current_slot = clampi(int(config.get_value("general", "last_slot", 1)), 1, SLOT_COUNT)
+func _process(delta: float) -> void:
+	_autosave_elapsed += delta
+	if _autosave_elapsed >= AUTOSAVE_INTERVAL_SECONDS:
+		_autosave_elapsed = 0.0
+		save_game()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not (event is InputEventKey and event.pressed and not event.echo):
@@ -25,88 +24,41 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		load_game()
 		get_viewport().set_input_as_handled()
 
-func slot_path(slot: int) -> String:
-	return SAVE_PATH_TEMPLATE % slot
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		save_game()
 
-func has_save(slot: int = 0) -> bool:
-	return FileAccess.file_exists(slot_path(slot if slot > 0 else current_slot))
+func has_save() -> bool:
+	return FileAccess.file_exists(SAVE_PATH)
 
-func delete_save(slot: int = 0) -> void:
-	var target_slot := slot if slot > 0 else current_slot
-	if FileAccess.file_exists(slot_path(target_slot)):
-		DirAccess.remove_absolute(slot_path(target_slot))
-	var config := ConfigFile.new()
-	if config.load(META_PATH) == OK:
-		config.erase_section_key("slot_%d" % target_slot, "day")
-		config.erase_section_key("slot_%d" % target_slot, "saved_at")
-		config.save(META_PATH)
-
-func get_world_name(slot: int) -> String:
-	var config := ConfigFile.new()
-	config.load(META_PATH)
-	var saved_name := str(config.get_value("slot_%d" % slot, "name", "")).strip_edges()
-	return saved_name if saved_name != "" else "World %d" % slot
-
-func set_world_name(slot: int, new_name: String) -> void:
-	var config := ConfigFile.new()
-	config.load(META_PATH)
-	var clean := new_name.strip_edges()
-	if clean == "World %d" % slot:
-		clean = ""
-	config.set_value("slot_%d" % slot, "name", clean)
-	config.save(META_PATH)
-
-func get_slot_info(slot: int) -> Dictionary:
-	if not has_save(slot):
-		return {"exists": false}
-	var config := ConfigFile.new()
-	config.load(META_PATH)
-	var section := "slot_%d" % slot
-	return {
-		"exists": true,
-		"day": int(config.get_value(section, "day", 1)),
-		"saved_at": int(config.get_value(section, "saved_at", 0)),
-	}
-
-func save_game(level_override: Node = null, slot: int = 0) -> bool:
-	var target_slot := slot if slot > 0 else current_slot
-	if target_slot < 1 or target_slot > SLOT_COUNT:
-		return false
+func save_game(level_override: Node = null) -> bool:
 	var level := level_override if level_override != null else _get_level()
 	if level == null:
 		return false
-	if not bool(level.get("world_boot_complete")):
+
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file == null:
+		push_error("Could not open save file: %s" % SAVE_PATH)
 		return false
 
-	var level_data: Dictionary = level.get_save_data()
 	var save_data: Dictionary = {
 		"version": 1,
 		"saved_at_unix": Time.get_unix_time_from_system(),
-		"slot": target_slot,
-		"level": level_data,
+		"level": level.get_save_data(),
 		"inventory": PlayerInventory.get_save_data()
 	}
-	var file := FileAccess.open_compressed(slot_path(target_slot), FileAccess.WRITE, FileAccess.COMPRESSION_ZSTD)
-	if file == null:
-		push_error("Could not open save file: %s" % slot_path(target_slot))
-		return false
 	file.store_string(JSON.stringify(save_data))
 	file.close()
-
-	current_slot = target_slot
-	var time_data: Dictionary = level_data.get("world_time", {})
-	_write_meta(target_slot, int(time_data.get("day_count", 1)))
-	print("Game saved to ", slot_path(target_slot))
+	print("Game saved to ", SAVE_PATH)
 	return true
 
-func load_game(level_override: Node = null, slot: int = 0) -> bool:
-	var target_slot := slot if slot > 0 else current_slot
-	if not has_save(target_slot):
+func load_game(level_override: Node = null) -> bool:
+	if not has_save():
 		return false
 
-	var file := FileAccess.open_compressed(slot_path(target_slot), FileAccess.READ, FileAccess.COMPRESSION_ZSTD)
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if file == null:
-		push_error("Could not open save file: %s" % slot_path(target_slot))
+		push_error("Could not open save file: %s" % SAVE_PATH)
 		return false
 	var parsed: Variant = JSON.parse_string(file.get_as_text())
 	file.close()
@@ -119,7 +71,6 @@ func load_game(level_override: Node = null, slot: int = 0) -> bool:
 		push_error("Save file uses an unsupported version.")
 		return false
 
-	current_slot = target_slot
 	var inventory_data: Variant = save_data.get("inventory", {})
 	if inventory_data is Dictionary:
 		PlayerInventory.load_save_data(inventory_data)
@@ -128,17 +79,9 @@ func load_game(level_override: Node = null, slot: int = 0) -> bool:
 	var level_data: Variant = save_data.get("level", {})
 	if level != null and level_data is Dictionary:
 		level.apply_save_data(level_data)
-		print("Game loaded from ", slot_path(target_slot))
+		print("Game loaded from ", SAVE_PATH)
 		return true
 	return false
-
-func _write_meta(slot: int, day: int) -> void:
-	var config := ConfigFile.new()
-	config.load(META_PATH)
-	config.set_value("general", "last_slot", slot)
-	config.set_value("slot_%d" % slot, "day", day)
-	config.set_value("slot_%d" % slot, "saved_at", int(Time.get_unix_time_from_system()))
-	config.save(META_PATH)
 
 func _get_level() -> Node:
 	var scene := get_tree().current_scene

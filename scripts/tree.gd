@@ -5,7 +5,7 @@ extends StaticBody2D
 @onready var sprite_2d: Sprite2D = $FlashSprite2D
 @onready var leaf_particles: GPUParticles2D = $leaf_particles
 @export var log_scene: PackedScene
-@onready var tree_chop: AudioStreamPlayer = $tree_chop
+@onready var audio_player: AudioStreamPlayer = $AudioPlayer
 
 func _ready() -> void:
 	# PackedScene instances can share subresource materials. Make the shake
@@ -31,8 +31,8 @@ var health := 3:
 			
 func hit(tool: Enum.Tool):
 	if tool == Enum.Tool.AXE:
-		tree_chop.play()
 		#flash_sprite_2d.flash()
+		audio_player.play()
 		leaf_particles.restart()
 		sprite_2d.material.set_shader_parameter("shake_intensity", 1)
 		await get_tree().create_timer(1.0).timeout

@@ -17,6 +17,7 @@
 script = ExtResource("9_schedule")
 
 [sub_resource type="BTCondition" id="BTCondition_talk"]
+required_state = &"talk"
 script = ExtResource("5_check_state")
 required_state = &"talk"
 
@@ -28,6 +29,7 @@ custom_name = "Talk"
 children = [SubResource("BTCondition_talk"), SubResource("BTWait_talk")]
 
 [sub_resource type="BTCondition" id="BTCondition_work"]
+required_state = &"work"
 script = ExtResource("5_check_state")
 required_state = &"work"
 
@@ -42,19 +44,24 @@ custom_name = "Work"
 children = [SubResource("BTCondition_work"), SubResource("BTAction_farmer_work"), SubResource("BTWait_work")]
 
 [sub_resource type="BTCondition" id="BTCondition_follow"]
+required_state = &"follow_player"
 script = ExtResource("5_check_state")
 required_state = &"follow_player"
 
 [sub_resource type="BTAction" id="BTAction_find_player"]
+group = &"Player"
+max_distance = 140.0
 script = ExtResource("3_find")
 group = &"Player"
 max_distance = 140.0
 
 [sub_resource type="BTCondition" id="BTCondition_distance"]
+max_distance = 140.0
 script = ExtResource("6_check_distance")
 max_distance = 140.0
 
 [sub_resource type="BTCondition" id="BTCondition_los"]
+collision_mask = 7
 script = ExtResource("7_check_los")
 collision_mask = 7
 
@@ -62,6 +69,7 @@ collision_mask = 7
 script = ExtResource("8_remember_target")
 
 [sub_resource type="BTAction" id="BTAction_move_player"]
+tolerance = 32.0
 script = ExtResource("4_move_target")
 tolerance = 32.0
 
@@ -70,6 +78,7 @@ custom_name = "Follow Player"
 children = [SubResource("BTCondition_follow"), SubResource("BTAction_find_player"), SubResource("BTCondition_distance"), SubResource("BTCondition_los"), SubResource("BTAction_remember"), SubResource("BTAction_move_player")]
 
 [sub_resource type="BTCondition" id="BTCondition_wander"]
+required_state = &"wander"
 script = ExtResource("5_check_state")
 required_state = &"wander"
 
@@ -97,6 +106,7 @@ custom_name = "Idle"
 children = [SubResource("BTCondition_idle"), SubResource("BTWait_idle")]
 
 [sub_resource type="BTCondition" id="BTCondition_sleep"]
+required_state = &"sleep"
 script = ExtResource("5_check_state")
 required_state = &"sleep"
 
