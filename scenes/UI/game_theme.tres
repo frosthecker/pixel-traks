@@ -1,7 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://dywbxg3hhdgio"]
 
 [ext_resource type="FontFile" uid="uid://uadc4tjam52n" path="res://assets/Sunnyside_World_Assets/Fonts/Kenney Pixel.ttf" id="1_d5qbn"]
-[ext_resource type="Texture2D" uid="uid://dsnf67tone8h3" path="res://assets/Sunnyside_World_Assets/UI/label_middle.png" id="2_w2js3"]
+[ext_resource type="Texture2D" uid="uid://x7rwro5xl7a6" path="res://assets/Sunnyside_World_Assets/UI/label_middle.png" id="2_w2js3"]
 [ext_resource type="StyleBox" uid="uid://cjg6kt701pmrj" path="res://scenes/UI/button_tex_pressed.tres" id="2_wpuj5"]
 [ext_resource type="Texture2D" uid="uid://bjuxsjtj7cbhe" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/14.png" id="3_rti5b"]
 [ext_resource type="StyleBox" uid="uid://djbswrh6ms57e" path="res://scenes/UI/button_tex.tres" id="3_uor6m"]

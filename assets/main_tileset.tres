@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" format=3 uid="uid://caenfd2q6s02v"]
 
-[ext_resource type="Texture2D" uid="uid://chji6u6wn1asx" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png" id="1_hoj7n"]
+[ext_resource type="Texture2D" uid="uid://c0nd2h5o5umkd" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png" id="1_hoj7n"]
 [ext_resource type="Texture2D" uid="uid://dkt4yk74fxgij" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_forest_32px.png" id="2_ubixv"]
 [ext_resource type="PackedScene" uid="uid://f3fenuoufl4e" path="res://scenes/vfx/water.tscn" id="3_t63td"]
 [ext_resource type="PackedScene" uid="uid://ccp45yg8geggs" path="res://scenes/objects/tree.tscn" id="4_hal1j"]

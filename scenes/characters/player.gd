@@ -7,6 +7,9 @@ var current_tool: Enum.Tool = Enum.Tool.AXE
 var current_seed: Enum.Seed
 var can_move: bool = true
 var is_in_water: bool = false
+# --- NEW: TRACK IF ON GRASS TERRAIN ---
+var is_on_grass: bool = false 
+
 var water_layer: TileMapLayer
 var ground_1_layer: TileMapLayer
 var ground_2_layer: TileMapLayer
@@ -19,6 +22,8 @@ var ground_2_layer: TileMapLayer
 signal tool_use(tool: Enum.Tool, pos: Vector2, dir: bool)
 @onready var sprite: Sprite2D = $Sprite2D
 var current_style = 0
+@onready var grass_walk: AudioStreamPlayer = $grass_walk
+@onready var swim: AudioStreamPlayer = $swim
 
 func _ready() -> void:
 	animation_tree.active = true
@@ -33,6 +38,9 @@ func _physics_process(delta: float) -> void:
 	if can_move:
 		move()
 		_update_water_state()
+		# --- NEW: CHECK FOR GRASS TILES ---
+		_update_grass_state()
+		
 		if is_in_water:
 			animate_swimming()
 		else:
@@ -94,6 +102,15 @@ func animate():
 	if direction:
 		var direction_animation = Vector2(round(direction.x), round(direction.y))
 		move_state_machine.travel("walk")
+		
+		# --- NEW: CONTROL GRASS FOOTSTEP AUDIO BASED ON SURFACE ---
+		if is_on_grass:
+			if not grass_walk.playing:
+				grass_walk.play()
+		else:
+			if grass_walk.playing:
+				grass_walk.stop()
+				
 		animation_tree.set("parameters/MoveStateMachine/idle/blend_position", direction_animation)
 		animation_tree.set("parameters/MoveStateMachine/walk/blend_position", direction_animation)
 		var tool_direction = Vector2(round(direction.x), round(direction.y)) if direction else Vector2.DOWN
@@ -102,25 +119,30 @@ func animate():
 			animation_tree.set(animation_name, tool_direction)
 	else:
 		move_state_machine.travel("idle")
+		# --- NEW: STOP FOOTSTEPS IMMEDIATELY WHEN PLAYER STOPS MOVING ---
+		if grass_walk.playing:
+			grass_walk.stop()
 
 ##animates swimming section (requires separate function because it needs checking of whether player is on water or not)
 func animate_swimming() -> void:
+	# --- NEW: SILENCE GRASS AUDIO WHEN SWIMMING ---
+	if grass_walk.playing:
+		grass_walk.stop()
+	if direction:
+		if not swim.playing:
+			swim.play()
+	else:
+		if swim.playing:
+			swim.playing == false
+			swim.stop()
 	play_swim_animation()
 
 ##simple function which plays the swim animation
 func play_swim_animation() -> void:
-	# Convert current or last direction to a rounded animation vector
 	var look_direction = Vector2(round(last_direction.x), round(last_direction.y))
-	
-	# Always keep the blend position updated so your character faces the correct way
 	animation_tree.set("parameters/MoveStateMachine/swim/blend_position", look_direction)
-	
 	if direction:
 		move_state_machine.travel("swim")
-	#else:
-		# If you don't have a distinct "swim_idle" state, traveling to "idle" is fine,
-		# but if your "idle" state doesn't look like swimming, the character will pop out of the water.
-		#move_state_machine.travel("idle") 
 
 ##this is the function that checks whether the player is on the water tile, if yes, plays swim animation
 func _is_water_cell() -> bool:
@@ -130,8 +152,6 @@ func _is_water_cell() -> bool:
 	var cell := water_layer.local_to_map(water_layer.to_local(global_position))
 	if water_layer.get_cell_source_id(cell) == -1:
 		return false
-	# The procedural map uses water as its base layer, then paints land over it.
-	# A cell is therefore water only when it has no ground tile on either land layer.
 	var has_land := false
 	if is_instance_valid(ground_1_layer):
 		has_land = ground_1_layer.get_cell_source_id(cell) != -1
@@ -139,17 +159,38 @@ func _is_water_cell() -> bool:
 		has_land = has_land or ground_2_layer.get_cell_source_id(cell) != -1
 	return not has_land
 
+# --- NEW: EVALUATE IF CURRENT TILE IS A GRASS CELL ---
+func _is_grass_cell() -> bool:
+	_cache_world_layers()
+	if not is_instance_valid(water_layer):
+		return false
+	var cell := water_layer.local_to_map(water_layer.to_local(global_position))
+	
+	# Checks if any tile is painted over the default water layer on ground_1 or ground_2
+	if is_instance_valid(ground_1_layer):
+		if ground_1_layer.get_cell_source_id(cell) != -1:
+			return true
+	if is_instance_valid(ground_2_layer):
+		if ground_2_layer.get_cell_source_id(cell) != -1:
+			return true
+			
+	return false
+
 ##updates the water animation state
 func _update_water_state() -> void:
 	var now_in_water := _is_water_cell()
 	if now_in_water == is_in_water:
 		return
 	is_in_water = now_in_water
-	# Cleaned up: No longer disabling the animation tree here
+
+# --- NEW: UPDATE RUNTIME GRASS STATE TRACKER ---
+func _update_grass_state() -> void:
+	var now_on_grass := _is_grass_cell()
+	if now_on_grass == is_on_grass:
+		return
+	is_on_grass = now_on_grass
 
 #emits the tool use signal as soon as any tool based animation is played
 func tool_use_emit():
-	# Tool placement is emitted when the action starts. This method remains for
-	# existing animation tracks but must not emit a second time.
 	var use_position : Vector2 =  global_position if current_tool == Enum.Tool.WATER else global_position + last_direction * Data.TILE_SIZE
 	tool_use.emit(current_tool, use_position, sprite2d.flip_h)

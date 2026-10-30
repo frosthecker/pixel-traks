@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://b0mnopqlx5dix"]
 
 [ext_resource type="Script" uid="uid://dbmbhotl3mjb4" path="res://scenes/characters/player.gd" id="2_76oj4"]
-[ext_resource type="Texture2D" uid="uid://ci41j325dxci7" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_spikey_hair.png" id="2_yewv4"]
+[ext_resource type="Texture2D" uid="uid://dll3c0647oao1" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_spikey_hair.png" id="2_yewv4"]
 [ext_resource type="PackedScene" uid="uid://b0b8cstbg0xhi" path="res://scenes/UI/tool_ui.tscn" id="3_76oj4"]
 [ext_resource type="Texture2D" uid="uid://c5yp2qyklxhfx" path="res://assets/Sunnyside_World_Assets/UI/expression_working.png" id="4_dyp2m"]
 [ext_resource type="Texture2D" uid="uid://c8kx1ahuw854r" path="res://assets/Sunnyside_World_Assets/UI/greenbar_00.png" id="5_kqtwu"]
-[ext_resource type="Texture2D" uid="uid://qyyqqu3bmehk" path="res://assets/Sunnyside_World_Assets/UI/green_bar_progress.png" id="6_6eyoc"]
+[ext_resource type="Texture2D" uid="uid://cv4nrx5g4fqi2" path="res://assets/Sunnyside_World_Assets/UI/green_bar_progress.png" id="6_6eyoc"]
 [ext_resource type="Script" uid="uid://b8udj2lx4lwqu" path="res://scripts/pickup_slot.gd" id="7_6eyoc"]
+[ext_resource type="AudioStream" uid="uid://b7q8hvsdcqcvb" path="res://assets/Music/sfx/grass_walk.mp3" id="8_eojnx"]
+[ext_resource type="AudioStream" uid="uid://bul4s36dq4wmx" path="res://assets/Music/sfx/swimming.mp3" id="9_qgnko"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
 radius = 4.0
@@ -2262,7 +2264,6 @@ transitions = ["Start", "Axe", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(124, 196.30896)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_inhyd"]
-graph_offset = Vector2(-101.51697, -351.573)
 nodes/output/position = Vector2(960, -80)
 nodes/ToolStateMachine/node = SubResource("AnimationNodeStateMachine_w5sjy")
 nodes/ToolStateMachine/position = Vector2(120, -140)
@@ -2406,6 +2407,14 @@ script = ExtResource("7_6eyoc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupZone" unique_id=767080778]
 shape = SubResource("CircleShape2D_4ifi7")
+
+[node name="grass_walk" type="AudioStreamPlayer" parent="." unique_id=558837875]
+stream = ExtResource("8_eojnx")
+bus = &"sfx"
+
+[node name="swim" type="AudioStreamPlayer" parent="." unique_id=557163993]
+stream = ExtResource("9_qgnko")
+bus = &"sfx"
 
 [connection signal="body_entered" from="PickupZone" to="PickupZone" method="_on_body_entered"]
 [connection signal="body_exited" from="PickupZone" to="PickupZone" method="_on_body_exited"]
