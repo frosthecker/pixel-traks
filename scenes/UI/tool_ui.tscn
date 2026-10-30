@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b0b8cstbg0xhi"]
 
 [ext_resource type="Script" uid="uid://c75vsc15svxko" path="res://scripts/tool_ui.gd" id="1_5w4ni"]
-[ext_resource type="Texture2D" uid="uid://x7rwro5xl7a6" path="res://assets/Sunnyside_World_Assets/UI/label_middle.png" id="2_y0ilp"]
+[ext_resource type="Texture2D" path="res://assets/Sunnyside_World_Assets/UI/label_middle.png" id="2_y0ilp"]
 
 [node name="ToolUI" type="Control" unique_id=1325860234]
 layout_mode = 3

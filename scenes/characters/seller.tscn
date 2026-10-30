@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bvf1ul2ljuh2y" path="res://assets/Sunnyside_World_Assets/Elements/Other/shops/shop1.png" id="2_e82xs"]
 [ext_resource type="Texture2D" uid="uid://dqhm7itwi0clg" path="res://assets/Sunnyside_World_Assets/Elements/Crops/cabbage_05.png" id="3_ng1cm"]
 [ext_resource type="Texture2D" uid="uid://cmbrc808urk6c" path="res://assets/Sunnyside_World_Assets/Elements/Crops/potato_05.png" id="4_svud8"]
-[ext_resource type="Texture2D" uid="uid://bf6dkxq0xsivo" path="res://assets/Sunnyside_World_Assets/Elements/Crops/wood.png" id="5_i65ro"]
+[ext_resource type="Texture2D" path="res://assets/Sunnyside_World_Assets/Elements/Crops/wood.png" id="5_i65ro"]
 [ext_resource type="Script" path="res://scripts/seller.gd" id="6_seller"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6jmdd"]

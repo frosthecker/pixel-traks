@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ds1rboov3hlux"]
 
 [ext_resource type="Script" uid="uid://wbs0l8ohvq7g" path="res://scripts/item.gd" id="1_wfbeu"]
-[ext_resource type="Texture2D" uid="uid://cih2tonffbwnx" path="res://assets/Sunnyside_World_Assets/UI/shovel.png" id="2_3guxc"]
+[ext_resource type="Texture2D" path="res://assets/Sunnyside_World_Assets/UI/shovel.png" id="2_3guxc"]
 [ext_resource type="FontFile" uid="uid://d1djxisfa7p2c" path="res://assets/Sunnyside_World_Assets/Fonts/editundo.ttf" id="4_muvxe"]
 
 [node name="Item" type="Node2D" unique_id=557144568]

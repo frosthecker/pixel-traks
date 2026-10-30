@@ -25,7 +25,6 @@ JsonData="*uid://h0kdt251magh"
 PlayerInventory="*uid://dulpok11oldcd"
 Dialogic="*uid://ds2q0uclmolvu"
 SaveGame="*uid://rq2k6xt1leh6"
-GameSetting="*uid://t726jfj63lbh"
 
 [dialogic]
 
@@ -206,5 +205,4 @@ behavior_tree/user_task_dirs=PackedStringArray("res://AI/tasks")
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="gl_compatibility"
 textures/vram_compression/import_s3tc_bptc=true

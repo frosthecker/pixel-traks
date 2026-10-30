@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cf6jvuo18bnhp" path="res://scripts/tool_ui_texture.gd" id="1_5godu"]
 [ext_resource type="Texture2D" uid="uid://bp8e6kc0ya2wb" path="res://assets/Sunnyside_World_Assets/UI/pickaxe.png" id="1_x4u7f"]
-[ext_resource type="Shader" uid="uid://dp5oxb36f6n8e" path="res://shaders/tool_outline.gdshader" id="2_outline"]
+[ext_resource type="Shader" path="res://shaders/tool_outline.gdshader" id="2_outline"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tool_outline"]
 resource_local_to_scene = true

@@ -1,28 +1,19 @@
 [gd_scene format=3 uid="uid://f3fenuoufl4e"]
 
-[ext_resource type="Shader" uid="uid://dkls6ghkqqxgt" path="res://shaders/water.gdshader" id="1_gs8q0"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_243dc"]
-noise_type = 2
-seed = 4
-frequency = 0.02
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xw8xi"]
-noise = SubResource("FastNoiseLite_243dc")
-seamless = true
+[ext_resource type="Shader" uid="uid://w8gcice407vb" path="res://shaders/proc_water_fast.gdshader" id="1_gs8q0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ifi7"]
 shader = ExtResource("1_gs8q0")
-shader_parameter/deep_base_color = Color(0.05, 0.25, 0.45, 1)
-shader_parameter/dark_cell_color = Color(0.1, 0.35, 0.55, 1)
-shader_parameter/light_caustic_color = Color(0.8, 0.95, 1, 1)
-shader_parameter/pixel_resolution = 128.0
-shader_parameter/wave_speed = 0.5
-shader_parameter/voronoi_texture = SubResource("NoiseTexture2D_xw8xi")
-shader_parameter/cell_stretch = Vector2(0.5, 2)
-shader_parameter/wave_scale = 0.7
-shader_parameter/cell_threshold = 0.55200002622
-shader_parameter/caustic_threshold = 0.76800003648
+shader_parameter/pixel_size = 0.5
+shader_parameter/seed = 49.30000073462916
+shader_parameter/speed = 0.31999999284736
+shader_parameter/scale = 8.0
+shader_parameter/depth = -0.22000000625855998
+shader_parameter/crest_amount = 0.5
+shader_parameter/color_deep = Color(0.067, 0.188, 0.384, 1)
+shader_parameter/color_mid = Color(0.114, 0.318, 0.553, 1)
+shader_parameter/color_light = Color(0.208, 0.482, 0.718, 1)
+shader_parameter/color_crest = Color(0.714, 0.89, 0.953, 1)
 
 [node name="ColorRect" type="ColorRect" unique_id=973203033]
 material = SubResource("ShaderMaterial_4ifi7")

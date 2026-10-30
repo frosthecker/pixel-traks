@@ -47,6 +47,11 @@ func _physics_process(delta: float) -> void:
 		velocity = knockback_velocity
 		move_and_slide()
 		return
+	if not _is_land_at(global_position):
+		# A skeleton should never remain in a water tile, even if a saved scene or
+		# a delayed spawn put it there before movement was initialized.
+		queue_free()
+		return
 	if player == null:
 		player = get_tree().get_first_node_in_group('Player')
 		if player == null:
@@ -86,6 +91,10 @@ func _physics_process(delta: float) -> void:
 
 	# Combine normal walk velocity with knockback force
 	velocity = move_velocity + knockback_velocity
+	if not _is_land_at(global_position + velocity * delta):
+		# Water has no physics collider because the player can swim in it. Keep
+		# enemies on the generated land instead of allowing them to chase across it.
+		velocity = Vector2.ZERO
 	move_and_slide()
 
 
@@ -188,3 +197,19 @@ func hit(tool: Enum.Tool) -> void:
 func _on_animation_finished() -> void:
 	if sprite_2d.animation == "death":
 		queue_free()
+
+func _is_land_at(world_position: Vector2) -> bool:
+	if level == null:
+		level = get_tree().get_first_node_in_group("Level")
+	if level == null:
+		return true
+	if level.has_method("is_land_position"):
+		return level.is_land_position(world_position)
+	for layer_name in [&"ground_1", &"ground_2"]:
+		var ground := level.get_node_or_null("Layers/" + str(layer_name)) as TileMapLayer
+		if ground == null:
+			continue
+		var cell := ground.local_to_map(ground.to_local(world_position))
+		if ground.get_cell_source_id(cell) != -1:
+			return true
+	return false

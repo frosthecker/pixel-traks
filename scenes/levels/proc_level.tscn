@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://briov8nuwg8g2"]
 
 [ext_resource type="Script" uid="uid://bg8bgl0s26y0h" path="res://scripts/proc_level.gd" id="1_3jh03"]
+[ext_resource type="PackedScene" uid="uid://f3fenuoufl4e" path="res://scenes/vfx/water.tscn" id="2_5jnv5"]
 [ext_resource type="TileSet" uid="uid://caenfd2q6s02v" path="res://assets/main_tileset.tres" id="2_7iper"]
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="3_7iper"]
 [ext_resource type="PackedScene" uid="uid://cpm07of23fq6r" path="res://scenes/characters/seller.tscn" id="4_0rint"]
@@ -17,6 +18,17 @@
 [ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="16_5jnv5"]
 [ext_resource type="Texture2D" uid="uid://ct00lowdu4brr" path="res://assets/Sunnyside_World_Assets/UI/redbar_00.png" id="16_dute6"]
 [ext_resource type="Texture2D" uid="uid://bo38r0b2tab1k" path="res://assets/Sunnyside_World_Assets/UI/red_bar_progress.png" id="17_b4i4j"]
+[ext_resource type="AudioStream" uid="uid://c6k5sn861d1rr" path="res://assets/Music/soundtrack/#58 Hour For Two - Orchestrated.WAV" id="18_bmstj"]
+[ext_resource type="Shader" uid="uid://w8gcice407vb" path="res://shaders/proc_water_fast.gdshader" id="18_pixelwater"]
+[ext_resource type="AudioStream" uid="uid://cxho3o1iiwea8" path="res://assets/Music/soundtrack/#59 She Will Try - Orchestrated.WAV" id="19_5jnv5"]
+[ext_resource type="AudioStream" uid="uid://cjw2srhru3b0n" path="res://assets/Music/soundtrack/#72 Get Out - Orchestrated.WAV" id="20_ifrkw"]
+[ext_resource type="AudioStream" uid="uid://c41p8icgyu5h8" path="res://assets/Music/soundtrack/#60 Easy Dreams - Orchestrated.WAV" id="21_hydf3"]
+[ext_resource type="AudioStream" uid="uid://qo8ashk3mufc" path="res://assets/Music/soundtrack/#64 I Think I Like You - Orchestrated.WAV" id="22_dex8e"]
+[ext_resource type="AudioStream" uid="uid://bcl6av4rb7o6j" path="res://assets/Music/soundtrack/#65 A Day - Orchestrated.WAV" id="23_qmt37"]
+[ext_resource type="AudioStream" uid="uid://drktoky4tgqy6" path="res://assets/Music/soundtrack/#67 Gift - Orchestrated.WAV" id="24_wg1i5"]
+[ext_resource type="AudioStream" uid="uid://bfhph0mcmjv22" path="res://assets/Music/soundtrack/#68 Goodbye Tales - Orchestrated.WAV" id="25_4q8r1"]
+[ext_resource type="AudioStream" uid="uid://dstrifsg68wcp" path="res://assets/Music/soundtrack/#70 Call For Love - Orchestrated.WAV" id="26_b6tby"]
+[ext_resource type="AudioStream" uid="uid://2wyul0d2se4v" path="res://assets/Music/soundtrack/#71 Music Of Something - Orchestrated.WAV" id="27_6sbnb"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hsok3"]
 
@@ -30,6 +42,22 @@ fractal_octaves = 2
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7iper"]
 noise = SubResource("FastNoiseLite_o4lyu")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pixelwater"]
+shader = ExtResource("18_pixelwater")
+shader_parameter/pixel_size = 0.5
+shader_parameter/seed = 3.0
+shader_parameter/speed = 0.125
+shader_parameter/scale = 2.0
+shader_parameter/flow_angle = 0.5
+shader_parameter/turbulence = 0.8
+shader_parameter/depth = 0.0
+shader_parameter/crest_amount = 0.5
+shader_parameter/swell = 0.5
+shader_parameter/color_deep = Color(0.067, 0.188, 0.384, 1)
+shader_parameter/color_mid = Color(0.114, 0.318, 0.553, 1)
+shader_parameter/color_light = Color(0.208, 0.482, 0.718, 1)
+shader_parameter/color_crest = Color(0.714, 0.89, 0.953, 1)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ifrkw"]
 shader = ExtResource("13_ooyhw")
 shader_parameter/progress = 0.0
@@ -39,6 +67,21 @@ vertices = PackedVector2Array(219.57031, -0.7734375, 550.47656, -8.7421875, 546.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 6, 7, 0), PackedInt32Array(7, 8, 0)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-287, -93, -285, 235, 448, 233, 461, 84, 556, 83, 561, -19, 229, -11, 224, -99, -265, -106)])
 
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_6eyoc"]
+shuffle = true
+stream_count = 11
+stream_0 = ExtResource("18_bmstj")
+stream_1 = ExtResource("19_5jnv5")
+stream_2 = ExtResource("21_hydf3")
+stream_3 = ExtResource("22_dex8e")
+stream_4 = ExtResource("23_qmt37")
+stream_5 = ExtResource("24_wg1i5")
+stream_6 = ExtResource("24_wg1i5")
+stream_7 = ExtResource("25_4q8r1")
+stream_8 = ExtResource("26_b6tby")
+stream_9 = ExtResource("27_6sbnb")
+stream_10 = ExtResource("20_ifrkw")
+
 [node name="level" type="Node2D" unique_id=968858291]
 script = ExtResource("1_3jh03")
 noise_height_text = SubResource("NoiseTexture2D_ubuo4")
@@ -46,8 +89,17 @@ noise_tree_text = SubResource("NoiseTexture2D_7iper")
 
 [node name="Layers" type="Node2D" parent="." unique_id=991742646]
 
+[node name="ColorRect" parent="Layers" unique_id=973203033 instance=ExtResource("2_5jnv5")]
+visible = false
+z_index = -2
+offset_left = -2048.0
+offset_top = -2048.0
+offset_right = 2048.0
+offset_bottom = 2048.0
+
 [node name="water" type="TileMapLayer" parent="Layers" unique_id=1839696258]
 z_index = -2
+material = SubResource("ShaderMaterial_pixelwater")
 tile_set = ExtResource("2_7iper")
 
 [node name="ground_1" type="TileMapLayer" parent="Layers" unique_id=1005478439]
@@ -182,5 +234,7 @@ visible = false
 navigation_polygon = SubResource("NavigationPolygon_hydf3")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1908090457]
+stream = SubResource("AudioStreamPlaylist_6eyoc")
+autoplay = true
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

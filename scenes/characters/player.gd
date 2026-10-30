@@ -75,15 +75,13 @@ func get_basic_input():
 		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		animation_tree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		
-	if Input.is_action_pressed("pick"):
+	if Input.is_action_just_pressed("pick"):
 		for pickup_item in $PickupZone.items_in_range.values():
-			if pickup_item.has_method("hit"):
-				print("tree picked")
-				break
-			elif pickup_item.has_method("pick_up_item"):
+			# Trees/stumps also implement hit() and can overlap a dropped log.
+			# Prefer an actual pickup instead of stopping at the first hit-able body.
+			if pickup_item.has_method("pick_up_item"):
 				pickup_item.pick_up_item(self)
 				$PickupZone.items_in_range.erase(pickup_item)
-				print('log picked')
 				break
 
 ##make player move 

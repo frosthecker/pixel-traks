@@ -217,9 +217,8 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('Objects'):
-				if object.global_position.distance_to(pos) < 24:
+				if object.has_method("hit") and object.global_position.distance_to(pos) < 24:
 					object.hit(tool)
-
 func _process(delta: float) -> void:
 	# The procedural level scene may not have a day-color gradient assigned yet.
 	# Skip the visual update until it does instead of calling sample() on null.
@@ -802,6 +801,10 @@ func _find_scene_file(dir_path: String) -> String:
 
 func _is_land_tile(cell: Vector2i) -> bool:
 	return ground_2.get_cell_source_id(cell) != -1 or ground_1.get_cell_source_id(cell) != -1
+
+func is_land_position(world_position: Vector2) -> bool:
+	var cell := ground_1.local_to_map(ground_1.to_local(world_position))
+	return _is_land_tile(cell)
 
 func _has_land_clearing(cell: Vector2i) -> bool:
 	for x in range(-1, 2):

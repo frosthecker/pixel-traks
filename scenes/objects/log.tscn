@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://xcvvujgqxboo"]
 
-[ext_resource type="Shader" uid="uid://dp5oxb36f6n8e" path="res://shaders/tool_outline.gdshader" id="1_2aixv"]
-[ext_resource type="Texture2D" uid="uid://bf6dkxq0xsivo" path="res://assets/Sunnyside_World_Assets/Elements/Crops/wood.png" id="2_qbesu"]
+[ext_resource type="Shader" path="res://shaders/tool_outline.gdshader" id="1_2aixv"]
+[ext_resource type="Texture2D" uid="uid://my8eas4hlkyb" path="res://assets/Sunnyside_World_Assets/Elements/Crops/wood.png" id="2_qbesu"]
 [ext_resource type="Script" uid="uid://dd3r0blb4ns1b" path="res://scripts/log.gd" id="3_qbesu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ifi7"]
