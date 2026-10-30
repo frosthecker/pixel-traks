@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://0fxxeuy4gqnt" path="res://assets/Sunnyside_World_Assets/Elements/Plants/spr_deco_tree_01_strip4.png" id="1_r6wkp"]
 [ext_resource type="PackedScene" uid="uid://xcvvujgqxboo" path="res://scenes/objects/log.tscn" id="2_03oh1"]
 [ext_resource type="PackedScene" uid="uid://cm1w86qwgiw57" path="res://scenes/vfx/flash_sprite_2d.tscn" id="2_7yu6v"]
-[ext_resource type="Texture2D" uid="uid://c0nd2h5o5umkd" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png" id="2_mbbxw"]
+[ext_resource type="Texture2D" uid="uid://chji6u6wn1asx" path="res://assets/Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png" id="2_mbbxw"]
 [ext_resource type="Shader" uid="uid://dd7gjmfd7rj2a" path="res://shaders/tree_shake.gdshader" id="4_lg7fn"]
 [ext_resource type="Texture2D" uid="uid://3x4q8xd41bbo" path="res://assets/Sunnyside_World_Assets/Elements/VFX/leaves/leaf_spritesheet.png" id="6_lg7fn"]
 
@@ -119,3 +119,5 @@ libraries/ = SubResource("AnimationLibrary_0v8c2")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="." unique_id=2125768874]
 vertices = PackedVector2Array(-9, 0, -9, 15, 8, 15, 8, 0)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1654669638]
