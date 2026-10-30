@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PlantResource" format=3 uid="uid://by8f0m2m1rjke"]
+
+[ext_resource type="Script" uid="uid://wn3vigxa0hd2" path="res://resources/plant_res.gd" id="1_fu7ff"]
+[ext_resource type="Texture2D" uid="uid://csml7dnt46tyk" path="res://assets/Sunnyside_World_Assets/Elements/Crops/beetroot_spritesheet.png" id="2_ve8t8"]
+
+[resource]
+script = ExtResource("1_fu7ff")
+texture = ExtResource("2_ve8t8")
+metadata/_custom_type_script = "uid://wn3vigxa0hd2"

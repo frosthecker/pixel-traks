@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://b6krlpcnfdkcw"]
+
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="1_c165x"]
+[ext_resource type="Texture2D" uid="uid://n25kjm1jya0c" path="res://assets/Sunnyside_World_Assets/Elements/Crops/beetroot_05.png" id="1_wduls"]
+[ext_resource type="Texture2D" uid="uid://bjuxsjtj7cbhe" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/14.png" id="2_52frt"]
+[ext_resource type="Script" uid="uid://jevcan3lovc7" path="res://scripts/panel_container.gd" id="2_dvrfb"]
+[ext_resource type="Texture2D" uid="uid://bkhox5kitjsee" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/green_progress_bar.png" id="5_jigw1"]
+[ext_resource type="Texture2D" uid="uid://6er3nfpp2a3o" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/green_progress.png" id="6_bgyyu"]
+[ext_resource type="Texture2D" uid="uid://bb0a4ebhqv2sb" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/blue_progress_bar.png" id="7_ito5v"]
+[ext_resource type="Texture2D" uid="uid://xeqj6cegjokh" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Progress Bars/blue_progress.png" id="8_er5s6"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xq7sh"]
+texture = ExtResource("2_52frt")
+texture_margin_left = 5.0
+texture_margin_top = 8.0
+texture_margin_right = 5.0
+texture_margin_bottom = 8.0
+region_rect = Rect2(8, 6, 176, 20)
+
+[node name="PlantInfo" type="PanelContainer" unique_id=1087409542]
+custom_minimum_size = Vector2(208, 58)
+offset_right = 208.0
+offset_bottom = 58.0
+theme = ExtResource("1_c165x")
+theme_override_styles/panel = SubResource("StyleBoxTexture_xq7sh")
+script = ExtResource("2_dvrfb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=527556179]
+custom_minimum_size = Vector2(198, 52)
+layout_mode = 2
+theme_override_constants/separation = 7
+
+[node name="IconTexture" type="TextureRect" parent="HBoxContainer" unique_id=458510092]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("1_wduls")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=1786215549]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NameLabel" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1552817265]
+layout_mode = 2
+theme = ExtResource("1_c165x")
+text = "BEETROOT"
+
+[node name="GrowthBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=496083715]
+custom_minimum_size = Vector2(135, 10)
+layout_mode = 2
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("5_jigw1")
+texture_progress = ExtResource("6_bgyyu")
+
+[node name="DeathBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer" unique_id=1313887665]
+custom_minimum_size = Vector2(135, 10)
+layout_mode = 2
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("7_ito5v")
+texture_progress = ExtResource("8_er5s6")

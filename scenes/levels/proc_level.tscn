@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://briov8nuwg8g2"]
+
+[ext_resource type="Script" uid="uid://bg8bgl0s26y0h" path="res://scripts/proc_level.gd" id="1_3jh03"]
+[ext_resource type="TileSet" uid="uid://caenfd2q6s02v" path="res://assets/main_tileset.tres" id="2_7iper"]
+[ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="3_7iper"]
+[ext_resource type="PackedScene" uid="uid://cpm07of23fq6r" path="res://scenes/characters/seller.tscn" id="4_0rint"]
+[ext_resource type="PackedScene" uid="uid://cvakiwj4a1x5n" path="res://AI/scenes/john.tscn" id="5_dute6"]
+[ext_resource type="Texture2D" uid="uid://dhsaihv6kjq6n" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="6_b4i4j"]
+[ext_resource type="Resource" path="res://resources/kaia_biodata.tres" id="7_cindd"]
+[ext_resource type="Texture2D" uid="uid://cagb0uq47yrn0" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_long_hair.png" id="8_wbfq5"]
+[ext_resource type="Resource" path="res://resources/mira_biodata.tres" id="9_0lto4"]
+[ext_resource type="Texture2D" uid="uid://b6o85d7o5jmyx" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_curly_hair.png" id="10_qchji"]
+[ext_resource type="Resource" path="res://resources/orin_biodata.tres" id="11_iv2di"]
+[ext_resource type="Shader" uid="uid://bpvr7bvak7ydr" path="res://shaders/circle_transition.gdshader" id="13_ooyhw"]
+[ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="14_rcits"]
+[ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="15_bmstj"]
+[ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="16_5jnv5"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hsok3"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ubuo4"]
+noise = SubResource("FastNoiseLite_hsok3")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o4lyu"]
+frequency = 0.02
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7iper"]
+noise = SubResource("FastNoiseLite_o4lyu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ifrkw"]
+shader = ExtResource("13_ooyhw")
+shader_parameter/progress = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_hydf3"]
+vertices = PackedVector2Array(219.57031, -0.7734375, 550.47656, -8.7421875, 546.46875, 73.09375, 451.82813, 74.10156, 438.82813, 223.02344, -275.0625, 224.96875, -276.96094, -87.3125, -262.32813, -95.953125, 214.53906, -89.13281)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 6, 7, 0), PackedInt32Array(7, 8, 0)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-287, -93, -285, 235, 448, 233, 461, 84, 556, 83, 561, -19, 229, -11, 224, -99, -265, -106)])
+
+[node name="level" type="Node2D" unique_id=968858291]
+script = ExtResource("1_3jh03")
+noise_height_text = SubResource("NoiseTexture2D_ubuo4")
+noise_tree_text = SubResource("NoiseTexture2D_7iper")
+
+[node name="Layers" type="Node2D" parent="." unique_id=991742646]
+
+[node name="water" type="TileMapLayer" parent="Layers" unique_id=1839696258]
+z_index = -2
+tile_set = ExtResource("2_7iper")
+
+[node name="ground_1" type="TileMapLayer" parent="Layers" unique_id=1005478439]
+z_index = -1
+tile_set = ExtResource("2_7iper")
+collision_enabled = false
+
+[node name="ground_2" type="TileMapLayer" parent="Layers" unique_id=1321193760]
+tile_set = ExtResource("2_7iper")
+collision_enabled = false
+
+[node name="LightDirtLayer" type="TileMapLayer" parent="Layers" unique_id=338066438]
+tile_set = ExtResource("2_7iper")
+
+[node name="DarkDirtLayer" type="TileMapLayer" parent="Layers" unique_id=702053594]
+tile_set = ExtResource("2_7iper")
+
+[node name="cliff" type="TileMapLayer" parent="Layers" unique_id=1197985178]
+tile_set = ExtResource("2_7iper")
+
+[node name="Objects" type="Node2D" parent="." unique_id=1483981050]
+y_sort_enabled = true
+
+[node name="environment" type="TileMapLayer" parent="Objects" unique_id=1944537496]
+y_sort_enabled = true
+tile_set = ExtResource("2_7iper")
+
+[node name="trees" type="Node2D" parent="Objects" unique_id=1965571586]
+y_sort_enabled = true
+
+[node name="Player" parent="Objects" unique_id=1434011847 instance=ExtResource("3_7iper")]
+position = Vector2(-14, 47)
+
+[node name="Camera2D2" type="Camera2D" parent="Objects/Player" unique_id=29486257]
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="shop" parent="Objects" unique_id=107149341 instance=ExtResource("4_0rint")]
+position = Vector2(85, 140)
+
+[node name="John" parent="Objects" unique_id=637622081 instance=ExtResource("5_dute6")]
+position = Vector2(38, 47)
+
+[node name="Kaia" parent="Objects" unique_id=26238878 instance=ExtResource("5_dute6")]
+position = Vector2(100, 120)
+texture = ExtResource("6_b4i4j")
+dialogue_character = "res://AI/characters/Kaia.dch"
+dialogue_timeline = "res://AI/timelines/kaia_fallback.dtl"
+intro_timeline = ""
+random_timelines = Array[String](["res://AI/timelines/kaia_fallback.dtl"])
+biodata = ExtResource("7_cindd")
+groq_character_id = "Kaia"
+
+[node name="Mira" parent="Objects" unique_id=1241798981 instance=ExtResource("5_dute6")]
+position = Vector2(-160, 20)
+texture = ExtResource("8_wbfq5")
+dialogue_character = "res://AI/characters/Mira.dch"
+dialogue_timeline = "res://AI/timelines/mira_fallback.dtl"
+intro_timeline = ""
+random_timelines = Array[String](["res://AI/timelines/mira_fallback.dtl"])
+biodata = ExtResource("9_0lto4")
+groq_character_id = "Mira"
+
+[node name="Orin" parent="Objects" unique_id=1429327719 instance=ExtResource("5_dute6")]
+position = Vector2(-120, 110)
+texture = ExtResource("10_qchji")
+dialogue_character = "res://AI/characters/Orin.dch"
+dialogue_timeline = "res://AI/timelines/orin_fallback.dtl"
+intro_timeline = ""
+random_timelines = Array[String](["res://AI/timelines/orin_fallback.dtl"])
+biodata = ExtResource("11_iv2di")
+groq_character_id = "Orin"
+
+[node name="Overlay" type="Node2D" parent="." unique_id=2013033497]
+
+[node name="DayTimeColor" type="CanvasModulate" parent="Overlay" unique_id=1967587240]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Overlay" unique_id=1955086363]
+
+[node name="DayTransitionLayer" type="ColorRect" parent="Overlay/CanvasLayer" unique_id=305253743]
+material = SubResource("ShaderMaterial_ifrkw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="UserInterface" type="CanvasLayer" parent="Overlay" unique_id=508896233]
+script = ExtResource("14_rcits")
+
+[node name="inventory" parent="Overlay/UserInterface" unique_id=344952141 instance=ExtResource("15_bmstj")]
+position = Vector2(633, 334)
+
+[node name="map" parent="Overlay/UserInterface" unique_id=1970492490 instance=ExtResource("16_5jnv5")]
+position = Vector2(640, 350)
+
+[node name="Timers" type="Node" parent="." unique_id=1199702263]
+
+[node name="DayTimer" type="Timer" parent="Timers" unique_id=771136192]
+wait_time = 21600.0
+one_shot = true
+autostart = true
+
+[node name="navigation" type="Node2D" parent="." unique_id=1927219762]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="navigation" unique_id=1145460728]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_hydf3")
+
+[connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

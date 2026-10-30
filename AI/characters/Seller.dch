@@ -1,0 +1,15 @@
+{
+"@path": "res://addons/dialogic/Resources/character.gd",
+"@subpath": NodePath(""),
+&"_translation_id": "",
+&"color": Color(0.78, 0.94, 0.62, 1),
+&"custom_info": {"prefix": "", "sound_mood_default": "", "sound_moods": {}, "style": "visual_style", "suffix": ""},
+&"default_portrait": "",
+&"description": "the farm shopkeeper",
+&"display_name": "Seller",
+&"mirror": false,
+&"nicknames": ["Seller"],
+&"offset": Vector2(0, 0),
+&"portraits": {},
+&"scale": 1.0
+}

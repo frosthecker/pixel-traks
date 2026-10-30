@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="NPCBiodata" format=3 uid="uid://bgbttkn51e6xh"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "John Legend"
+personality = "Friendly and cautious."
+daily_schedule = [{"start_minute": 360, "end_minute": 420, "activity": "wake", "target_location": Vector2(0, 0)}, {"start_minute": 420, "end_minute": 720, "activity": "farm", "target_location": Vector2(160, 96)}, {"start_minute": 720, "end_minute": 840, "activity": "eat", "target_location": Vector2(224, 128)}, {"start_minute": 840, "end_minute": 1080, "activity": "wander"}, {"start_minute": 1080, "end_minute": 1320, "activity": "work", "target_location": Vector2(160, 96)}, {"start_minute": 1320, "end_minute": 360, "activity": "sleep", "target_location": Vector2(64, 64)}]

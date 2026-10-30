@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://xsbuhpgu3b0v"]
+
+[ext_resource type="Texture2D" uid="uid://cogxhecmuygj4" path="res://assets/Sunnyside_World_Assets/Tileset/window_spritesheet.png" id="1_4sbid"]
+
+[node name="windows" type="Node2D" unique_id=756721773]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=245839235]
+texture = ExtResource("1_4sbid")
+vframes = 2

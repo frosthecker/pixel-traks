@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://xcvvujgqxboo"]
+
+[ext_resource type="Shader" uid="uid://dp5oxb36f6n8e" path="res://shaders/tool_outline.gdshader" id="1_2aixv"]
+[ext_resource type="Texture2D" uid="uid://bf6dkxq0xsivo" path="res://assets/Sunnyside_World_Assets/Elements/Crops/wood.png" id="2_qbesu"]
+[ext_resource type="Script" uid="uid://dd3r0blb4ns1b" path="res://scripts/log.gd" id="3_qbesu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ifi7"]
+shader = ExtResource("1_2aixv")
+shader_parameter/enabled = true
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 0.50000002375
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u86jo"]
+shader = ExtResource("1_2aixv")
+shader_parameter/enabled = true
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_u86jo"]
+radius = 12.0
+
+[node name="log" type="StaticBody2D" unique_id=2070477663]
+material = SubResource("ShaderMaterial_4ifi7")
+collision_layer = 6
+collision_mask = 7
+script = ExtResource("3_qbesu")
+
+[node name="Area2D" type="Sprite2D" parent="." unique_id=2138021750]
+material = SubResource("ShaderMaterial_u86jo")
+texture = ExtResource("2_qbesu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=79114544]
+shape = SubResource("CircleShape2D_u86jo")
