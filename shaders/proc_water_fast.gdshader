@@ -21,7 +21,9 @@ uniform vec4 color_crest : source_color = vec4(0.714, 0.89, 0.953, 1.0);
 varying vec2 local;
 
 void vertex() {
-	local = VERTEX;
+	// TileMap supplies VERTEX in each tile's local space. Transform it to
+	// world space so the procedural pattern does not restart at tile borders.
+	local = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
 }
 
 float hash(vec2 p) {
