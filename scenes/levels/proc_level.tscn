@@ -15,18 +15,15 @@
 [ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="14_rcits"]
 [ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="15_bmstj"]
 [ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="16_5jnv5"]
-[ext_resource type="AudioStream" uid="uid://bhaxemvrsorok" path="res://assets/Music/sountracks/#67 Gift - Orchestrated.WAV" id="16_bmstj"]
-[ext_resource type="AudioStream" uid="uid://dcxsiyektf3jw" path="res://assets/Music/sountracks/#65 A Day - Orchestrated.WAV" id="17_5jnv5"]
-[ext_resource type="AudioStream" uid="uid://s7nh381j1s4y" path="res://assets/Music/sountracks/#60 Easy Dreams - Orchestrated.WAV" id="18_ifrkw"]
-[ext_resource type="AudioStream" uid="uid://dyj1a1uyteol7" path="res://assets/Music/sountracks/#59 She Will Try - Orchestrated.WAV" id="19_hydf3"]
-[ext_resource type="AudioStream" uid="uid://db4mmya8vkqux" path="res://assets/Music/sountracks/#58 Hour For Two - Orchestrated.WAV" id="20_dex8e"]
-[ext_resource type="AudioStream" uid="uid://bl84oc1tljbsm" path="res://assets/Music/sountracks/#72 Get Out - Orchestrated.WAV" id="21_qmt37"]
-[ext_resource type="AudioStream" uid="uid://b4smbap48q5g6" path="res://assets/Music/sountracks/#66 Give Her Shadow - Orchestrated.WAV" id="22_wg1i5"]
-[ext_resource type="AudioStream" uid="uid://c58twe0p6iyxh" path="res://assets/Music/sountracks/#68 Goodbye Tales - Orchestrated.WAV" id="23_4q8r1"]
-[ext_resource type="AudioStream" uid="uid://bxwknef8gp48a" path="res://assets/Music/sountracks/#69 Wait And See - Orchestrated.WAV" id="24_b6tby"]
-[ext_resource type="AudioStream" uid="uid://bqofrsq4kdqw4" path="res://assets/Music/sountracks/#70 Call For Love - Orchestrated.WAV" id="25_6sbnb"]
-[ext_resource type="AudioStream" uid="uid://b23wosdmitov5" path="res://assets/Music/sountracks/#71 Music Of Something - Orchestrated.WAV" id="26_72b3s"]
-[ext_resource type="AudioStream" uid="uid://dfxq0bbthk0uy" path="res://assets/Music/sountracks/#64 I Think I Like You - Orchestrated.WAV" id="27_6yjl4"]
+[ext_resource type="AudioStream" uid="uid://bm1qait3b7p6g" path="res://assets/music/soundtracks/#58 Hour For Two - Orchestrated.WAV" id="16_eq7mb"]
+[ext_resource type="AudioStream" uid="uid://bk2li1iaeu4ea" path="res://assets/music/soundtracks/#59 She Will Try - Orchestrated.WAV" id="17_ooyhw"]
+[ext_resource type="AudioStream" uid="uid://d1qepxbvx0rl3" path="res://assets/music/soundtracks/#60 Easy Dreams - Orchestrated.WAV" id="18_rcits"]
+[ext_resource type="AudioStream" uid="uid://chx0yit5mx4vr" path="res://assets/music/soundtracks/#65 A Day - Orchestrated.WAV" id="19_bmstj"]
+[ext_resource type="AudioStream" uid="uid://cc1sb12bu5ef2" path="res://assets/music/soundtracks/#66 Give Her Shadow - Orchestrated.WAV" id="20_5jnv5"]
+[ext_resource type="AudioStream" uid="uid://bp2h6mwye3muy" path="res://assets/music/soundtracks/#67 Gift - Orchestrated.WAV" id="21_ifrkw"]
+[ext_resource type="AudioStream" uid="uid://bupbd87dbh3b8" path="res://assets/music/soundtracks/#68 Goodbye Tales - Orchestrated.WAV" id="22_hydf3"]
+[ext_resource type="AudioStream" uid="uid://bkcttklurl3so" path="res://assets/music/soundtracks/#69 Wait And See - Orchestrated.WAV" id="23_dex8e"]
+[ext_resource type="AudioStream" uid="uid://c7w4yq3f55e1y" path="res://assets/music/soundtracks/#70 Call For Love - Orchestrated.WAV" id="24_qmt37"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hsok3"]
 
@@ -49,27 +46,23 @@ vertices = PackedVector2Array(219.57031, -0.7734375, 550.47656, -8.7421875, 546.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 6, 7, 0), PackedInt32Array(7, 8, 0)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-287, -93, -285, 235, 448, 233, 461, 84, 556, 83, 561, -19, 229, -11, 224, -99, -265, -106)])
 
-[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_4ifi7"]
-stream_count = 13
-stream_0 = ExtResource("16_bmstj")
-stream_1 = ExtResource("17_5jnv5")
-stream_2 = ExtResource("21_qmt37")
-stream_3 = ExtResource("22_wg1i5")
-stream_4 = ExtResource("23_4q8r1")
-stream_5 = ExtResource("24_b6tby")
-stream_6 = ExtResource("25_6sbnb")
-stream_7 = ExtResource("26_72b3s")
-stream_8 = ExtResource("21_qmt37")
-stream_9 = ExtResource("27_6yjl4")
-stream_10 = ExtResource("18_ifrkw")
-stream_11 = ExtResource("19_hydf3")
-stream_12 = ExtResource("20_dex8e")
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_7j8v6"]
+shuffle = true
+stream_count = 9
+stream_0 = ExtResource("16_eq7mb")
+stream_1 = ExtResource("17_ooyhw")
+stream_2 = ExtResource("18_rcits")
+stream_3 = ExtResource("19_bmstj")
+stream_4 = ExtResource("20_5jnv5")
+stream_5 = ExtResource("21_ifrkw")
+stream_6 = ExtResource("22_hydf3")
+stream_7 = ExtResource("23_dex8e")
+stream_8 = ExtResource("24_qmt37")
 
 [node name="level" type="Node2D" unique_id=968858291]
 script = ExtResource("1_3jh03")
 noise_height_text = SubResource("NoiseTexture2D_ubuo4")
 noise_tree_text = SubResource("NoiseTexture2D_7iper")
-max_tree_count = 1000
 
 [node name="Layers" type="Node2D" parent="." unique_id=991742646]
 
@@ -80,9 +73,11 @@ tile_set = ExtResource("2_7iper")
 [node name="ground_1" type="TileMapLayer" parent="Layers" unique_id=1005478439]
 z_index = -1
 tile_set = ExtResource("2_7iper")
+collision_enabled = false
 
 [node name="ground_2" type="TileMapLayer" parent="Layers" unique_id=1321193760]
 tile_set = ExtResource("2_7iper")
+collision_enabled = false
 
 [node name="LightDirtLayer" type="TileMapLayer" parent="Layers" unique_id=338066438]
 tile_set = ExtResource("2_7iper")
@@ -184,9 +179,8 @@ autostart = true
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_hydf3")
 
-[node name="Audio" type="Node2D" parent="." unique_id=2008319163]
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Audio" unique_id=49584914]
-stream = SubResource("AudioStreamPlaylist_4ifi7")
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=219659575]
+stream = SubResource("AudioStreamPlaylist_7j8v6")
+autoplay = true
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

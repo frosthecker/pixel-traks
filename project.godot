@@ -19,12 +19,13 @@ config/icon="res://icon.svg"
 
 Data="*uid://d1uhsv5tkrg2h"
 Enum="*uid://brb7nes73ibj2"
-Dialogic="*uid://ds2q0uclmolvu"
 WorldTime="*res://scripts/world_time.gd"
 GroqService="*res://scripts/groq_service.gd"
 JsonData="*uid://h0kdt251magh"
 PlayerInventory="*uid://dulpok11oldcd"
-SaveGame="*res://scripts/singleton/save_game.gd"
+SaveGame="*uid://rq2k6xt1leh6"
+GameSetting="*uid://t726jfj63lbh"
+Dialogic="*uid://ds2q0uclmolvu"
 
 [dialogic]
 
