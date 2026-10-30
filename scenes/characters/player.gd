@@ -24,6 +24,10 @@ func _ready() -> void:
 	animation_tree.active = true
 
 func _physics_process(delta: float) -> void:
+	if current_style == 2:
+		sprite2d.vframes = 18
+	else:
+		sprite2d.vframes = 17
 	if not can_move and not animation_tree.get("parameters/ToolOneShot/active"):
 		can_move = true
 	if can_move:

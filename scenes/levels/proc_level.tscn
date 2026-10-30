@@ -70,6 +70,7 @@ tile_set = ExtResource("2_7iper")
 
 [node name="Objects" type="Node2D" parent="." unique_id=1483981050]
 y_sort_enabled = true
+position = Vector2(632, 304)
 
 [node name="environment" type="TileMapLayer" parent="Objects" unique_id=1944537496]
 y_sort_enabled = true
@@ -83,6 +84,11 @@ position = Vector2(-14, 47)
 
 [node name="Camera2D2" type="Camera2D" parent="Objects/Player" unique_id=29486257]
 zoom = Vector2(4, 4)
+limit_enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 4096
+limit_bottom = 4096
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
