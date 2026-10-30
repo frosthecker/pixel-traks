@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b502i2647p4ef"]
 
-[ext_resource type="Script" path="res://scripts/save_load.gd" id="1_save_load"]
 [ext_resource type="Texture2D" uid="uid://dgn60yvyul47k" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/11.png" id="1_6ib35"]
+[ext_resource type="Script" uid="uid://c34440udyhfr1" path="res://scripts/save_load.gd" id="1_save_load"]
 [ext_resource type="Texture2D" uid="uid://rryybsagv5ym" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/12.png" id="2_axkc8"]
 [ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="3_md8q1"]
 [ext_resource type="Texture2D" uid="uid://ctu8503v10mx0" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/9.png" id="4_7txf5"]

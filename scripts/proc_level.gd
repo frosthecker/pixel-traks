@@ -30,6 +30,21 @@ var day_transition_tween: Tween
 @export_range(100, 2000, 25) var max_tree_count: int = 750 ## Keeps scene-tile physics affordable on low-end devices
 var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_noise_threshold
 
+@export_group("Night Enemies")
+@export var skeleton_scene: PackedScene
+@export var max_skeletons: int = 6
+@export var skeleton_spawn_interval: float = 5.0
+@export var skeleton_spawn_min_distance: float = 260.0
+@export var skeleton_spawn_max_distance: float = 420.0
+@export var morning_hour: int = 6
+@export var night_start_hour: int = 19
+@export_range(0.0, 1.0, 0.01) var night_brightness_threshold: float = 0.6
+@export var tree_shelter_radius: float = 26.0
+
+@export_group("Player")
+@export var player_max_health: int = 10
+@export var player_hit_immunity: float = 0.7
+
 var noise: Noise
 var tree_noise: Noise
 var world_seed: int = 0
@@ -54,6 +69,15 @@ var terrain_grass_int = 0
 var _restored_world_data := false
 var world_boot_complete := false
 var _daylight_update_elapsed := 0.0
+var player_health: int = 10
+var spawn_position := Vector2.INF
+var default_inventory: Dictionary = {}
+var health_bar_back: ColorRect
+var health_bar_fill: ColorRect
+var contrast_layer: CanvasLayer
+var _skeleton_spawn_elapsed := 0.0
+var _skeleton_scene_searched := false
+var _damage_immune_until := 0.0
 
 
 func _ready() -> void:
@@ -67,6 +91,15 @@ func _ready() -> void:
 		tree_noise = FastNoiseLite.new()
 		tree_noise.frequency = 0.02
 		tree_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	add_to_group("Level")
+	add_to_group("SettingsListeners")
+	if player != null and not player.is_in_group("Player"):
+		player.add_to_group("Player")
+	default_inventory = PlayerInventory.get_save_data()
+	player_health = player_max_health
+	_setup_health_bar()
+	_setup_contrast_layer()
+	on_settings_changed()
 	# Generation intentionally yields so the loading animation stays responsive.
 	# Do not expose the partially populated TileMaps during those yield points.
 	_set_world_visible(false)
@@ -84,10 +117,7 @@ func _ready() -> void:
 			call_deferred("_save_migrated_world")
 	else:
 		SaveGame.new_world_requested = false
-		WorldTime.day_count = 1
-		WorldTime.set_time(WorldTime.start_minutes)
-		await generate_world()
-		day_timer.start()
+		await _begin_new_world()
 		call_deferred("_save_migrated_world")
 	_set_world_visible(true)
 	_play_startup_transition()
@@ -107,7 +137,7 @@ func _play_startup_transition() -> void:
 	day_transition_layer.visible = true
 	day_transition_layer_material.set_shader_parameter("progress", 1.0)
 	var transition := create_tween()
-	transition.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)
+	transition.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, _transition_time(1.0))
 	transition.tween_callback(_finish_day_transition)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -215,10 +245,10 @@ func day_restart() -> void:
 	day_transition_layer.visible = true
 	day_transition_layer_material.set_shader_parameter("progress", 0.0)
 	day_transition_tween = create_tween()
-	day_transition_tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 1.0, 1.0)
-	day_transition_tween.tween_interval(0.5)
+	day_transition_tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 1.0, _transition_time(1.0))
+	day_transition_tween.tween_interval(_transition_time(0.5))
 	day_transition_tween.tween_callback(level_reset)
-	day_transition_tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)
+	day_transition_tween.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, _transition_time(1.0))
 	day_transition_tween.tween_callback(_finish_day_transition)
 
 func _finish_day_transition() -> void:
@@ -231,6 +261,12 @@ func level_reset():
 	plant_info_container.update_all()
 	WorldTime.day_count += 1
 	WorldTime.set_time(WorldTime.start_minutes)
+	_clear_skeletons()
+	var died := player_health <= 0
+	player_health = player_max_health
+	if died and spawn_position.is_finite():
+		player.global_position = spawn_position
+	_update_health_bar()
 	day_timer.start()
 
 func plant_death(coord: Vector2i):
@@ -268,6 +304,7 @@ func get_save_data() -> Dictionary:
 
 	return {
 		"world_seed": world_seed,
+		"spawn_position": _vector_to_data(spawn_position) if spawn_position.is_finite() else [],
 		"world": {
 			"water": _serialize_tile_layer(water),
 			"ground_1": _serialize_tile_layer(ground_1),
@@ -279,7 +316,8 @@ func get_save_data() -> Dictionary:
 			"last_direction": _vector_to_data(player.last_direction),
 			"current_tool": int(player.current_tool),
 			"current_seed": int(player.current_seed),
-			"current_style": int(player.current_style)
+			"current_style": int(player.current_style),
+			"health": player_health
 		},
 		"world_time": {
 			"minutes": WorldTime.get_current_minutes(),
@@ -318,6 +356,12 @@ func apply_save_data(save_data: Dictionary) -> void:
 		player.current_style = int(player_data.get("current_style", player.current_style)) as Enum.Style
 		if Data.PLAYER_SKINS.has(player.current_style):
 			player.sprite.texture = Data.PLAYER_SKINS[player.current_style]
+		player_health = clampi(int(player_data.get("health", player_max_health)), 1, player_max_health)
+		_update_health_bar()
+
+	var spawn_data: Variant = save_data.get("spawn_position", [])
+	if spawn_data is Array and spawn_data.size() >= 2:
+		spawn_position = _data_to_vector(spawn_data)
 
 	var time_data: Variant = save_data.get("world_time", {})
 	if time_data is Dictionary:
@@ -503,7 +547,70 @@ func generate_world() -> void:
 	ground_1.set_cells_terrain_connect(sand_tiles_arr, 0, terrain_sand_int, false)
 	ground_2.set_cells_terrain_connect(grass_tiles_arr, 0, terrain_grass_int)
 	await get_tree().process_frame
+	_place_entities_on_grass()
 	await _generate_forests(grass_tiles_arr)
+
+func _place_entities_on_grass() -> void:
+	var grass_set: Dictionary = {}
+	for cell in grass_tiles_arr:
+		grass_set[cell] = true
+	if grass_set.is_empty():
+		return
+
+	var entities: Array[Node2D] = []
+	if player != null:
+		entities.append(player)
+	for npc in get_tree().get_nodes_in_group("NPC"):
+		entities.append(npc)
+	var shop: Node2D = get_node_or_null("Objects/shop")
+	if shop != null:
+		entities.append(shop)
+	if entities.is_empty():
+		return
+
+	var origin: Vector2 = entities[0].global_position
+	var offsets: Array[Vector2] = []
+	for entity in entities:
+		offsets.append(entity.global_position - origin)
+
+	var anchor: Vector2i = _find_spawn_cell(grass_set)
+	var anchor_pos: Vector2 = ground_2.to_global(ground_2.map_to_local(anchor))
+	var taken: Dictionary = {}
+	for i in entities.size():
+		var wanted: Vector2i = ground_2.local_to_map(ground_2.to_local(anchor_pos + offsets[i]))
+		var cell: Vector2i = _nearest_free_grass_cell(wanted, grass_set, taken)
+		taken[cell] = true
+		entities[i].global_position = ground_2.to_global(ground_2.map_to_local(cell))
+	if player != null:
+		spawn_position = player.global_position
+
+func _find_spawn_cell(grass_set: Dictionary) -> Vector2i:
+	var cells: Array = grass_set.keys()
+	cells.sort_custom(func(a: Vector2i, b: Vector2i): return a.length_squared() < b.length_squared())
+	for radius in [8, 4, 1]:
+		for cell in cells:
+			var open := true
+			for x in range(-radius, radius + 1):
+				for y in range(-radius, radius + 1):
+					if not grass_set.has(cell + Vector2i(x, y)):
+						open = false
+						break
+				if not open:
+					break
+			if open:
+				return cell
+	return cells[0]
+
+func _nearest_free_grass_cell(wanted: Vector2i, grass_set: Dictionary, taken: Dictionary) -> Vector2i:
+	for r in range(0, 24):
+		for dx in range(-r, r + 1):
+			for dy in range(-r, r + 1):
+				if maxi(absi(dx), absi(dy)) != r:
+					continue
+				var cell := wanted + Vector2i(dx, dy)
+				if grass_set.has(cell) and not taken.has(cell) and _has_grass_clearing(cell, grass_set):
+					return cell
+	return wanted
 
 func _generate_forests(grass_cells_arr: Array[Vector2i]) -> void:
 	if environment == null or tree_noise == null:
@@ -637,3 +744,245 @@ func _limit_tree_count() -> void:
 			environment.erase_cell(cell)
 		else:
 			kept += 1
+
+
+func _physics_process(delta: float) -> void:
+	if not world_boot_complete:
+		return
+	_skeleton_spawn_elapsed += delta
+	if _skeleton_spawn_elapsed < skeleton_spawn_interval:
+		return
+	_skeleton_spawn_elapsed = 0.0
+	_try_spawn_skeleton()
+
+func is_daytime() -> bool:
+	if daytime_color != null and day_timer != null and day_timer.wait_time > 0.0:
+		var progress: float = 1.0 - day_timer.time_left / day_timer.wait_time
+		return daytime_color.sample(progress).get_luminance() >= night_brightness_threshold
+	var hour: float = posmod(int(WorldTime.get_current_minutes()), 1440) / 60.0
+	return hour >= morning_hour and hour < night_start_hour
+
+func _try_spawn_skeleton() -> void:
+	if is_daytime() or player == null:
+		return
+	if get_tree().get_nodes_in_group("Skeletons").size() >= max_skeletons:
+		return
+	var scene := _get_skeleton_scene()
+	if scene == null:
+		return
+	for attempt in 16:
+		var spawn_pos: Vector2 = player.global_position + Vector2.from_angle(randf() * TAU) * randf_range(skeleton_spawn_min_distance, skeleton_spawn_max_distance)
+		var cell: Vector2i = ground_2.local_to_map(ground_2.to_local(spawn_pos))
+		if not _has_grass_tile_clearing(cell) or environment.get_cell_source_id(cell) != -1:
+			continue
+		var skeleton: Node2D = scene.instantiate()
+		$Objects.add_child(skeleton)
+		skeleton.global_position = ground_2.to_global(ground_2.map_to_local(cell))
+		return
+
+func _get_skeleton_scene() -> PackedScene:
+	if skeleton_scene != null:
+		return skeleton_scene
+	if _skeleton_scene_searched:
+		return null
+	_skeleton_scene_searched = true
+	var path := _find_scene_file("res://")
+	if path == "":
+		push_warning("No skeleton scene found. Assign skeleton_scene on the level node.")
+		return null
+	skeleton_scene = load(path) as PackedScene
+	return skeleton_scene
+
+func _find_scene_file(dir_path: String) -> String:
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		return ""
+	for file in dir.get_files():
+		var clean := file.trim_suffix(".remap")
+		if clean.to_lower().begins_with("skeleton") and clean.ends_with(".tscn"):
+			return dir_path.path_join(clean)
+	for sub_dir in dir.get_directories():
+		if sub_dir == "addons" or sub_dir.begins_with("."):
+			continue
+		var found := _find_scene_file(dir_path.path_join(sub_dir))
+		if found != "":
+			return found
+	return ""
+
+func _nearest_tree_position(world_pos: Vector2, max_distance: float) -> Vector2:
+	if environment == null or environment.tile_set == null:
+		return Vector2.INF
+	var center: Vector2i = environment.local_to_map(environment.to_local(world_pos))
+	var tile_size: float = environment.tile_set.tile_size.x
+	var span: int = int(ceil(max_distance / tile_size))
+	var best := Vector2.INF
+	var best_distance := max_distance
+	for x in range(-span, span + 1):
+		for y in range(-span, span + 1):
+			var cell := center + Vector2i(x, y)
+			if environment.get_cell_source_id(cell) != tree_source_id:
+				continue
+			var tree_pos: Vector2 = environment.to_global(environment.map_to_local(cell))
+			var distance := tree_pos.distance_to(world_pos)
+			if distance < best_distance:
+				best_distance = distance
+				best = tree_pos
+	return best
+
+func is_under_tree(world_pos: Vector2) -> bool:
+	return _nearest_tree_position(world_pos, tree_shelter_radius).is_finite()
+
+func find_cover(from_pos: Vector2, radius: float) -> Vector2:
+	var tree_pos := _nearest_tree_position(from_pos, radius)
+	if not tree_pos.is_finite():
+		return Vector2.INF
+	return tree_pos + Vector2(0, 12)
+
+func damage_player(amount: int, _from_position: Vector2 = Vector2.ZERO) -> void:
+	if not world_boot_complete or player_health <= 0:
+		return
+	var now := Time.get_ticks_msec() / 1000.0
+	if now < _damage_immune_until:
+		return
+	_damage_immune_until = now + player_hit_immunity
+	player_health = maxi(0, player_health - amount)
+	_update_health_bar()
+	player.modulate = Color(1.0, 0.35, 0.35)
+	create_tween().tween_property(player, "modulate", Color.WHITE, 0.25)
+	_shake_camera(2.5)
+	if player_health <= 0:
+		_on_player_died()
+
+func _shake_camera(strength: float) -> void:
+	var shake_enabled: bool = GameSettings.get_value("video", "screen_shake")
+	var reduced_motion: bool = GameSettings.get_value("accessibility", "reduced_motion")
+	if not shake_enabled or reduced_motion:
+		return
+	var camera: Camera2D = null
+	for child in player.get_children():
+		if child is Camera2D:
+			camera = child
+			break
+	if camera == null:
+		return
+	var tween := create_tween()
+	for i in 5:
+		tween.tween_property(camera, "offset", Vector2(randf_range(-strength, strength), randf_range(-strength, strength)), 0.04)
+	tween.tween_property(camera, "offset", Vector2.ZERO, 0.04)
+
+func _on_player_died() -> void:
+	_clear_skeletons()
+	day_restart()
+
+func _clear_skeletons() -> void:
+	for skeleton in get_tree().get_nodes_in_group("Skeletons"):
+		skeleton.queue_free()
+
+func _setup_health_bar() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 20
+	health_bar_back = ColorRect.new()
+	health_bar_back.color = Color(0.09, 0.07, 0.12, 0.85)
+	health_bar_back.position = Vector2(16, 16)
+	health_bar_back.size = Vector2(124, 14)
+	health_bar_back.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	health_bar_fill = ColorRect.new()
+	health_bar_fill.color = Color(0.86, 0.2, 0.25)
+	health_bar_fill.position = Vector2(2, 2)
+	health_bar_fill.size = Vector2(120, 10)
+	health_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	health_bar_back.add_child(health_bar_fill)
+	layer.add_child(health_bar_back)
+	add_child(layer)
+
+func _update_health_bar() -> void:
+	if health_bar_fill == null:
+		return
+	health_bar_fill.size.x = 120.0 * float(player_health) / float(maxi(player_max_health, 1))
+
+func _setup_contrast_layer() -> void:
+	contrast_layer = CanvasLayer.new()
+	contrast_layer.layer = 100
+	var rect := ColorRect.new()
+	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var shader := Shader.new()
+	shader.code = "shader_type canvas_item;\nuniform sampler2D screen_texture : hint_screen_texture, filter_nearest;\nuniform float contrast = 1.4;\nvoid fragment() {\n\tvec3 color = texture(screen_texture, SCREEN_UV).rgb;\n\tcolor = (color - 0.5) * contrast + 0.5;\n\tCOLOR = vec4(clamp(color, 0.0, 1.0), 1.0);\n}\n"
+	var shader_material := ShaderMaterial.new()
+	shader_material.shader = shader
+	rect.material = shader_material
+	contrast_layer.add_child(rect)
+	contrast_layer.visible = false
+	add_child(contrast_layer)
+
+func on_settings_changed() -> void:
+	if contrast_layer != null:
+		contrast_layer.visible = GameSettings.get_value("accessibility", "high_contrast")
+
+func _transition_time(seconds: float) -> float:
+	if GameSettings.get_value("accessibility", "reduced_motion"):
+		return seconds * 0.3
+	return seconds
+
+func _begin_new_world() -> void:
+	_clear_world_entities()
+	PlayerInventory.load_save_data(default_inventory.duplicate(true))
+	WorldTime.day_count = 1
+	WorldTime.set_time(WorldTime.start_minutes)
+	player_health = player_max_health
+	_update_health_bar()
+	await generate_world()
+	day_timer.start()
+
+func _clear_world_entities() -> void:
+	for plant in get_tree().get_nodes_in_group("Plants"):
+		plant.free()
+	for item in get_tree().get_nodes_in_group("DroppedItems"):
+		item.free()
+	_clear_skeletons()
+	used_cells.clear()
+	$Layers/LightDirtLayer.clear()
+	$Layers/DarkDirtLayer.clear()
+
+func _cover_screen() -> void:
+	if day_transition_layer_material == null:
+		return
+	day_transition_layer.visible = true
+	day_transition_layer_material.set_shader_parameter("progress", 1.0)
+
+func _load_or_create_world() -> void:
+	_cover_screen()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_set_world_visible(false)
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+	_clear_world_entities()
+	_restored_world_data = false
+	if SaveGame.has_save():
+		SaveGame.load_game(self)
+		if not _restored_world_data:
+			await generate_world()
+	else:
+		await _begin_new_world()
+	player.process_mode = Node.PROCESS_MODE_INHERIT
+	_set_world_visible(true)
+	_play_startup_transition()
+	world_boot_complete = true
+	call_deferred("_save_migrated_world")
+
+func switch_world(slot: int) -> void:
+	if not world_boot_complete or slot == SaveGame.current_slot:
+		return
+	if slot < 1 or slot > SaveGame.SLOT_COUNT:
+		return
+	SaveGame.save_game(self)
+	world_boot_complete = false
+	SaveGame.current_slot = slot
+	await _load_or_create_world()
+
+func new_world_in_slot() -> void:
+	if not world_boot_complete:
+		return
+	world_boot_complete = false
+	SaveGame.delete_save()
+	await _load_or_create_world()

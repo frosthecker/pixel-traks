@@ -51,9 +51,11 @@ tile_set = ExtResource("2_7iper")
 [node name="ground_1" type="TileMapLayer" parent="Layers" unique_id=1005478439]
 z_index = -1
 tile_set = ExtResource("2_7iper")
+collision_enabled = false
 
 [node name="ground_2" type="TileMapLayer" parent="Layers" unique_id=1321193760]
 tile_set = ExtResource("2_7iper")
+collision_enabled = false
 
 [node name="LightDirtLayer" type="TileMapLayer" parent="Layers" unique_id=338066438]
 tile_set = ExtResource("2_7iper")

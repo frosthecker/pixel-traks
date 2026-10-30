@@ -153,10 +153,8 @@ func _apply_settings() -> void:
 	var scale_factor := float(settings.accessibility.text_scale) / 100.0
 	option_list.scale = Vector2.ONE * scale_factor
 	option_list.position = Vector2.ZERO
-	if settings.accessibility.high_contrast:
-		modulate = Color(1.15, 1.15, 1.15, 1.0)
-	else:
-		modulate = Color.WHITE
+	GameSettings.values = settings
+	get_tree().call_group("SettingsListeners", "on_settings_changed")
 
 
 func _load_settings() -> void:
