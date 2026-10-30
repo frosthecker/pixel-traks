@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://b0mnopqlx5dix"]
 
 [ext_resource type="Script" uid="uid://dbmbhotl3mjb4" path="res://scenes/characters/player.gd" id="2_76oj4"]
-[ext_resource type="Texture2D" uid="uid://dll3c0647oao1" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_spikey_hair.png" id="2_yewv4"]
+[ext_resource type="Texture2D" uid="uid://ci41j325dxci7" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_spikey_hair.png" id="2_yewv4"]
 [ext_resource type="PackedScene" uid="uid://b0b8cstbg0xhi" path="res://scenes/UI/tool_ui.tscn" id="3_76oj4"]
 [ext_resource type="Texture2D" uid="uid://c5yp2qyklxhfx" path="res://assets/Sunnyside_World_Assets/UI/expression_working.png" id="4_dyp2m"]
 [ext_resource type="Texture2D" uid="uid://c8kx1ahuw854r" path="res://assets/Sunnyside_World_Assets/UI/greenbar_00.png" id="5_kqtwu"]
-[ext_resource type="Texture2D" uid="uid://cv4nrx5g4fqi2" path="res://assets/Sunnyside_World_Assets/UI/green_bar_progress.png" id="6_6eyoc"]
+[ext_resource type="Texture2D" uid="uid://qyyqqu3bmehk" path="res://assets/Sunnyside_World_Assets/UI/green_bar_progress.png" id="6_6eyoc"]
 [ext_resource type="Script" uid="uid://b8udj2lx4lwqu" path="res://scripts/pickup_slot.gd" id="7_6eyoc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
@@ -542,6 +542,62 @@ tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0.0027123687),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_yyjep"]
+resource_name = "hurt_left"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1004, 0.19979998, 0.3004, 0.4004, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [108, 109, 110, 111, 112, 113]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_6aj6e"]
+resource_name = "hurt_right"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1004, 0.19979998, 0.3004, 0.4004, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [108, 109, 110, 111, 112, 113]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -1514,6 +1570,8 @@ _data = {
 &"hammer_right": SubResource("Animation_g66nw"),
 &"hoe_left": SubResource("Animation_d6tgn"),
 &"hoe_right": SubResource("Animation_rpnd8"),
+&"hurt_left": SubResource("Animation_yyjep"),
+&"hurt_right": SubResource("Animation_6aj6e"),
 &"idle_dleft": SubResource("Animation_3wg1y"),
 &"idle_down": SubResource("Animation_rp718"),
 &"idle_dright": SubResource("Animation_yhyq5"),
@@ -1730,7 +1788,7 @@ states/swim/position = Vector2(220.46223, 160.66666)
 states/walk/node = SubResource("AnimationNodeBlendSpace2D_76oj4")
 states/walk/position = Vector2(249.90666, -8.333336)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_rpnd8"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_yewv4"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_76oj4"), "idle", "swim", SubResource("AnimationNodeStateMachineTransition_uvbm0"), "swim", "idle", SubResource("AnimationNodeStateMachineTransition_4ttjg")]
-graph_offset = Vector2(3.7955627, -114)
+graph_offset = Vector2(-31.204437, -55)
 
 [sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_yewv4"]
 
@@ -2262,7 +2320,7 @@ transitions = ["Start", "Axe", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(124, 196.30896)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_inhyd"]
-graph_offset = Vector2(-101.51697, -351.573)
+graph_offset = Vector2(-397.18262, -215.02263)
 nodes/output/position = Vector2(960, -80)
 nodes/ToolStateMachine/node = SubResource("AnimationNodeStateMachine_w5sjy")
 nodes/ToolStateMachine/position = Vector2(120, -140)

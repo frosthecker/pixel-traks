@@ -15,6 +15,8 @@
 [ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="14_rcits"]
 [ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="15_bmstj"]
 [ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="16_5jnv5"]
+[ext_resource type="Texture2D" uid="uid://ct00lowdu4brr" path="res://assets/Sunnyside_World_Assets/UI/redbar_00.png" id="16_dute6"]
+[ext_resource type="Texture2D" uid="uid://bo38r0b2tab1k" path="res://assets/Sunnyside_World_Assets/UI/red_bar_progress.png" id="17_b4i4j"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hsok3"]
 
@@ -80,7 +82,7 @@ y_sort_enabled = true
 position = Vector2(-14, 47)
 
 [node name="Camera2D2" type="Camera2D" parent="Objects/Player" unique_id=29486257]
-zoom = Vector2(0.33, 0.33)
+zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
@@ -126,6 +128,22 @@ groq_character_id = "Orin"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Overlay" unique_id=1955086363]
 
+[node name="healthbar" type="TextureProgressBar" parent="Overlay/CanvasLayer" unique_id=1531441472]
+offset_left = 24.0
+offset_top = 25.0
+offset_right = 116.0
+offset_bottom = 32.0
+scale = Vector2(3, 3)
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 4
+texture_under = ExtResource("16_dute6")
+texture_progress = ExtResource("17_b4i4j")
+texture_progress_offset = Vector2(0, -1)
+
 [node name="DayTransitionLayer" type="ColorRect" parent="Overlay/CanvasLayer" unique_id=305253743]
 material = SubResource("ShaderMaterial_ifrkw")
 anchors_preset = 15
@@ -156,5 +174,7 @@ autostart = true
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="navigation" unique_id=1145460728]
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_hydf3")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1908090457]
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

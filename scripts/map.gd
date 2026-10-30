@@ -67,12 +67,12 @@ func _input(event: InputEvent) -> void:
 
 	# W/S are the map's temporary up/down controls. They are consumed here and
 	# the player is locked while the panel is open, so they never move the player.
-	if event.keycode == KEY_UP or event.keycode == KEY_W:
+	if event.keycode == KEY_UP:
 		page_flip_anim.play("next")
 		await  page_flip_anim.animation_finished
 		_show_page(posmod(current_page - 1, PAGE_NAMES.size()))
 		get_viewport().set_input_as_handled()
-	elif event.keycode == KEY_DOWN or event.keycode == KEY_S:
+	elif event.keycode == KEY_DOWN:
 		page_flip_anim.play("previous")
 		await  page_flip_anim.animation_finished
 		_show_page(posmod(current_page + 1, PAGE_NAMES.size()))
@@ -89,11 +89,11 @@ func open():
 	visible = true
 	if player == null:
 		player = get_tree().current_scene.get_node_or_null("Objects/Player")
-	if player != null and player.get("can_move") != null:
-		player_can_move_before_open = player.can_move
-		player_physics_processing_before_open = player.is_physics_processing()
-		player.can_move = false
-		player.set_physics_process(false)
+	#if player != null and player.get("can_move") != null:
+		#player_can_move_before_open = player.can_move
+		#player_physics_processing_before_open = player.is_physics_processing()
+		#player.can_move = false
+		#player.set_physics_process(false)
 	_show_page(current_page)
 	#light_flicker.play("open")
 	#await light_flicker.animation_finished

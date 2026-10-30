@@ -74,6 +74,7 @@ var contrast_layer: CanvasLayer
 var _skeleton_spawn_elapsed := 0.0
 var _skeleton_scene_searched := false
 var _damage_immune_until := 0.0
+@onready var healthbar: TextureProgressBar = $Overlay/CanvasLayer/healthbar
 
 
 func _ready() -> void:
@@ -93,7 +94,7 @@ func _ready() -> void:
 		player.add_to_group("Player")
 	default_inventory = PlayerInventory.get_save_data()
 	player_health = player_max_health
-	_setup_health_bar()
+	#_setup_health_bar()
 	_setup_contrast_layer()
 	on_settings_changed()
 	# Generation intentionally yields so the loading animation stays responsive.
@@ -818,8 +819,10 @@ func damage_player(amount: int, _from_position: Vector2 = Vector2.ZERO) -> void:
 	_damage_immune_until = now + player_hit_immunity
 	player_health = maxi(0, player_health - amount)
 	_update_health_bar()
-	player.modulate = Color(1.0, 0.35, 0.35)
-	create_tween().tween_property(player, "modulate", Color.WHITE, 0.25)
+	#player.modulate = Color(1.0, 0.35, 0.35)
+	#create_tween().tween_property(player, "modulate", Color.WHITE, 0.25)
+	player.get_node("Animation/AnimationPlayer").play('hurt_left')
+	
 	_shake_camera(2.5)
 	if player_health <= 0:
 		_on_player_died()
@@ -849,27 +852,11 @@ func _clear_skeletons() -> void:
 	for skeleton in get_tree().get_nodes_in_group("Skeletons"):
 		skeleton.queue_free()
 
-func _setup_health_bar() -> void:
-	var layer := CanvasLayer.new()
-	layer.layer = 20
-	health_bar_back = ColorRect.new()
-	health_bar_back.color = Color(0.09, 0.07, 0.12, 0.85)
-	health_bar_back.position = Vector2(16, 16)
-	health_bar_back.size = Vector2(124, 14)
-	health_bar_back.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	health_bar_fill = ColorRect.new()
-	health_bar_fill.color = Color(0.86, 0.2, 0.25)
-	health_bar_fill.position = Vector2(2, 2)
-	health_bar_fill.size = Vector2(120, 10)
-	health_bar_fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	health_bar_back.add_child(health_bar_fill)
-	layer.add_child(health_bar_back)
-	add_child(layer)
 
 func _update_health_bar() -> void:
-	if health_bar_fill == null:
-		return
-	health_bar_fill.size.x = 120.0 * float(player_health) / float(maxi(player_max_health, 1))
+	# Calculate the health percentage (0 to 100) dynamically
+	var health_pct : float = (float(player_health) / float(maxi(player_max_health, 1))) * 100.0
+	healthbar.value = health_pct
 
 func _setup_contrast_layer() -> void:
 	contrast_layer = CanvasLayer.new()
