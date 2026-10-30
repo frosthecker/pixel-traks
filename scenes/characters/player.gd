@@ -66,6 +66,11 @@ func get_basic_input():
 		print(current_seed)
 	
 	if Input.is_action_just_pressed("action"):
+		# Check if the player is facing up or down
+		if last_direction == Vector2.UP or last_direction == Vector2.DOWN:
+			print("Cannot use tools while facing up or down!")
+			return # Exit the block early so the tool is not used
+			
 		can_move = false
 		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		animation_tree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
