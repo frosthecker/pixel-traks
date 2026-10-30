@@ -1,0 +1,209 @@
+[gd_scene format=3 uid="uid://c3xg7cgii4k65"]
+
+[ext_resource type="Script" uid="uid://oiit7pytcwn5" path="res://scenes/UI/inventory.gd" id="1_kpdmy"]
+[ext_resource type="Texture2D" uid="uid://b3uuw42721vtl" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/3.png" id="2_lvvmf"]
+[ext_resource type="Texture2D" uid="uid://blnq8rw405i7j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/0.png" id="4_kpdmy"]
+[ext_resource type="Script" uid="uid://b6og31nec0waq" path="res://scripts/slot.gd" id="4_krngk"]
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="5_qjyq4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4ifi7"]
+texture = ExtResource("2_lvvmf")
+
+[node name="inventory" type="Node2D" unique_id=344952141]
+script = ExtResource("1_kpdmy")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=940011204]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.22845
+offset_top = -128.0
+offset_right = -1.6142273
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+theme = ExtResource("5_qjyq4")
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer" unique_id=492371688]
+custom_minimum_size = Vector2(240, 140)
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 5
+
+[node name="Slot1" type="Panel" parent="ScrollContainer/GridContainer" unique_id=43626023]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot2" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1508790787]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot3" type="Panel" parent="ScrollContainer/GridContainer" unique_id=2059307069]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot4" type="Panel" parent="ScrollContainer/GridContainer" unique_id=2053835006]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot5" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1562299237]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot6" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1241017161]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot7" type="Panel" parent="ScrollContainer/GridContainer" unique_id=191153856]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot8" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1528395053]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot9" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1241868641]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot10" type="Panel" parent="ScrollContainer/GridContainer" unique_id=361209694]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot11" type="Panel" parent="ScrollContainer/GridContainer" unique_id=975283114]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot12" type="Panel" parent="ScrollContainer/GridContainer" unique_id=531257293]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot13" type="Panel" parent="ScrollContainer/GridContainer" unique_id=777728409]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot14" type="Panel" parent="ScrollContainer/GridContainer" unique_id=500461229]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot15" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1342522060]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot16" type="Panel" parent="ScrollContainer/GridContainer" unique_id=13953564]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot17" type="Panel" parent="ScrollContainer/GridContainer" unique_id=205374320]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot18" type="Panel" parent="ScrollContainer/GridContainer" unique_id=980132224]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot19" type="Panel" parent="ScrollContainer/GridContainer" unique_id=989437481]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot20" type="Panel" parent="ScrollContainer/GridContainer" unique_id=621711090]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot21" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1917504306]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot22" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1829943224]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot23" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1438433731]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="Slot24" type="Panel" parent="ScrollContainer/GridContainer" unique_id=1708214364]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_4ifi7")
+script = ExtResource("4_krngk")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="." unique_id=1142074164]
+offset_left = -260.0
+offset_top = 63.0
+offset_right = -114.0
+offset_bottom = 103.0
+
+[node name="TextureRect2" type="TextureRect" parent="HBoxContainer2" unique_id=503738655]
+layout_mode = 2
+texture = ExtResource("4_kpdmy")
+
+[node name="Label" type="Label" parent="HBoxContainer2" unique_id=1114239873]
+layout_mode = 2
+theme = ExtResource("5_qjyq4")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer2" unique_id=1815357690]
+layout_mode = 2
+texture = ExtResource("4_kpdmy")
+flip_h = true
+
+[node name="item_description" type="Label" parent="." unique_id=1947698439]
+offset_left = -136.0
+offset_top = 176.0
+offset_right = -90.0
+offset_bottom = 200.0
+theme = ExtResource("5_qjyq4")
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1

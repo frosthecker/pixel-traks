@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cjaqa7v8n5of8"]
+
+[ext_resource type="Texture2D" uid="uid://ev27lhgftnbl" path="res://assets/Sunnyside_World_Assets/Tileset/house_tileset.png" id="1_gfo0o"]
+
+[node name="stairs" type="Node2D" unique_id=515847278]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1791428251]
+texture = ExtResource("1_gfo0o")
+hframes = 32
+vframes = 32
+frame = 8

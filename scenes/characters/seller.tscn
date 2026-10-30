@@ -1,0 +1,203 @@
+[gd_scene format=3 uid="uid://cpm07of23fq6r"]
+
+[ext_resource type="Texture2D" uid="uid://dt6rl4xrg78td" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_short_hair.png" id="1_lftx6"]
+[ext_resource type="Texture2D" uid="uid://bvf1ul2ljuh2y" path="res://assets/Sunnyside_World_Assets/Elements/Other/shops/shop1.png" id="2_e82xs"]
+[ext_resource type="Texture2D" uid="uid://dqhm7itwi0clg" path="res://assets/Sunnyside_World_Assets/Elements/Crops/cabbage_05.png" id="3_ng1cm"]
+[ext_resource type="Texture2D" uid="uid://cmbrc808urk6c" path="res://assets/Sunnyside_World_Assets/Elements/Crops/potato_05.png" id="4_svud8"]
+[ext_resource type="Texture2D" uid="uid://bf6dkxq0xsivo" path="res://assets/Sunnyside_World_Assets/Elements/Crops/wood.png" id="5_i65ro"]
+[ext_resource type="Script" path="res://scripts/seller.gd" id="6_seller"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jmdd"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(0, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e82xs"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(96, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ng1cm"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(192, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svud8"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(288, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i65ro"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(384, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbrem"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(480, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tynhp"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(576, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkw7k"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(672, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5fsb"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(768, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyyrh"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(864, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2e4v3"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(960, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2iv67"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(1056, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mlf6"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(1152, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sa1l"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(1248, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pu8xv"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(1344, 0, 96, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7pp6k"]
+atlas = ExtResource("1_lftx6")
+region = Rect2(1440, 0, 96, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ifi7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6jmdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e82xs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ng1cm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svud8")
+}],
+"loop": 1,
+"name": &"new_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i65ro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbrem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tynhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkw7k")
+}],
+"loop": 1,
+"name": &"new_animation_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5fsb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyyrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2e4v3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2iv67")
+}],
+"loop": 1,
+"name": &"new_animation_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mlf6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6sa1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pu8xv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7pp6k")
+}],
+"loop": 1,
+"name": &"new_animation_3",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4ifi7"]
+height = 28.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sell_area"]
+radius = 28.0
+
+[node name="shop" type="StaticBody2D" unique_id=107149341]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("6_seller")
+
+[node name="seller" type="AnimatedSprite2D" parent="." unique_id=185814333]
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+animation = &"new_animation"
+autoplay = "new_animation"
+frame_progress = 0.25578836
+
+[node name="shop" type="Sprite2D" parent="." unique_id=1318054593]
+position = Vector2(0, 1)
+texture = ExtResource("2_e82xs")
+
+[node name="crop" type="Sprite2D" parent="." unique_id=1756858695]
+position = Vector2(-5, 6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_ng1cm")
+
+[node name="crop2" type="Sprite2D" parent="." unique_id=2053841800]
+position = Vector2(0.7, 6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_svud8")
+
+[node name="crop3" type="Sprite2D" parent="." unique_id=1202588262]
+position = Vector2(6, 6)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_i65ro")
+
+[node name="collision" type="CollisionShape2D" parent="." unique_id=258767459]
+shape = SubResource("CapsuleShape2D_4ifi7")
+
+[node name="SellArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SellArea"]
+shape = SubResource("CircleShape2D_sell_area")
+
+[node name="Prompt" type="Label" parent="."]
+offset_left = -44.0
+offset_top = -30.0
+offset_right = 100.0
+offset_bottom = -7.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 10
+text = "Press R to sell crops"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="SellArea" to="." method="_on_sell_area_body_entered"]
+[connection signal="body_exited" from="SellArea" to="." method="_on_sell_area_body_exited"]

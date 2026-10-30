@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NPCResource" format=3]
+
+[ext_resource type="Script" path="res://resources/npc_resource.gd" id="1_npc"]
+[ext_resource type="Texture2D" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="2_texture"]
+[ext_resource type="Resource" path="res://resources/john_biodata.tres" id="3_bio"]
+
+[resource]
+script = ExtResource("1_npc")
+texture = ExtResource("2_texture")
+dialogue_character = "res://AI/characters/John.dch"
+dialogue_timeline = "res://AI/timelines/John_intro.dtl"
+dialogue_distance = 32.0
+key_prompt_delay = 5.0
+biodata = ExtResource("3_bio")

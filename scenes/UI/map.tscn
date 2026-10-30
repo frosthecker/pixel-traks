@@ -1,0 +1,1319 @@
+[gd_scene format=3 uid="uid://eh20dww40ce2"]
+
+[ext_resource type="Script" uid="uid://bxyxc3m82tcxy" path="res://scripts/map.gd" id="1_oaiha"]
+[ext_resource type="Texture2D" uid="uid://dvg06wmcu2lfy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Side Tabs/0.png" id="2_rwguo"]
+[ext_resource type="Texture2D" uid="uid://c0v6h4yip1p7j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Side Tabs/3.png" id="3_drp5q"]
+[ext_resource type="Texture2D" uid="uid://b0m5rb6q1yfw1" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Side Tabs/4.png" id="4_yfqry"]
+[ext_resource type="Texture2D" uid="uid://kxg0affjblvq" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Side Tabs/5.png" id="5_1j7b7"]
+[ext_resource type="Texture2D" uid="uid://b4omik23be5oo" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Side Tabs/6.png" id="6_kn1hm"]
+[ext_resource type="Texture2D" uid="uid://b1jl7kctwpt4f" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Side Tabs/7.png" id="7_6ni8m"]
+[ext_resource type="Texture2D" uid="uid://5llf17ot2qxq" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Side Tabs/8.png" id="8_xwuuo"]
+[ext_resource type="Texture2D" uid="uid://3gc23dienv65" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Pixel Map/0.png" id="9_h4b0a"]
+[ext_resource type="Texture2D" uid="uid://br2a6xmaajivq" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/5.png" id="10_6ni8m"]
+[ext_resource type="Texture2D" uid="uid://b6ol4welrv3dj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/15.png" id="10_mbrlg"]
+[ext_resource type="Texture2D" uid="uid://cb106byunyxgl" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Compass/3.png" id="10_rwguo"]
+[ext_resource type="Texture2D" uid="uid://dgaime6kjscrw" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/14.png" id="11_t87of"]
+[ext_resource type="Texture2D" uid="uid://dm33l2txk5ig5" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/4.png" id="11_xwuuo"]
+[ext_resource type="Texture2D" uid="uid://f3x6d7tvu617" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/10.png" id="12_h4b0a"]
+[ext_resource type="Texture2D" uid="uid://c5a441whwtx38" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/13.png" id="12_hadfg"]
+[ext_resource type="Texture2D" uid="uid://b38ack1vmllgt" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/8.png" id="13_mbrlg"]
+[ext_resource type="Texture2D" uid="uid://rme3lyogbp8j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/12.png" id="13_qp07s"]
+[ext_resource type="Texture2D" uid="uid://b4bjold7m6ftj" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/9.png" id="14_t87of"]
+[ext_resource type="Texture2D" uid="uid://dnwsghwdpihsy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/11.png" id="14_ujkxp"]
+[ext_resource type="Texture2D" uid="uid://keiduq81at75" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/10.png" id="15_1l3pj"]
+[ext_resource type="Texture2D" uid="uid://bp2vpkt7o7cur" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/1.png" id="15_t87of"]
+[ext_resource type="Texture2D" uid="uid://b2q1ax1aflbo4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/9.png" id="16_6313l"]
+[ext_resource type="Texture2D" uid="uid://dhm580t54if28" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/0.png" id="16_hadfg"]
+[ext_resource type="Texture2D" uid="uid://oi8f46l0iqmo" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/3.png" id="17_qp07s"]
+[ext_resource type="Texture2D" uid="uid://b0looi1nolmxy" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/8.png" id="17_tlrkf"]
+[ext_resource type="Texture2D" uid="uid://c5ymkowkl4515" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/7.png" id="18_ffbl4"]
+[ext_resource type="Texture2D" uid="uid://b2pkysor6x2fn" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/UI Buttons/2.png" id="18_ujkxp"]
+[ext_resource type="Texture2D" uid="uid://criilnk7a81c4" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/6.png" id="19_lckcl"]
+[ext_resource type="Texture2D" uid="uid://c4y53me5yrsir" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/5.png" id="20_kdiaf"]
+[ext_resource type="Texture2D" uid="uid://15fl41mkj6l7" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/4.png" id="21_537i7"]
+[ext_resource type="PackedScene" uid="uid://cuydy7velp8pq" path="res://scenes/UI/profile.tscn" id="22_1l3pj"]
+[ext_resource type="Texture2D" uid="uid://cn5h031l5hkv7" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/3.png" id="22_mnbro"]
+[ext_resource type="Texture2D" uid="uid://b2xh2bn143j2q" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/2.png" id="23_m652r"]
+[ext_resource type="PackedScene" uid="uid://cwmduvxhdck53" path="res://scenes/UI/world_sections.tscn" id="24_0p0hx"]
+[ext_resource type="PackedScene" uid="uid://b502i2647p4ef" path="res://scenes/UI/save_load.tscn" id="24_6313l"]
+[ext_resource type="Texture2D" uid="uid://5qocvdrjklyi" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/1.png" id="24_acnug"]
+[ext_resource type="Texture2D" uid="uid://0pjd1ryj0vk5" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Light Flicker/0.png" id="25_rpo2n"]
+[ext_resource type="PackedScene" uid="uid://j3q3qd8vukl8" path="res://scenes/UI/settings_menu.tscn" id="25_tlrkf"]
+[ext_resource type="Texture2D" uid="uid://blnq8rw405i7j" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/0.png" id="36_ujkxp"]
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="37_1l3pj"]
+[ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="38_6313l"]
+[ext_resource type="Texture2D" uid="uid://drixllsy8rkfr" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/11.png" id="42_3dvs0"]
+[ext_resource type="Texture2D" uid="uid://dmdd12smiayv6" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/1.png" id="43_sx1k8"]
+[ext_resource type="Texture2D" uid="uid://beald2f0ti48x" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/2.png" id="44_0p0hx"]
+[ext_resource type="Texture2D" uid="uid://hetmkad46ymm" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/3.png" id="45_olluh"]
+[ext_resource type="Texture2D" uid="uid://bupi5gafgapmm" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/4.png" id="46_s3h10"]
+[ext_resource type="Texture2D" uid="uid://dv8agju6l2pui" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/5.png" id="47_rmcs8"]
+[ext_resource type="Texture2D" uid="uid://beuftdgqgrf7d" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/6.png" id="48_805pn"]
+[ext_resource type="Texture2D" uid="uid://xh0p5k3j31kw" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/7.png" id="49_jwkdw"]
+[ext_resource type="SpriteFrames" uid="uid://dexqvfckbsf3c" path="res://scenes/UI/digit_frames.tres" id="49_sx1k8"]
+[ext_resource type="Texture2D" uid="uid://dclo55tjykhvr" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/8.png" id="50_rcabb"]
+[ext_resource type="Texture2D" uid="uid://cura287d7wot7" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/9.png" id="51_a7lw6"]
+[ext_resource type="Texture2D" uid="uid://cj43yggyky4r0" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/10.png" id="52_6pnfm"]
+[ext_resource type="Texture2D" uid="uid://baqm06lfmpgov" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Next Page/11.png" id="53_mvpjm"]
+[ext_resource type="Texture2D" uid="uid://36lp2g47bu4f" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/0.png" id="54_dpt7q"]
+[ext_resource type="Texture2D" uid="uid://dfm7luuu3mvw" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/1.png" id="55_0hwcx"]
+[ext_resource type="Texture2D" uid="uid://ddpsty7vaes5s" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/2.png" id="56_g2c28"]
+[ext_resource type="Texture2D" uid="uid://da7kvp2pr4frk" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/3.png" id="57_uoc6l"]
+[ext_resource type="Texture2D" uid="uid://m5ukpewsggag" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/4.png" id="58_3maif"]
+[ext_resource type="Texture2D" uid="uid://das4l5g0oamxh" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/5.png" id="59_6v7n6"]
+[ext_resource type="Texture2D" uid="uid://c140ekgy8fihf" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/6.png" id="60_wwgkn"]
+[ext_resource type="Texture2D" uid="uid://cqqt6p0d8uena" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/7.png" id="61_ren0n"]
+[ext_resource type="Texture2D" uid="uid://dqtsb5xmy6di1" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/8.png" id="62_5tmyj"]
+[ext_resource type="Texture2D" uid="uid://doophlad0sej1" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/9.png" id="63_fj6vk"]
+[ext_resource type="Texture2D" uid="uid://bc777ghfvkhe8" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Page Flip/Previous Page/10.png" id="64_l5vcx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u86jo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rwguo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_drp5q")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4gktj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("42_3dvs0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_sx1k8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_0p0hx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_olluh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_s3h10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_rmcs8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_805pn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_jwkdw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_rcabb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_a7lw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_6pnfm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_mvpjm")
+}],
+"loop": 0,
+"name": &"next",
+"speed": 22.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("54_dpt7q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_0hwcx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_g2c28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_uoc6l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_3maif")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_6v7n6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_wwgkn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_ren0n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_5tmyj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_fj6vk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_l5vcx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_3dvs0")
+}],
+"loop": 0,
+"name": &"previous",
+"speed": 22.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ifi7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_mbrlg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_mbrlg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_t87of")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hadfg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_qp07s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ujkxp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_1l3pj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_6313l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_tlrkf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ffbl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_lckcl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_kdiaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_537i7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_mnbro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_m652r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_acnug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_rpo2n")
+}],
+"loop": 0,
+"name": &"close",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_rpo2n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_acnug")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_m652r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_mnbro")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_537i7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_kdiaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_lckcl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_ffbl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_tlrkf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_6313l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_1l3pj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ujkxp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_qp07s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_hadfg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_t87of")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_mbrlg")
+}],
+"loop": 0,
+"name": &"open",
+"speed": 10.0
+}]
+
+[sub_resource type="Animation" id="Animation_4ic6h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("tabs/tab1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, -100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("tabs/icons/profile:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, -100)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("tabs/tab2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, -52)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("tabs/icons/inventory:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, -52)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("tabs/tab3:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, -4)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("tabs/icons/worldmap:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-244, -2)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("tabs/tab4:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, 44)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("tabs/icons/save:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, 45)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("tabs/tab5:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, 92)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("tabs/icons/settings:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-243, 93)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("light flicker:animation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("compass/Sprite2D:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [6.2831855]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ColorRect:color")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("light flicker:frame")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("UI_Buttons:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.85, 0.85)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("page_flip:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("ColorRect:modulate")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("tabs:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("UI_Buttons:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("map_bg:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("compass:visible")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("header:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("pages:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("clock:visible")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("clock/hours:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("clock/hours/d1:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("clock/hours/d2:visible")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("clock/mins:visible")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("clock/mins/d1:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("clock/mins/d2:visible")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/30/type = "value"
+tracks/30/imported = false
+tracks/30/enabled = true
+tracks/30/path = NodePath("light flicker:visible")
+tracks/30/interp = 1
+tracks/30/loop_wrap = true
+tracks/30/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/31/type = "value"
+tracks/31/imported = false
+tracks/31/enabled = true
+tracks/31/path = NodePath("ColorRect:visible")
+tracks/31/interp = 1
+tracks/31/loop_wrap = true
+tracks/31/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tlrkf"]
+resource_name = "bg_close"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_drp5q"]
+resource_name = "compass_calibrate"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("compass/Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(5.0982423, 7.4642644),
+"update": 0,
+"values": [-6.283185307179586, 6.2831855]
+}
+
+[sub_resource type="Animation" id="Animation_kd6r5"]
+resource_name = "tab_close"
+length = 3.0
+step = 0.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("tabs/tab1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, -100), Vector2(-195, -100)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("tabs/icons/profile:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, -100), Vector2(-195, -100)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("tabs/tab2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, -52), Vector2(-195, -52)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("tabs/icons/inventory:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, -52), Vector2(-195, -52)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("tabs/tab3:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, -4), Vector2(-195, -4)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("tabs/icons/worldmap:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-244, -2), Vector2(-195, -2)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("tabs/tab4:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, 44), Vector2(-195, 44)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("tabs/icons/save:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, 45), Vector2(-195, 45)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("tabs/tab5:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, 92), Vector2(-195, 92)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("tabs/icons/settings:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-243, 93), Vector2(-195, 93)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("light flicker:animation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.7, 2.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [&"close", &"close", &"close"]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("light flicker:frame")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("UI_Buttons:scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1, 1.1, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.85, 0.85), Vector2(0.85, 0.85), Vector2(0.9, 0.9), Vector2(1e-05, 1e-05)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("page_flip:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.5, 2.6128001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, false]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("ColorRect:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(2.7, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("tabs:visible")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("UI_Buttons:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("map_bg:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("compass:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("header:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("pages:visible")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("clock:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("clock/hours:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("clock/hours/d1:visible")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("clock/hours/d2:visible")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("clock/mins:visible")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("clock/mins/d1:visible")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/27/type = "value"
+tracks/27/imported = false
+tracks/27/enabled = true
+tracks/27/path = NodePath("clock/mins/d2:visible")
+tracks/27/interp = 1
+tracks/27/loop_wrap = true
+tracks/27/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/28/type = "value"
+tracks/28/imported = false
+tracks/28/enabled = true
+tracks/28/path = NodePath("light flicker:visible")
+tracks/28/interp = 1
+tracks/28/loop_wrap = true
+tracks/28/keys = {
+"times": PackedFloat32Array(0, 2.6128001, 2.75),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/29/type = "value"
+tracks/29/imported = false
+tracks/29/enabled = true
+tracks/29/path = NodePath("ColorRect:visible")
+tracks/29/interp = 1
+tracks/29/loop_wrap = true
+tracks/29/keys = {
+"times": PackedFloat32Array(2.6128001),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6e7vn"]
+_data = {
+&"RESET": SubResource("Animation_4ic6h"),
+&"bg_close": SubResource("Animation_tlrkf"),
+&"compass_calibrate": SubResource("Animation_drp5q"),
+&"tab_close": SubResource("Animation_kd6r5")
+}
+
+[node name="map" type="Node2D" unique_id=1970492490]
+scale = Vector2(2, 2)
+script = ExtResource("1_oaiha")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1640270121]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -324.5
+offset_top = -184.0
+offset_right = 328.5
+offset_bottom = 196.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="tabs" type="Node2D" parent="." unique_id=1627462524]
+visible = false
+scale = Vector2(0.85, 0.85)
+
+[node name="tab1" type="AnimatedSprite2D" parent="tabs" unique_id=1498112483]
+position = Vector2(-243, -100)
+sprite_frames = SubResource("SpriteFrames_u86jo")
+
+[node name="tab2" type="AnimatedSprite2D" parent="tabs" unique_id=368119658]
+position = Vector2(-243, -52)
+sprite_frames = SubResource("SpriteFrames_u86jo")
+
+[node name="tab3" type="AnimatedSprite2D" parent="tabs" unique_id=679844417]
+position = Vector2(-243, -4)
+sprite_frames = SubResource("SpriteFrames_u86jo")
+
+[node name="tab4" type="AnimatedSprite2D" parent="tabs" unique_id=244320957]
+position = Vector2(-243, 44)
+sprite_frames = SubResource("SpriteFrames_u86jo")
+
+[node name="tab5" type="AnimatedSprite2D" parent="tabs" unique_id=1408763843]
+position = Vector2(-243, 92)
+sprite_frames = SubResource("SpriteFrames_u86jo")
+
+[node name="icons" type="Node2D" parent="tabs" unique_id=1453021705]
+
+[node name="profile" type="Sprite2D" parent="tabs/icons" unique_id=290896935]
+position = Vector2(-243, -100)
+texture = ExtResource("4_yfqry")
+
+[node name="inventory" type="Sprite2D" parent="tabs/icons" unique_id=452882170]
+position = Vector2(-243, -52)
+texture = ExtResource("5_1j7b7")
+
+[node name="worldmap" type="Sprite2D" parent="tabs/icons" unique_id=1567930606]
+position = Vector2(-244, -2)
+texture = ExtResource("6_kn1hm")
+
+[node name="save" type="Sprite2D" parent="tabs/icons" unique_id=1784415568]
+position = Vector2(-243, 45)
+texture = ExtResource("7_6ni8m")
+
+[node name="settings" type="Sprite2D" parent="tabs/icons" unique_id=1883497700]
+position = Vector2(-243, 93)
+texture = ExtResource("8_xwuuo")
+
+[node name="UI_Buttons" type="Node2D" parent="." unique_id=1039548829]
+visible = false
+scale = Vector2(0.85, 0.85)
+
+[node name="WASD" type="Sprite2D" parent="UI_Buttons" unique_id=791970820]
+position = Vector2(-128, 196)
+texture = ExtResource("12_h4b0a")
+
+[node name="select" type="Sprite2D" parent="UI_Buttons" unique_id=228440520]
+position = Vector2(-16, 208)
+texture = ExtResource("13_mbrlg")
+
+[node name="back" type="Sprite2D" parent="UI_Buttons" unique_id=704998097]
+position = Vector2(88, 208)
+texture = ExtResource("14_t87of")
+
+[node name="cross" type="TextureButton" parent="UI_Buttons" unique_id=1577126766]
+offset_left = 242.94127
+offset_top = -198.23529
+offset_right = 282.94116
+offset_bottom = -150.23529
+texture_normal = ExtResource("11_xwuuo")
+texture_pressed = ExtResource("10_6ni8m")
+texture_hover = ExtResource("10_6ni8m")
+
+[node name="up" type="TextureButton" parent="UI_Buttons" unique_id=370842216]
+offset_left = -258.8235
+offset_top = -168.23532
+offset_right = -218.82349
+offset_bottom = -120.23532
+texture_normal = ExtResource("16_hadfg")
+texture_pressed = ExtResource("15_t87of")
+texture_hover = ExtResource("15_t87of")
+
+[node name="down" type="TextureButton" parent="UI_Buttons" unique_id=1389749799]
+offset_left = -258.82355
+offset_top = 112.94119
+offset_right = -218.82355
+offset_bottom = 160.9412
+texture_normal = ExtResource("18_ujkxp")
+texture_pressed = ExtResource("17_qp07s")
+texture_hover = ExtResource("17_qp07s")
+
+[node name="map_bg" type="Sprite2D" parent="." unique_id=1529974733]
+visible = false
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("9_h4b0a")
+
+[node name="compass" type="Node2D" parent="." unique_id=1707972637]
+visible = false
+position = Vector2(-151, 99)
+scale = Vector2(0.85, 0.85)
+
+[node name="Sprite2D" type="Sprite2D" parent="compass" unique_id=151093369]
+position = Vector2(26.5, -17.5)
+rotation = 6.2831855
+texture = ExtResource("10_rwguo")
+
+[node name="header" type="Node2D" parent="." unique_id=1871205970]
+visible = false
+scale = Vector2(0.85, 0.85)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="header" unique_id=1910866899]
+offset_left = -31.0
+offset_top = -132.0
+offset_right = 115.0
+offset_bottom = -92.0
+
+[node name="TextureRect2" type="TextureRect" parent="header/HBoxContainer" unique_id=2062969579]
+layout_mode = 2
+texture = ExtResource("36_ujkxp")
+
+[node name="Label" type="Label" parent="header/HBoxContainer" unique_id=1510626755]
+layout_mode = 2
+theme = ExtResource("37_1l3pj")
+text = "Profile"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="header/HBoxContainer" unique_id=1933687379]
+layout_mode = 2
+texture = ExtResource("36_ujkxp")
+flip_h = true
+
+[node name="pages" type="Node2D" parent="." unique_id=437846646]
+visible = false
+scale = Vector2(0.85, 0.85)
+
+[node name="profile" type="Node2D" parent="pages" unique_id=228661906]
+
+[node name="profile" parent="pages/profile" unique_id=51121445 instance=ExtResource("22_1l3pj")]
+visible = false
+position = Vector2(-88, -88)
+scale = Vector2(0.7, 0.7)
+
+[node name="inventory" type="Node2D" parent="pages" unique_id=287561301]
+
+[node name="inventory" parent="pages/inventory" unique_id=344952141 instance=ExtResource("38_6313l")]
+visible = false
+position = Vector2(46.5, 0.5)
+scale = Vector2(0.5, 0.5)
+
+[node name="worldmap" type="Node2D" parent="pages" unique_id=1218726913]
+
+[node name="WorldSections" parent="pages/worldmap" unique_id=878674231 instance=ExtResource("24_0p0hx")]
+
+[node name="save" type="Node2D" parent="pages" unique_id=662643379]
+
+[node name="save_load" parent="pages/save" unique_id=424082628 instance=ExtResource("24_6313l")]
+visible = false
+position = Vector2(-84, -80.5)
+script = null
+
+[node name="settings" type="Node2D" parent="pages" unique_id=1504587071]
+position = Vector2(0, -4)
+
+[node name="SettingsMenu" parent="pages/settings" unique_id=1130025637 instance=ExtResource("25_tlrkf")]
+position = Vector2(-87.999985, -84)
+scale = Vector2(0.7, 0.7)
+
+[node name="page_flip" type="Node2D" parent="." unique_id=367921027]
+visible = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="page_flip" unique_id=2127566680]
+sprite_frames = SubResource("SpriteFrames_4gktj")
+animation = &"next"
+frame = 11
+frame_progress = 1.0
+
+[node name="clock" type="Node2D" parent="." unique_id=350232950]
+visible = false
+
+[node name="hours" type="Node2D" parent="clock" unique_id=1631375617]
+visible = false
+position = Vector2(-30.5, 0)
+
+[node name="d1" type="AnimatedSprite2D" parent="clock/hours" unique_id=1145554687]
+visible = false
+position = Vector2(-105.5, -103)
+scale = Vector2(0.85, 0.85)
+sprite_frames = ExtResource("49_sx1k8")
+animation = &"0"
+frame = 9
+frame_progress = 1.0
+
+[node name="d2" type="AnimatedSprite2D" parent="clock/hours" unique_id=1506404484]
+visible = false
+position = Vector2(-120, -103)
+scale = Vector2(0.85, 0.85)
+sprite_frames = ExtResource("49_sx1k8")
+animation = &"1"
+frame = 9
+frame_progress = 1.0
+
+[node name="mins" type="Node2D" parent="clock" unique_id=840306807]
+visible = false
+
+[node name="d1" type="AnimatedSprite2D" parent="clock/mins" unique_id=1000326997]
+visible = false
+position = Vector2(-105.5, -103)
+scale = Vector2(0.85, 0.85)
+sprite_frames = ExtResource("49_sx1k8")
+animation = &"9"
+frame = 9
+frame_progress = 1.0
+
+[node name="d2" type="AnimatedSprite2D" parent="clock/mins" unique_id=1145352138]
+visible = false
+position = Vector2(-120, -103)
+scale = Vector2(0.85, 0.85)
+sprite_frames = ExtResource("49_sx1k8")
+animation = &"1"
+frame = 9
+frame_progress = 1.0
+
+[node name="light flicker" type="AnimatedSprite2D" parent="." unique_id=971514442]
+visible = false
+scale = Vector2(0.85, 0.85)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1894328565]
+libraries/ = SubResource("AnimationLibrary_6e7vn")
+
+[connection signal="pressed" from="UI_Buttons/cross" to="." method="_on_cross_pressed"]
+[connection signal="pressed" from="UI_Buttons/up" to="." method="_on_up_pressed"]
+[connection signal="pressed" from="UI_Buttons/down" to="." method="_on_down_pressed"]

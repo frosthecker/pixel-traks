@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="NPCBiodata" format=3]
+
+[ext_resource type="Script" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Kaia Flint"
+personality = "A brisk, good-natured island courier who knows everyone and every shortcut. Kaia is energetic, encouraging, and direct; she turns errands and discoveries into small adventures."
+movement_speed = 32.0
+daily_schedule = [{"start_minute": 300, "end_minute": 660, "activity": "planning delivery routes", "target_location": Vector2(100, 120)}, {"start_minute": 660, "end_minute": 1080, "activity": "making deliveries around the island", "target_location": Vector2(220, 80)}, {"start_minute": 1080, "end_minute": 1260, "activity": "sharing trail news at the market", "target_location": Vector2(85, 140)}, {"start_minute": 1260, "end_minute": 300, "activity": "resting after the last route", "target_location": Vector2(100, 120)}]
+favorite_locations = [Vector2(100, 120), Vector2(220, 80), Vector2(85, 140)]
+current_mood = &"upbeat"

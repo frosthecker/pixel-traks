@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://bsfrcbl075rpe"]
+
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="1_btwfa"]
+
+[node name="WorldDashboard" type="Control" unique_id=1805449315]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -88.0
+offset_top = -88.0
+offset_right = 92.0
+offset_bottom = 82.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Intro" type="Label" parent="." unique_id=1401663257]
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 16.0
+theme = ExtResource("1_btwfa")
+theme_override_colors/font_color = Color(0.31, 0.2, 0.12, 1)
+theme_override_font_sizes/font_size = 12
+text = "FIELD NOTES"
+horizontal_alignment = 1
+
+[node name="CropsPanel" type="ColorRect" parent="." unique_id=404079715]
+layout_mode = 0
+offset_top = 20.0
+offset_right = 180.0
+offset_bottom = 62.0
+color = Color(0.21, 0.38, 0.2, 0.9)
+
+[node name="Title" type="Label" parent="CropsPanel" unique_id=1735646559]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 172.0
+offset_bottom = 18.0
+theme = ExtResource("1_btwfa")
+theme_override_colors/font_color = Color(0.84, 0.96, 0.65, 1)
+theme_override_font_sizes/font_size = 12
+text = "CROPS"
+
+[node name="CropSummary" type="Label" parent="CropsPanel" unique_id=1272495115]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 20.0
+offset_right = 172.0
+offset_bottom = 38.0
+theme = ExtResource("1_btwfa")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "0 planted  •  0 ready to harvest"
+
+[node name="TradersPanel" type="ColorRect" parent="." unique_id=1995153122]
+layout_mode = 0
+offset_top = 66.0
+offset_right = 180.0
+offset_bottom = 112.0
+color = Color(0.34, 0.24, 0.17, 0.9)
+
+[node name="Title" type="Label" parent="TradersPanel" unique_id=466558931]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 172.0
+offset_bottom = 18.0
+theme = ExtResource("1_btwfa")
+theme_override_colors/font_color = Color(1, 0.84, 0.48, 1)
+theme_override_font_sizes/font_size = 12
+text = "TRADERS & TOWNSFOLK"
+
+[node name="TraderSummary" type="Label" parent="TradersPanel" unique_id=1632073532]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 19.0
+offset_right = 172.0
+offset_bottom = 44.0
+theme = ExtResource("1_btwfa")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "No traders nearby"
+
+[node name="WorldPanel" type="ColorRect" parent="." unique_id=797629774]
+layout_mode = 0
+offset_top = 116.0
+offset_right = 180.0
+offset_bottom = 162.0
+color = Color(0.16, 0.29, 0.42, 0.9)
+
+[node name="Title" type="Label" parent="WorldPanel" unique_id=1739239588]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 4.0
+offset_right = 172.0
+offset_bottom = 18.0
+theme = ExtResource("1_btwfa")
+theme_override_colors/font_color = Color(0.57, 0.86, 1, 1)
+theme_override_font_sizes/font_size = 12
+text = "WORLD"
+
+[node name="WorldSummary" type="Label" parent="WorldPanel" unique_id=1319559337]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 19.0
+offset_right = 172.0
+offset_bottom = 44.0
+theme = ExtResource("1_btwfa")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 10
+text = "Day 1  •  06:00
+World size: Unknown"

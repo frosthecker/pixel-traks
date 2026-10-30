@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ds1rboov3hlux"]
+
+[ext_resource type="Script" uid="uid://wbs0l8ohvq7g" path="res://scripts/item.gd" id="1_wfbeu"]
+[ext_resource type="Texture2D" uid="uid://cih2tonffbwnx" path="res://assets/Sunnyside_World_Assets/UI/shovel.png" id="2_3guxc"]
+[ext_resource type="FontFile" uid="uid://d1djxisfa7p2c" path="res://assets/Sunnyside_World_Assets/Fonts/editundo.ttf" id="4_muvxe"]
+
+[node name="Item" type="Node2D" unique_id=557144568]
+position = Vector2(8, 8)
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_wfbeu")
+
+[node name="item_tex" type="TextureRect" parent="." unique_id=1803975619]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("2_3guxc")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="." unique_id=858583070]
+z_index = 3
+offset_left = 49.000023
+offset_top = 44.66667
+offset_right = 69.00002
+offset_bottom = 62.66667
+scale = Vector2(0.5, 0.5)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_muvxe")
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1

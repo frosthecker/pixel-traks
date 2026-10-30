@@ -1,0 +1,161 @@
+[gd_scene format=3 uid="uid://b502i2647p4ef"]
+
+[ext_resource type="Script" path="res://scripts/save_load.gd" id="1_save_load"]
+[ext_resource type="Texture2D" uid="uid://dgn60yvyul47k" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/11.png" id="1_6ib35"]
+[ext_resource type="Texture2D" uid="uid://rryybsagv5ym" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Holders/12.png" id="2_axkc8"]
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="3_md8q1"]
+[ext_resource type="Texture2D" uid="uid://ctu8503v10mx0" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/9.png" id="4_7txf5"]
+[ext_resource type="Texture2D" uid="uid://cim4seyt77nk" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Icons/10.png" id="5_sx7gt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ifi7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_7txf5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sx7gt")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="save_load" type="Node2D" unique_id=424082628]
+script = ExtResource("1_save_load")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1493870889]
+offset_right = 184.0
+offset_bottom = 153.0
+theme = ExtResource("3_md8q1")
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1468584395]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="slot1" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=453428798]
+layout_mode = 2
+texture_normal = ExtResource("1_6ib35")
+texture_pressed = ExtResource("2_axkc8")
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/slot1" unique_id=1521140513]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 10.0
+offset_right = 155.0
+offset_bottom = 34.0
+theme = ExtResource("3_md8q1")
+theme_override_font_sizes/font_size = 32
+text = "Empty slot"
+
+[node name="save_icon" type="AnimatedSprite2D" parent="ScrollContainer/VBoxContainer/slot1" unique_id=1580151696]
+position = Vector2(23, 24)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+frame = 1
+frame_progress = 1.0
+
+[node name="slot2" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=251953680]
+layout_mode = 2
+texture_normal = ExtResource("1_6ib35")
+texture_pressed = ExtResource("2_axkc8")
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/slot2" unique_id=742338716]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 10.0
+offset_right = 155.0
+offset_bottom = 34.0
+theme = ExtResource("3_md8q1")
+theme_override_font_sizes/font_size = 32
+text = "Empty slot"
+
+[node name="save_icon" type="AnimatedSprite2D" parent="ScrollContainer/VBoxContainer/slot2" unique_id=1809557381]
+position = Vector2(23, 24)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+frame = 1
+frame_progress = 1.0
+
+[node name="slot3" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=839021713]
+layout_mode = 2
+texture_normal = ExtResource("1_6ib35")
+texture_pressed = ExtResource("2_axkc8")
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/slot3" unique_id=983865476]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 10.0
+offset_right = 155.0
+offset_bottom = 34.0
+theme = ExtResource("3_md8q1")
+theme_override_font_sizes/font_size = 32
+text = "Empty slot"
+
+[node name="save_icon" type="AnimatedSprite2D" parent="ScrollContainer/VBoxContainer/slot3" unique_id=1788558019]
+position = Vector2(23, 24)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+frame = 1
+frame_progress = 1.0
+
+[node name="slot4" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=1011541522]
+layout_mode = 2
+texture_normal = ExtResource("1_6ib35")
+texture_pressed = ExtResource("2_axkc8")
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/slot4" unique_id=801329723]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 10.0
+offset_right = 155.0
+offset_bottom = 34.0
+theme = ExtResource("3_md8q1")
+theme_override_font_sizes/font_size = 32
+text = "Empty slot"
+
+[node name="save_icon" type="AnimatedSprite2D" parent="ScrollContainer/VBoxContainer/slot4" unique_id=2065666247]
+position = Vector2(23, 24)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+frame = 1
+frame_progress = 1.0
+
+[node name="slot5" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=106912938]
+layout_mode = 2
+texture_normal = ExtResource("1_6ib35")
+texture_pressed = ExtResource("2_axkc8")
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/slot5" unique_id=883418331]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 10.0
+offset_right = 155.0
+offset_bottom = 34.0
+theme = ExtResource("3_md8q1")
+theme_override_font_sizes/font_size = 32
+text = "Empty slot"
+
+[node name="save_icon" type="AnimatedSprite2D" parent="ScrollContainer/VBoxContainer/slot5" unique_id=1578599773]
+position = Vector2(23, 24)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+frame = 1
+frame_progress = 1.0
+
+[node name="slot6" type="TextureButton" parent="ScrollContainer/VBoxContainer" unique_id=773104022]
+layout_mode = 2
+texture_normal = ExtResource("1_6ib35")
+texture_pressed = ExtResource("2_axkc8")
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/slot6" unique_id=631116353]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 10.0
+offset_right = 155.0
+offset_bottom = 34.0
+theme = ExtResource("3_md8q1")
+theme_override_font_sizes/font_size = 32
+text = "Empty slot"
+
+[node name="save_icon" type="AnimatedSprite2D" parent="ScrollContainer/VBoxContainer/slot6" unique_id=1821266049]
+position = Vector2(23, 24)
+sprite_frames = SubResource("SpriteFrames_4ifi7")
+frame = 1
+frame_progress = 1.0

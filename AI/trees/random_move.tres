@@ -1,0 +1,129 @@
+[gd_resource type="BehaviorTree" format=3 uid="uid://doomf55ntf6vk"]
+
+[ext_resource type="Script" uid="uid://2gpjxq7nn3x4" path="res://AI/tasks/random_pos.gd" id="1_random"]
+[ext_resource type="Script" uid="uid://u316pcke6wgu" path="res://AI/tasks/move_to_position.gd" id="2_move_pos"]
+[ext_resource type="Script" uid="uid://cx521xbbj3ohd" path="res://AI/tasks/find_target.gd" id="3_find"]
+[ext_resource type="Script" uid="uid://euis2upx40d8" path="res://AI/tasks/move_to_target.gd" id="4_move_target"]
+[ext_resource type="Script" uid="uid://bckp14yvpdhyb" path="res://AI/tasks/check_state.gd" id="5_check_state"]
+[ext_resource type="Script" uid="uid://vu2uj0mg3lgc" path="res://AI/tasks/check_distance.gd" id="6_check_distance"]
+[ext_resource type="Script" uid="uid://cfwvqqu67xb3w" path="res://AI/tasks/check_line_of_sight.gd" id="7_check_los"]
+[ext_resource type="Script" uid="uid://bkin7yqb6gqk5" path="res://AI/tasks/remember_target_position.gd" id="8_remember_target"]
+[ext_resource type="Script" uid="uid://dwht1icaf4kfw" path="res://AI/tasks/apply_schedule.gd" id="9_schedule"]
+[ext_resource type="Script" uid="uid://bt86vach1w7td" path="res://AI/tasks/farmer_work.gd" id="10_farmer_work"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_main"]
+
+[sub_resource type="BTAction" id="BTAction_schedule"]
+script = ExtResource("9_schedule")
+
+[sub_resource type="BTCondition" id="BTCondition_talk"]
+required_state = &"talk"
+script = ExtResource("5_check_state")
+required_state = &"talk"
+
+[sub_resource type="BTWait" id="BTWait_talk"]
+duration = 0.1
+
+[sub_resource type="BTSequence" id="BTSequence_talk"]
+custom_name = "Talk"
+children = [SubResource("BTCondition_talk"), SubResource("BTWait_talk")]
+
+[sub_resource type="BTCondition" id="BTCondition_work"]
+required_state = &"work"
+script = ExtResource("5_check_state")
+required_state = &"work"
+
+[sub_resource type="BTAction" id="BTAction_farmer_work"]
+script = ExtResource("10_farmer_work")
+
+[sub_resource type="BTWait" id="BTWait_work"]
+duration = 2.0
+
+[sub_resource type="BTSequence" id="BTSequence_work"]
+custom_name = "Work"
+children = [SubResource("BTCondition_work"), SubResource("BTAction_farmer_work"), SubResource("BTWait_work")]
+
+[sub_resource type="BTCondition" id="BTCondition_follow"]
+required_state = &"follow_player"
+script = ExtResource("5_check_state")
+required_state = &"follow_player"
+
+[sub_resource type="BTAction" id="BTAction_find_player"]
+group = &"Player"
+max_distance = 140.0
+script = ExtResource("3_find")
+group = &"Player"
+max_distance = 140.0
+
+[sub_resource type="BTCondition" id="BTCondition_distance"]
+max_distance = 140.0
+script = ExtResource("6_check_distance")
+max_distance = 140.0
+
+[sub_resource type="BTCondition" id="BTCondition_los"]
+collision_mask = 7
+script = ExtResource("7_check_los")
+collision_mask = 7
+
+[sub_resource type="BTAction" id="BTAction_remember"]
+script = ExtResource("8_remember_target")
+
+[sub_resource type="BTAction" id="BTAction_move_player"]
+tolerance = 32.0
+script = ExtResource("4_move_target")
+tolerance = 32.0
+
+[sub_resource type="BTSequence" id="BTSequence_follow"]
+custom_name = "Follow Player"
+children = [SubResource("BTCondition_follow"), SubResource("BTAction_find_player"), SubResource("BTCondition_distance"), SubResource("BTCondition_los"), SubResource("BTAction_remember"), SubResource("BTAction_move_player")]
+
+[sub_resource type="BTCondition" id="BTCondition_wander"]
+required_state = &"wander"
+script = ExtResource("5_check_state")
+required_state = &"wander"
+
+[sub_resource type="BTAction" id="BTAction_random_position"]
+script = ExtResource("1_random")
+
+[sub_resource type="BTAction" id="BTAction_move_position"]
+script = ExtResource("2_move_pos")
+
+[sub_resource type="BTRandomWait" id="BTRandomWait_wander"]
+max_duration = 4.0
+
+[sub_resource type="BTSequence" id="BTSequence_wander"]
+custom_name = "Wander"
+children = [SubResource("BTCondition_wander"), SubResource("BTAction_random_position"), SubResource("BTAction_move_position"), SubResource("BTRandomWait_wander")]
+
+[sub_resource type="BTCondition" id="BTCondition_idle"]
+script = ExtResource("5_check_state")
+
+[sub_resource type="BTWait" id="BTWait_idle"]
+duration = 2.0
+
+[sub_resource type="BTSequence" id="BTSequence_idle"]
+custom_name = "Idle"
+children = [SubResource("BTCondition_idle"), SubResource("BTWait_idle")]
+
+[sub_resource type="BTCondition" id="BTCondition_sleep"]
+required_state = &"sleep"
+script = ExtResource("5_check_state")
+required_state = &"sleep"
+
+[sub_resource type="BTWait" id="BTWait_sleep"]
+duration = 4.0
+
+[sub_resource type="BTSequence" id="BTSequence_sleep"]
+custom_name = "Sleep"
+children = [SubResource("BTCondition_sleep"), SubResource("BTWait_sleep")]
+
+[sub_resource type="BTSelector" id="BTSelector_states"]
+custom_name = "NPC States"
+children = [SubResource("BTSequence_talk"), SubResource("BTSequence_work"), SubResource("BTSequence_follow"), SubResource("BTSequence_wander"), SubResource("BTSequence_idle"), SubResource("BTSequence_sleep")]
+
+[sub_resource type="BTSequence" id="BTSequence_root"]
+children = [SubResource("BTAction_schedule"), SubResource("BTSelector_states")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_main")
+root_task = SubResource("BTSequence_root")

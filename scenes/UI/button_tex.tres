@@ -1,0 +1,11 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://djbswrh6ms57e"]
+
+[ext_resource type="Texture2D" uid="uid://1kxej4gdw6v2" path="res://assets/Pocket Inventory Series #2 Pixel Map v1.2/Sprites/Content/Buttons/12.png" id="1_041hp"]
+
+[resource]
+texture = ExtResource("1_041hp")
+texture_margin_left = 8.0
+texture_margin_top = 7.0
+texture_margin_right = 8.0
+texture_margin_bottom = 7.0
+region_rect = Rect2(9, 5, 45, 22)

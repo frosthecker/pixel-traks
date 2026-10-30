@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://phqnvra8w8b7"]
+
+[ext_resource type="Script" uid="uid://ctv7kb1ij6fpj" path="res://scripts/hotbar.gd" id="1_3lmyj"]
+[ext_resource type="Texture2D" uid="uid://48ry1faev4a6" path="res://assets/Sunnyside_World_Assets/UI/9slice_box_white/dt_full_box.png" id="1_17b1v"]
+[ext_resource type="Script" uid="uid://b6og31nec0waq" path="res://scripts/slot.gd" id="2_od12x"]
+
+[node name="hotbar" type="Node2D" unique_id=1581433299]
+script = ExtResource("1_3lmyj")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1771428081]
+offset_left = 334.0
+offset_top = 628.0
+offset_right = 691.6404
+offset_bottom = 677.3297
+scale = Vector2(1.7028279, 1.7028279)
+texture = ExtResource("1_17b1v")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="HotbarSlots" type="GridContainer" parent="." unique_id=1024997296]
+offset_left = 342.0
+offset_top = 636.0
+offset_right = 690.0
+offset_bottom = 676.0
+scale = Vector2(1.7028279, 1.7028279)
+columns = 8
+
+[node name="hotbarslot1" type="Panel" parent="HotbarSlots" unique_id=1759716591]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
+
+[node name="hotbarslot2" type="Panel" parent="HotbarSlots" unique_id=1164822870]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
+
+[node name="hotbarslot3" type="Panel" parent="HotbarSlots" unique_id=931858922]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
+
+[node name="hotbarslot4" type="Panel" parent="HotbarSlots" unique_id=639619592]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
+
+[node name="hotbarslot5" type="Panel" parent="HotbarSlots" unique_id=2115022598]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
+
+[node name="hotbarslot6" type="Panel" parent="HotbarSlots" unique_id=2055518396]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
+
+[node name="hotbarslot7" type="Panel" parent="HotbarSlots" unique_id=1520691880]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
+
+[node name="hotbarslot8" type="Panel" parent="HotbarSlots" unique_id=354101780]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+script = ExtResource("2_od12x")
