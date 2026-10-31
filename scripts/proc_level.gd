@@ -338,6 +338,7 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 					plant_res.setup(seed)
 					var plant = plant_scene.instantiate()
 					plant.setup(grid_coord + tile_adjuster, $Objects, plant_res, plant_death)
+					_align_plant_to_grid(plant)
 					used_cells.append(grid_coord)
 
 					if show_plant_info:
@@ -636,6 +637,13 @@ func _rescue_stranded_npcs() -> void:
 		npc.global_position = _cell_to_global(new_cell)
 	_npcs_spread = true
 
+## Plant.setup() positions a plant from its grid cell in the parent's local space,
+## and the plant is parented to $Objects, which is offset from the tile layers in
+## this scene. That put every crop away from the soil it was planted on. Subtract
+## the parent's offset so the crop lands exactly on its soil cell.
+func _align_plant_to_grid(plant: Node2D) -> void:
+	plant.global_position -= $Objects.global_position
+
 func _restore_plants(plants_data: Variant) -> void:
 	for plant in get_tree().get_nodes_in_group("Plants"):
 		plant.free()
@@ -655,6 +663,7 @@ func _restore_plants(plants_data: Variant) -> void:
 		var plant = plant_scene.instantiate()
 		var coord := Vector2i(_data_to_vector(plant_data.get("coord", [])))
 		plant.setup(coord, $Objects, plant_res, plant_death)
+		_align_plant_to_grid(plant)
 		plant.sprite_2d.frame = clampi(int(plant_res.age), 0, plant_res.h_frames)
 		used_cells.append(coord)
 

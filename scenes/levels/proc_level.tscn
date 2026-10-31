@@ -135,7 +135,7 @@ y_sort_enabled = true
 position = Vector2(-14, 47)
 
 [node name="Camera2D2" type="Camera2D" parent="Objects/Player" unique_id=29486257]
-zoom = Vector2(0.33, 0.33)
+zoom = Vector2(4, 4)
 limit_enabled = false
 limit_left = 0
 limit_top = 0
