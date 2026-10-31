@@ -1,8 +1,16 @@
 extends Node2D
 
 signal world_boot_completed
+signal health_changed(current: int, maximum: int)
 
 const GRASS_THRESHOLD := 0.15
+const MIN_ISLAND_GRASS_CELLS := 40
+## NPC placement, measured in tiles. NPCs are spread over the player's island:
+## never right on top of the start, never too far to find, and well apart from each other.
+const NPC_MIN_SPAWN_DISTANCE_CELLS := 6.0 ## Closest an NPC may be to the player's start
+const NPC_MAX_SPAWN_DISTANCE_CELLS := 30.0 ## Farthest an NPC may be from the player's start
+const NPC_MIN_SPACING_CELLS := 12.0 ## Minimum distance between two NPCs
+const PROFILE_PATH := "user://profile.cfg"
 const DAYLIGHT_UPDATE_INTERVAL := 0.1
 
 var plant_scene = preload("res://scenes/objects/plant.tscn")
@@ -12,6 +20,7 @@ var used_cells: Array[Vector2i]
 @onready var player: CharacterBody2D = $Objects/Player
 @export var daytime_color: Gradient
 @onready var day_timer: Timer = $Timers/DayTimer
+@onready var healthbar: TextureProgressBar = get_node_or_null("Overlay/CanvasLayer/healthbar")
 @onready var day_time_color: CanvasModulate = $Overlay/DayTimeColor
 @onready var day_transition_layer: ColorRect = $Overlay/CanvasLayer/DayTransitionLayer
 @onready var day_transition_layer_material: ShaderMaterial = day_transition_layer.material as ShaderMaterial
@@ -23,23 +32,25 @@ var day_transition_tween: Tween
 @export var noise_tree_text: NoiseTexture2D
 
 @export_group("Forest Generation")
-@export var forest_noise_threshold: float = 0.12 ## Noise threshold above which terrain is considered a forest biome
+@export var forest_noise_threshold: float = -0.08 ## Noise threshold above which terrain is considered a forest biome
 @export var forest_block_size: int = 4 ## Tile grid block size for placing trees
 @export var min_tree_distance: int = 3 ## Minimum tile distance between trees to prevent collision overlap
-@export var solitary_tree_chance: float = 0.004 ## Chance of occasional lone trees in open plains
+@export var solitary_tree_chance: float = 0.06 ## Chance of occasional lone trees in open plains
 @export_range(100, 2000, 25) var max_tree_count: int = 750 ## Keeps scene-tile physics affordable on low-end devices
 var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_noise_threshold
 
 @export_group("Skeletons")
 @export var skeleton_scene: PackedScene
-@export var max_skeletons: int = 3
-@export var skeleton_spawn_interval: float = 12.0
-@export var skeleton_spawn_min_distance: float = 170.0
-@export var skeleton_spawn_max_distance: float = 300.0
+@export var max_skeletons: int = 2
+@export var skeleton_spawn_interval: float = 45.0
+@export var skeleton_spawn_min_distance: float = 240.0
+@export var skeleton_spawn_max_distance: float = 400.0
 
 @export_group("Player")
 @export var player_max_health: int = 10
 @export var player_hit_immunity: float = 0.7
+@export var health_regen_delay: float = 8.0
+@export var health_regen_interval: float = 4.0
 
 var noise: Noise
 var tree_noise: Noise
@@ -68,13 +79,22 @@ var _daylight_update_elapsed := 0.0
 var player_health: int = 10
 var spawn_position := Vector2.INF
 var default_inventory: Dictionary = {}
-var health_bar_back: ColorRect
-var health_bar_fill: ColorRect
 var contrast_layer: CanvasLayer
 var _skeleton_spawn_elapsed := 0.0
 var _skeleton_scene_searched := false
 var _damage_immune_until := 0.0
-@onready var healthbar: TextureProgressBar = $Overlay/CanvasLayer/healthbar
+var _last_damage_time := -1000.0
+var _regen_elapsed := 0.0
+var _terrain_cache: Dictionary = {}
+var _stuck_elapsed := 0.0
+## True once John's opening intro has played in THIS world. It is stored inside the
+## world's own save data, so it persists with the world and resets for a new one.
+var intro_played := false
+var _john_intro_default := ""
+var _intro_active := false
+var _boot_msec := 0
+var _delete_dialog: ConfirmationDialog
+var _npcs_spread := false ## Saved per world: NPCs have been spread out (older worlds get a one-time spread)
 
 
 func _ready() -> void:
@@ -90,21 +110,30 @@ func _ready() -> void:
 		tree_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 	add_to_group("Level")
 	add_to_group("SettingsListeners")
+	_boot_msec = Time.get_ticks_msec()
+	_capture_intro_default()
+	_connect_dialogic_signals()
 	if player != null and not player.is_in_group("Player"):
 		player.add_to_group("Player")
 	default_inventory = PlayerInventory.get_save_data()
 	player_health = player_max_health
-	#_setup_health_bar()
 	_setup_contrast_layer()
 	on_settings_changed()
+	_setup_profile_persistence()
 	# Generation intentionally yields so the loading animation stays responsive.
 	# Do not expose the partially populated TileMaps during those yield points.
 	_set_world_visible(false)
 	# A save contains the generated tile layers, so restoring it must happen
 	# instead of generating a fresh map first.  Passing this scene explicitly is
 	# important while the loading screen is still the SceneTree's current scene.
-	var should_load: bool = SaveGame.has_save() and not SaveGame.new_world_requested
-	if should_load:
+	var resumed := false
+	if not SaveGame.new_world_requested and SaveGame.has_resume():
+		resumed = SaveGame.load_resume(self)
+	var should_load: bool = SaveGame.has_save() and not SaveGame.new_world_requested and not resumed
+	if resumed:
+		if not _restored_world_data:
+			await generate_world()
+	elif should_load:
 		SaveGame.load_game(self)
 		# Saves created before procedural layers were persisted cannot be restored
 		# exactly. Generate once to migrate them, then rewrite the save after this
@@ -118,8 +147,104 @@ func _ready() -> void:
 		call_deferred("_save_migrated_world")
 	_set_world_visible(true)
 	_play_startup_transition()
+	_apply_intro_state()
 	world_boot_complete = true
+	_update_health_bar()
 	world_boot_completed.emit()
+
+func _capture_intro_default() -> void:
+	var john: Node = get_node_or_null("Objects/John")
+	if john != null and john.get("intro_timeline") != null:
+		_john_intro_default = str(john.get("intro_timeline"))
+
+func _connect_dialogic_signals() -> void:
+	var dialogic: Node = get_node_or_null("/root/Dialogic")
+	if dialogic == null:
+		return
+	if dialogic.has_signal("timeline_started") and not dialogic.is_connected("timeline_started", _on_dialogic_started):
+		dialogic.connect("timeline_started", _on_dialogic_started)
+	if dialogic.has_signal("timeline_ended") and not dialogic.is_connected("timeline_ended", _on_dialogic_ended):
+		dialogic.connect("timeline_ended", _on_dialogic_ended)
+
+## John only runs his intro while his `intro_timeline` is set. Kaia, Mira and Orin
+## have it empty in the scene, so empty means "no intro". After the intro has been
+## played once in a world, blank it; in a fresh world, restore it.
+func _apply_intro_state() -> void:
+	var john: Node = get_node_or_null("Objects/John")
+	if john != null and john.get("intro_timeline") != null:
+		john.set("intro_timeline", "" if intro_played else _john_intro_default)
+
+func _current_timeline_path() -> String:
+	var dialogic: Node = get_node_or_null("/root/Dialogic")
+	if dialogic == null:
+		return ""
+	var timeline: Variant = dialogic.get("current_timeline")
+	if timeline is Resource:
+		return String(timeline.resource_path)
+	return ""
+
+func _on_dialogic_started() -> void:
+	var path := _current_timeline_path()
+	var looks_like_intro := path.to_lower().contains("intro") \
+			or (_john_intro_default != "" and path == _john_intro_default)
+	# Dynamically built timelines have no path: treat one that starts right after
+	# boot, before the intro has ever played, as the intro.
+	if path == "" and not intro_played and Time.get_ticks_msec() - _boot_msec < 20000:
+		looks_like_intro = true
+	if not looks_like_intro:
+		return
+	if intro_played:
+		# Safety net: something still tried to start the intro, so end it.
+		var dialogic: Node = get_node_or_null("/root/Dialogic")
+		if dialogic != null and dialogic.has_method("end_timeline"):
+			dialogic.call_deferred("end_timeline")
+		return
+	_intro_active = true
+
+func _on_dialogic_ended() -> void:
+	if not _intro_active:
+		return
+	_intro_active = false
+	intro_played = true
+	_apply_intro_state()
+	# Write it down right away if this world already has a save slot; the flag is
+	# also part of every normal save/resume of the level.
+	if world_boot_complete and SaveGame.current_slot > 0:
+		SaveGame.save_game(self)
+
+## Opens a confirmation, then wipes this world and starts over as a new player.
+## Also callable from a menu button: get_tree().get_first_node_in_group("Level").request_delete_world()
+func request_delete_world() -> void:
+	if not world_boot_complete:
+		return
+	if _delete_dialog == null:
+		_delete_dialog = ConfirmationDialog.new()
+		_delete_dialog.title = "Delete world"
+		_delete_dialog.dialog_text = "Delete this world and start over as a brand-new player?\nThis cannot be undone."
+		_delete_dialog.ok_button_text = "Delete"
+		_delete_dialog.confirmed.connect(_delete_world_and_restart)
+		add_child(_delete_dialog)
+	_delete_dialog.popup_centered()
+
+func _delete_world_and_restart() -> void:
+	world_boot_complete = false # stops autosaves from rewriting the world during teardown
+	var slot: int = SaveGame.current_slot
+	if slot > 0:
+		SaveGame.delete_save(slot)
+	# If the save system keeps a separate "resume" file, clear that too.
+	for method_name in ["clear_resume", "delete_resume"]:
+		for method_info in SaveGame.get_method_list():
+			if method_info.get("name") == method_name and (method_info.get("args", []) as Array).is_empty():
+				SaveGame.call(method_name)
+	SaveGame.current_slot = 0
+	SaveGame.new_world_requested = true # skip resume/load; _ready builds a fresh world
+	intro_played = false
+	_apply_intro_state()
+	# Reloading the scene re-runs everything (NPC intros included) like a first launch.
+	if scene_file_path != "":
+		get_tree().change_scene_to_file(scene_file_path)
+	else:
+		get_tree().reload_current_scene()
 
 func _set_world_visible(show_world: bool) -> void:
 	$Layers.visible = show_world
@@ -141,6 +266,11 @@ func _play_startup_transition() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("day_change") and world_boot_complete:
 		day_restart()
+	# Ctrl+Shift+Backspace (Cmd+Shift+Backspace on macOS) opens "Delete world".
+	elif event is InputEventKey and event.pressed and not event.echo \
+			and event.is_command_or_control_pressed() and event.shift_pressed \
+			and (event.keycode == KEY_BACKSPACE or event.keycode == KEY_DELETE):
+		request_delete_world()
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	_apply_tool_use(tool, pos, dir, player.current_seed, true)
@@ -217,8 +347,9 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			for object in get_tree().get_nodes_in_group('Objects'):
-				if object.has_method("hit") and object.global_position.distance_to(pos) < 24:
+				if object.global_position.distance_to(pos) < 24:
 					object.hit(tool)
+
 func _process(delta: float) -> void:
 	# The procedural level scene may not have a day-color gradient assigned yet.
 	# Skip the visual update until it does instead of calling sample() on null.
@@ -299,13 +430,17 @@ func get_save_data() -> Dictionary:
 			"position": _vector_to_data(item.global_position)
 		})
 
+	if _terrain_cache.is_empty():
+		_cache_terrain()
+
 	return {
 		"world_seed": world_seed,
 		"spawn_position": _vector_to_data(spawn_position) if spawn_position.is_finite() else [],
+		"shop_position": _vector_to_data(_get_shop().global_position) if _get_shop() != null else [],
 		"world": {
-			"water": _serialize_tile_layer(water),
-			"ground_1": _serialize_tile_layer(ground_1),
-			"ground_2": _serialize_tile_layer(ground_2),
+			"water": _terrain_cache["water"],
+			"ground_1": _terrain_cache["ground_1"],
+			"ground_2": _terrain_cache["ground_2"],
 			"environment": _serialize_tile_layer(environment)
 		},
 		"player": {
@@ -326,10 +461,15 @@ func get_save_data() -> Dictionary:
 		"plants": plants,
 		"dropped_items": dropped_items,
 		"trees": trees,
-		"npcs": npcs
+		"npcs": npcs,
+		"intro_played": intro_played,
+		"npcs_spread_v2": _npcs_spread
 	}
 
 func apply_save_data(save_data: Dictionary) -> void:
+	# Saves made before this flag existed were already past the intro.
+	intro_played = bool(save_data.get("intro_played", true))
+	_npcs_spread = bool(save_data.get("npcs_spread_v2", false))
 	world_seed = int(save_data.get("world_seed", 0))
 
 	var world_data: Variant = save_data.get("world", {})
@@ -340,6 +480,7 @@ func apply_save_data(save_data: Dictionary) -> void:
 		_restore_tile_layer(environment, world_data.get("environment", []))
 		_remove_water_trees()
 		_limit_tree_count()
+		_cache_terrain()
 		_restored_world_data = true
 	else:
 		push_warning("Save game has no generated world data; generating once to migrate this legacy save.")
@@ -354,11 +495,20 @@ func apply_save_data(save_data: Dictionary) -> void:
 		if Data.PLAYER_SKINS.has(player.current_style):
 			player.sprite.texture = Data.PLAYER_SKINS[player.current_style]
 		player_health = clampi(int(player_data.get("health", player_max_health)), 1, player_max_health)
+		_last_damage_time = Time.get_ticks_msec() / 1000.0
 		_update_health_bar()
 
 	var spawn_data: Variant = save_data.get("spawn_position", [])
 	if spawn_data is Array and spawn_data.size() >= 2:
 		spawn_position = _data_to_vector(spawn_data)
+
+	var shop_node := _get_shop()
+	if shop_node != null:
+		var shop_data: Variant = save_data.get("shop_position", [])
+		if shop_data is Array and shop_data.size() >= 2:
+			shop_node.global_position = _data_to_vector(shop_data)
+		else:
+			_place_shop_near_player()
 
 	var time_data: Variant = save_data.get("world_time", {})
 	if time_data is Dictionary:
@@ -371,23 +521,44 @@ func apply_save_data(save_data: Dictionary) -> void:
 	_restore_tile_layer($Layers/DarkDirtLayer, save_data.get("dark_dirt", []))
 	_restore_trees(save_data.get("trees", {}))
 	_restore_npcs(save_data.get("npcs", {}))
+	_rescue_stranded_npcs()
 	_restore_plants(save_data.get("plants", []))
 	_restore_dropped_items(save_data.get("dropped_items", []))
 
-func _serialize_tile_layer(layer: TileMapLayer) -> Array:
-	var cells: Array = []
+func _serialize_tile_layer(layer: TileMapLayer) -> Dictionary:
+	var packed := PackedInt32Array()
 	for coord in layer.get_used_cells():
 		var atlas := layer.get_cell_atlas_coords(coord)
-		cells.append({
-			"coord": _vector_to_data(coord),
-			"source": layer.get_cell_source_id(coord),
-			"atlas": _vector_to_data(atlas),
-			"alternative": layer.get_cell_alternative_tile(coord)
-		})
-	return cells
+		packed.append(coord.x)
+		packed.append(coord.y)
+		packed.append(layer.get_cell_source_id(coord))
+		packed.append(atlas.x)
+		packed.append(atlas.y)
+		packed.append(layer.get_cell_alternative_tile(coord))
+	return {"packed": Marshalls.raw_to_base64(packed.to_byte_array())}
+
+func _cache_terrain() -> void:
+	_terrain_cache = {
+		"water": {"full": true},
+		"ground_1": _serialize_tile_layer(ground_1),
+		"ground_2": _serialize_tile_layer(ground_2)
+	}
+
+func _fill_water(layer: TileMapLayer) -> void:
+	for x in range(-width / 2, width / 2):
+		for y in range(-height / 2, height / 2):
+			layer.set_cell(Vector2i(x, y), source_id, water_atlas)
 
 func _restore_tile_layer(layer: TileMapLayer, cell_data: Variant) -> void:
 	layer.clear()
+	if cell_data is Dictionary:
+		if cell_data.has("full"):
+			_fill_water(layer)
+			return
+		var values := Marshalls.base64_to_raw(str(cell_data.get("packed", ""))).to_int32_array()
+		for i in range(0, values.size() - 5, 6):
+			layer.set_cell(Vector2i(values[i], values[i + 1]), values[i + 2], Vector2i(values[i + 3], values[i + 4]), values[i + 5])
+		return
 	if not (cell_data is Array):
 		return
 	for cell in cell_data:
@@ -417,6 +588,53 @@ func _restore_npcs(npc_data: Variant) -> void:
 			npc.global_position = _data_to_vector(state.get("position", []))
 			npc.last_direction = _data_to_vector(state.get("last_direction", [0, 1]))
 			npc.behavior_state = str(state.get("behavior_state", npc.behavior_state))
+
+## For existing worlds: bring NPCs that are stranded on other islands back to the
+## player's island, and (once per world) spread them out the same way new worlds do.
+func _rescue_stranded_npcs() -> void:
+	if player == null:
+		return
+	var land: Dictionary = {}
+	for cell in ground_1.get_used_cells():
+		land[cell] = true
+	for cell in ground_2.get_used_cells():
+		land[cell] = true
+	var start: Vector2i = ground_2.local_to_map(ground_2.to_local(player.global_position))
+	if not land.has(start):
+		return
+	var reachable: Dictionary = {start: true}
+	var stack: Array[Vector2i] = [start]
+	while not stack.is_empty():
+		var current: Vector2i = stack.pop_back()
+		for offset in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+			var neighbor: Vector2i = current + offset
+			if land.has(neighbor) and not reachable.has(neighbor):
+				reachable[neighbor] = true
+				stack.append(neighbor)
+	var grass_set: Dictionary = {}
+	var reachable_grass: Array = []
+	for cell in ground_2.get_used_cells():
+		grass_set[cell] = true
+		if reachable.has(cell):
+			reachable_grass.append(cell)
+	if reachable_grass.is_empty():
+		return
+	var avoid_cells: Array[Vector2i] = [start]
+	var shop_node := _get_shop()
+	if shop_node != null:
+		avoid_cells.append(ground_2.local_to_map(ground_2.to_local(shop_node.global_position)))
+	var taken: Dictionary = {}
+	var npc_cells: Array[Vector2i] = []
+	for npc in get_tree().get_nodes_in_group("NPC"):
+		var npc_cell: Vector2i = ground_2.local_to_map(ground_2.to_local(npc.global_position))
+		if _npcs_spread and reachable.has(npc_cell):
+			npc_cells.append(npc_cell)
+			continue
+		var new_cell: Vector2i = _pick_npc_cell(reachable_grass, grass_set, start, avoid_cells, npc_cells, taken)
+		taken[new_cell] = true
+		npc_cells.append(new_cell)
+		npc.global_position = _cell_to_global(new_cell)
+	_npcs_spread = true
 
 func _restore_plants(plants_data: Variant) -> void:
 	for plant in get_tree().get_nodes_in_group("Plants"):
@@ -546,6 +764,31 @@ func generate_world() -> void:
 	await get_tree().process_frame
 	_place_entities_on_grass()
 	await _generate_forests(grass_tiles_arr)
+	_cache_terrain()
+
+func _get_shop() -> Node2D:
+	var found: Node2D = get_node_or_null("Objects/shop")
+	if found != null:
+		return found
+	for child in $Objects.get_children():
+		var lowered := String(child.name).to_lower()
+		if child is Node2D and (lowered.contains("shop") or lowered.contains("seller") or lowered.contains("stall") or lowered.contains("trader")):
+			return child
+	return null
+
+func _place_shop_near_player() -> void:
+	var shop_node := _get_shop()
+	if shop_node == null or player == null:
+		return
+	var grass_set: Dictionary = {}
+	for cell in ground_2.get_used_cells():
+		grass_set[cell] = true
+	var wanted: Vector2i = ground_2.local_to_map(ground_2.to_local(player.global_position + Vector2(64, 48)))
+	var cell: Vector2i = _nearest_free_grass_cell(wanted, grass_set, {})
+	shop_node.global_position = ground_2.to_global(ground_2.map_to_local(cell))
+
+func _cell_to_global(cell: Vector2i) -> Vector2:
+	return ground_2.to_global(ground_2.map_to_local(cell))
 
 func _place_entities_on_grass() -> void:
 	var grass_set: Dictionary = {}
@@ -553,33 +796,124 @@ func _place_entities_on_grass() -> void:
 		grass_set[cell] = true
 	if grass_set.is_empty():
 		return
-
-	var entities: Array[Node2D] = []
-	if player != null:
-		entities.append(player)
-	for npc in get_tree().get_nodes_in_group("NPC"):
-		entities.append(npc)
-	var shop: Node2D = get_node_or_null("Objects/shop")
-	if shop != null:
-		entities.append(shop)
-	if entities.is_empty():
+	var islands := _find_islands(grass_set)
+	if islands.is_empty():
 		return
 
-	var origin: Vector2 = entities[0].global_position
-	var offsets: Array[Vector2] = []
-	for entity in entities:
-		offsets.append(entity.global_position - origin)
-
-	var anchor: Vector2i = _find_spawn_cell(grass_set)
-	var anchor_pos: Vector2 = ground_2.to_global(ground_2.map_to_local(anchor))
+	var main_set: Dictionary = {}
+	for cell in islands[0]:
+		main_set[cell] = true
 	var taken: Dictionary = {}
-	for i in entities.size():
-		var wanted: Vector2i = ground_2.local_to_map(ground_2.to_local(anchor_pos + offsets[i]))
-		var cell: Vector2i = _nearest_free_grass_cell(wanted, grass_set, taken)
-		taken[cell] = true
-		entities[i].global_position = ground_2.to_global(ground_2.map_to_local(cell))
+	var placed: Array[Vector2] = []
+
+	var anchor: Vector2i = _find_spawn_cell(main_set)
 	if player != null:
+		player.global_position = _cell_to_global(anchor)
+		taken[anchor] = true
+		placed.append(player.global_position)
 		spawn_position = player.global_position
+	var avoid_cells: Array[Vector2i] = [anchor]
+	var shop: Node2D = _get_shop()
+	if shop != null:
+		var shop_cell: Vector2i = _nearest_free_grass_cell(anchor + Vector2i(4, 3), main_set, taken)
+		taken[shop_cell] = true
+		shop.global_position = _cell_to_global(shop_cell)
+		placed.append(shop.global_position)
+		avoid_cells.append(shop_cell)
+
+	# Spread the NPCs across the player's own island so each one is in a different
+	# area, all reachable on foot, none stacked together and none too far away.
+	var npc_cells: Array[Vector2i] = []
+	for npc in get_tree().get_nodes_in_group("NPC"):
+		var npc_cell: Vector2i = _pick_npc_cell(islands[0], grass_set, anchor, avoid_cells, npc_cells, taken)
+		taken[npc_cell] = true
+		npc_cells.append(npc_cell)
+		npc.global_position = _cell_to_global(npc_cell)
+		placed.append(npc.global_position)
+	_npcs_spread = true
+
+## Picks a grass cell that is between the min/max distance from the player's start,
+## away from the start/shop, and as far as possible from the NPCs already placed
+## (but at least NPC_MIN_SPACING_CELLS). If the island is too small to satisfy the
+## rules, they are relaxed step by step instead of failing.
+func _pick_npc_cell(cells: Array, grass_set: Dictionary, anchor: Vector2i, avoid_cells: Array[Vector2i], npc_cells: Array[Vector2i], taken: Dictionary) -> Vector2i:
+	var min_dist := NPC_MIN_SPAWN_DISTANCE_CELLS
+	var max_dist := NPC_MAX_SPAWN_DISTANCE_CELLS
+	var spacing := NPC_MIN_SPACING_CELLS
+	for _relax in 5:
+		var best := Vector2i.ZERO
+		var best_score := -1.0
+		for _attempt in 200:
+			var cell: Vector2i = cells[randi() % cells.size()]
+			if taken.has(cell) or not _has_grass_clearing(cell, grass_set):
+				continue
+			var from_start := (cell - anchor).length()
+			if from_start < min_dist or from_start > max_dist:
+				continue
+			var too_close_to_avoid := false
+			for avoid in avoid_cells:
+				if (cell - avoid).length() < 8.0:
+					too_close_to_avoid = true
+					break
+			if too_close_to_avoid:
+				continue
+			var nearest := 9999.0
+			for other in npc_cells:
+				nearest = minf(nearest, (cell - other).length())
+			if nearest < spacing:
+				continue
+			if nearest > best_score:
+				best_score = nearest
+				best = cell
+		if best_score >= 0.0:
+			return best
+		min_dist *= 0.5
+		max_dist *= 1.25
+		spacing *= 0.7
+	return cells[randi() % cells.size()]
+
+func _find_islands(grass_set: Dictionary) -> Array:
+	var land: Dictionary = grass_set.duplicate()
+	for cell in sand_tiles_arr:
+		land[cell] = true
+	var visited: Dictionary = {}
+	var islands: Array = []
+	for start in land:
+		if visited.has(start):
+			continue
+		var grass_cells: Array = []
+		var stack: Array[Vector2i] = [start]
+		visited[start] = true
+		while not stack.is_empty():
+			var current: Vector2i = stack.pop_back()
+			if grass_set.has(current):
+				grass_cells.append(current)
+			for offset in [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]:
+				var neighbor: Vector2i = current + offset
+				if land.has(neighbor) and not visited.has(neighbor):
+					visited[neighbor] = true
+					stack.append(neighbor)
+		if grass_cells.size() >= MIN_ISLAND_GRASS_CELLS:
+			islands.append(grass_cells)
+	islands.sort_custom(func(a: Array, b: Array): return a.size() > b.size())
+	return islands
+
+func _scatter_cell(island: Array, grass_set: Dictionary, taken: Dictionary, placed: Array[Vector2]) -> Vector2i:
+	var fallback: Vector2i = island[randi() % island.size()]
+	for attempt in 80:
+		var cell: Vector2i = island[randi() % island.size()]
+		if taken.has(cell) or not _has_grass_clearing(cell, grass_set):
+			continue
+		fallback = cell
+		var world_pos := _cell_to_global(cell)
+		var far_enough := true
+		for other in placed:
+			if world_pos.distance_to(other) < 96.0:
+				far_enough = false
+				break
+		if far_enough:
+			return cell
+	return fallback
 
 func _find_spawn_cell(grass_set: Dictionary) -> Vector2i:
 	var cells: Array = grass_set.keys()
@@ -621,12 +955,12 @@ func _generate_forests(grass_cells_arr: Array[Vector2i]) -> void:
 	# Keep safe clear areas around player, shop, and NPCs
 	var protected_positions: Array[Vector2] = []
 	if player != null:
-		protected_positions.append(player.position)
+		protected_positions.append(player.global_position)
 	for npc in get_tree().get_nodes_in_group("NPC"):
-		protected_positions.append(npc.position)
-	var shop: Node2D = get_node_or_null("Objects/shop")
+		protected_positions.append(npc.global_position)
+	var shop: Node2D = _get_shop()
 	if shop != null:
-		protected_positions.append(shop.position)
+		protected_positions.append(shop.global_position)
 
 	if protected_positions.is_empty():
 		protected_positions = [
@@ -656,9 +990,9 @@ func _generate_forests(grass_cells_arr: Array[Vector2i]) -> void:
 					continue
 
 			# Keep forests lush without creating thousands of scene-tile instances.
-			var density: float = 0.25
+			var density: float = 1.0 # plains: solitary_tree_chance alone decides
 			if is_forest:
-				density = remap(clampf(t_noise_val, threshold, 0.55), threshold, 0.55, 0.20, 0.55)
+				density = remap(clampf(t_noise_val, threshold, 0.55), threshold, 0.55, 0.40, 0.80)
 
 			var h: int = int(((bx * 73856093) ^ (by * 19349663) ^ 8461 ^ (world_seed * 83492791)) & 0x7FFFFFFF)
 			if float(h % 1000) / 1000.0 > density:
@@ -675,7 +1009,8 @@ func _generate_forests(grass_cells_arr: Array[Vector2i]) -> void:
 				continue
 
 			# Entity clearance check
-			var world_pos: Vector2 = environment.map_to_local(cell)
+			# `cell` is a ground_2 cell; compare in world space.
+			var world_pos: Vector2 = _cell_to_global(cell)
 			var blocked := false
 			for prot_pos in protected_positions:
 				if world_pos.distance_to(prot_pos) < 55.0:
@@ -705,8 +1040,13 @@ func _generate_forests(grass_cells_arr: Array[Vector2i]) -> void:
 				break
 		if too_close:
 			continue
+		# The environment layer lives under $Objects, which is offset from the ground
+		# layers, so the same cell number is a different place. Go through world space.
+		var env_cell: Vector2i = environment.local_to_map(environment.to_local(_cell_to_global(cell)))
+		if environment.get_cell_source_id(env_cell) != -1:
+			continue
 		# Place tree scene tile in environment layer (scene tile 2 in collection source 2)
-		environment.set_cell(cell, tree_source_id, Vector2i(0, 0), 2)
+		environment.set_cell(env_cell, tree_source_id, Vector2i(0, 0), 2)
 		occupied_cells[cell] = true
 
 func _has_grass_clearing(cell: Vector2i, grass_set: Dictionary) -> bool:
@@ -728,9 +1068,13 @@ func _is_grass_tile(cell: Vector2i) -> bool:
 	return ground_2.get_cell_source_id(cell) != -1
 
 func _remove_water_trees() -> void:
-	for cell in environment.get_used_cells():
-		if environment.get_cell_source_id(cell) == tree_source_id and not _has_grass_tile_clearing(cell):
-			environment.erase_cell(cell)
+	for env_cell in environment.get_used_cells():
+		if environment.get_cell_source_id(env_cell) != tree_source_id:
+			continue
+		var world_pos: Vector2 = environment.to_global(environment.map_to_local(env_cell))
+		var ground_cell: Vector2i = ground_2.local_to_map(ground_2.to_local(world_pos))
+		if not _has_grass_tile_clearing(ground_cell):
+			environment.erase_cell(env_cell)
 
 func _limit_tree_count() -> void:
 	var kept := 0
@@ -746,6 +1090,8 @@ func _limit_tree_count() -> void:
 func _physics_process(delta: float) -> void:
 	if not world_boot_complete:
 		return
+	_check_player_stuck(delta)
+	_regenerate_health(delta)
 	_skeleton_spawn_elapsed += delta
 	if _skeleton_spawn_elapsed < skeleton_spawn_interval:
 		return
@@ -763,7 +1109,8 @@ func _try_spawn_skeleton() -> void:
 	for attempt in 16:
 		var spawn_pos: Vector2 = player.global_position + Vector2.from_angle(randf() * TAU) * randf_range(skeleton_spawn_min_distance, skeleton_spawn_max_distance)
 		var cell: Vector2i = ground_2.local_to_map(ground_2.to_local(spawn_pos))
-		if not _has_land_clearing(cell) or environment.get_cell_source_id(cell) != -1:
+		var env_cell: Vector2i = environment.local_to_map(environment.to_local(spawn_pos))
+		if not _has_land_clearing(cell) or environment.get_cell_source_id(env_cell) != -1:
 			continue
 		var skeleton: Node2D = scene.instantiate()
 		$Objects.add_child(skeleton)
@@ -802,10 +1149,6 @@ func _find_scene_file(dir_path: String) -> String:
 func _is_land_tile(cell: Vector2i) -> bool:
 	return ground_2.get_cell_source_id(cell) != -1 or ground_1.get_cell_source_id(cell) != -1
 
-func is_land_position(world_position: Vector2) -> bool:
-	var cell := ground_1.local_to_map(ground_1.to_local(world_position))
-	return _is_land_tile(cell)
-
 func _has_land_clearing(cell: Vector2i) -> bool:
 	for x in range(-1, 2):
 		for y in range(-1, 2):
@@ -820,12 +1163,11 @@ func damage_player(amount: int, _from_position: Vector2 = Vector2.ZERO) -> void:
 	if now < _damage_immune_until:
 		return
 	_damage_immune_until = now + player_hit_immunity
+	_last_damage_time = now
 	player_health = maxi(0, player_health - amount)
 	_update_health_bar()
-	#player.modulate = Color(1.0, 0.35, 0.35)
-	#create_tween().tween_property(player, "modulate", Color.WHITE, 0.25)
-	player.get_node("Animation/AnimationPlayer").play('hurt_left')
-	
+	player.modulate = Color(1.0, 0.35, 0.35)
+	create_tween().tween_property(player, "modulate", Color.WHITE, 0.25)
 	_shake_camera(2.5)
 	if player_health <= 0:
 		_on_player_died()
@@ -855,11 +1197,17 @@ func _clear_skeletons() -> void:
 	for skeleton in get_tree().get_nodes_in_group("Skeletons"):
 		skeleton.queue_free()
 
-
 func _update_health_bar() -> void:
-	# Calculate the health percentage (0 to 100) dynamically
-	var health_pct : float = (float(player_health) / float(maxi(player_max_health, 1))) * 100.0
-	healthbar.value = health_pct
+	health_changed.emit(player_health, player_max_health)
+	# Drive the health bar that is already in the scene (Overlay/CanvasLayer/healthbar).
+	# Its max_value is the editor default (100), so set it to the real max here.
+	if healthbar != null:
+		healthbar.max_value = player_max_health
+		healthbar.value = player_health
+	for bar in get_tree().get_nodes_in_group("HealthBar"):
+		if bar is Range and bar != healthbar:
+			bar.max_value = player_max_health
+			bar.value = player_health
 
 func _setup_contrast_layer() -> void:
 	contrast_layer = CanvasLayer.new()
@@ -887,6 +1235,8 @@ func _transition_time(seconds: float) -> float:
 
 func _begin_new_world() -> void:
 	SaveGame.current_slot = 0
+	intro_played = false
+	_npcs_spread = false
 	_clear_world_entities()
 	PlayerInventory.load_save_data(default_inventory.duplicate(true))
 	WorldTime.day_count = 1
@@ -944,3 +1294,69 @@ func start_new_world() -> void:
 	world_boot_complete = false
 	SaveGame.current_slot = 0
 	await _load_or_create_world()
+
+func _regenerate_health(delta: float) -> void:
+	if player_health <= 0 or player_health >= player_max_health:
+		_regen_elapsed = 0.0
+		return
+	if Time.get_ticks_msec() / 1000.0 - _last_damage_time < health_regen_delay:
+		_regen_elapsed = 0.0
+		return
+	_regen_elapsed += delta
+	if _regen_elapsed >= health_regen_interval:
+		_regen_elapsed = 0.0
+		player_health += 1
+		_update_health_bar()
+
+func _check_player_stuck(delta: float) -> void:
+	if player == null or player.get("can_move") == null:
+		return
+	var map_ui := get_node_or_null("Overlay/UserInterface/map")
+	var ui_open: bool = map_ui != null and bool(map_ui.get("is_open"))
+	var dialogic_node := get_node_or_null("/root/Dialogic")
+	var in_dialogue: bool = dialogic_node != null and dialogic_node.get("current_timeline") != null
+	var locked: bool = not bool(player.get("can_move")) or not player.is_physics_processing()
+	if not locked or ui_open or in_dialogue:
+		_stuck_elapsed = 0.0
+		return
+	_stuck_elapsed += delta
+	if _stuck_elapsed >= 3.0:
+		_stuck_elapsed = 0.0
+		player.can_move = true
+		player.set_physics_process(true)
+		player.process_mode = Node.PROCESS_MODE_INHERIT
+
+func _setup_profile_persistence() -> void:
+	var profile_root := get_node_or_null("Overlay/UserInterface/map/pages/profile")
+	if profile_root == null:
+		return
+	var config := ConfigFile.new()
+	config.load(PROFILE_PATH)
+	for field in _find_text_fields(profile_root):
+		var key := str(profile_root.get_path_to(field))
+		if config.has_section_key("profile", key):
+			field.text = str(config.get_value("profile", key))
+		if field is LineEdit:
+			field.text_changed.connect(_on_profile_line_changed.bind(key))
+		else:
+			field.text_changed.connect(_on_profile_text_edited.bind(field, key))
+
+func _find_text_fields(node: Node) -> Array:
+	var fields: Array = []
+	for child in node.get_children():
+		if child is LineEdit or child is TextEdit:
+			fields.append(child)
+		fields.append_array(_find_text_fields(child))
+	return fields
+
+func _on_profile_line_changed(new_text: String, key: String) -> void:
+	_store_profile_value(key, new_text)
+
+func _on_profile_text_edited(field: TextEdit, key: String) -> void:
+	_store_profile_value(key, field.text)
+
+func _store_profile_value(key: String, value: String) -> void:
+	var config := ConfigFile.new()
+	config.load(PROFILE_PATH)
+	config.set_value("profile", key, value)
+	config.save(PROFILE_PATH)
