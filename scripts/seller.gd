@@ -17,8 +17,12 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if player_in_range and not dialogue_running and event.is_action_pressed("interact"):
-		_sell_crops()
+		interact()
 		get_viewport().set_input_as_handled()
+
+func interact(_interactor: Node2D = null) -> void:
+	if player_in_range and not dialogue_running:
+		_sell_crops()
 
 func _sell_crops() -> void:
 	var earnings := PlayerInventory.sell_all_crops()

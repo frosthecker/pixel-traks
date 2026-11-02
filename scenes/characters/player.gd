@@ -19,6 +19,17 @@ var ground_2_layer: TileMapLayer
 signal tool_use(tool: Enum.Tool, pos: Vector2, dir: bool)
 @onready var sprite: Sprite2D = $Sprite2D
 var current_style = 0
+@onready var tool_button: TextureButton = $CanvasLayer/tool
+@onready var inventory_button: TextureButton = $CanvasLayer/inventory
+@onready var chat_button: TextureButton = $CanvasLayer/chat
+@onready var seed_button: TextureButton = $CanvasLayer/seed
+var tool_but_pressed: bool = false
+var seed_but_pressed: bool = false
+var inventory_but_pressed: bool = false
+var chat_but_pressed: bool = false
+var action_but_pressed: bool = false
+var pick_but_pressed: bool = false
+
 
 func _ready() -> void:
 	animation_tree.active = true
@@ -55,27 +66,32 @@ func get_basic_input():
 	if Input.is_action_just_pressed("style"):
 		current_style = posmod(current_style + 1, Enum.Style.size()) as Enum.Style
 		sprite.texture = Data.PLAYER_SKINS[current_style] 
-	if Input.is_action_just_pressed("tool_backward"):
+		
+	if Input.is_action_just_pressed("tool_backward") or tool_but_pressed:
 		current_tool = posmod(current_tool + 1, Enum.Tool.size()) as Enum.Tool
 		print(current_tool)
 		tool_ui.reveal(true)
+		tool_but_pressed = false
 		
-	if Input.is_action_just_pressed("seed_forward"):
+	if Input.is_action_just_pressed("seed_forward") or seed_but_pressed:
 		current_seed = posmod(current_seed + 1, Enum.Seed.size()) as Enum.Seed
 		tool_ui.reveal(false)
 		print(current_seed)
-	
-	if Input.is_action_just_pressed("action"):
+		seed_but_pressed = false
+		
+	if Input.is_action_just_pressed("action") or action_but_pressed:
 		# Check if the player is facing up or down
 		if last_direction == Vector2.UP or last_direction == Vector2.DOWN:
 			print("Cannot use tools while facing up or down!")
+			action_but_pressed = false
 			return # Exit the block early so the tool is not used
 			
 		can_move = false
 		tool_state_machine.travel(Data.TOOL_STATE_ANIMATIONS[current_tool])
 		animation_tree.set("parameters/ToolOneShot/request", AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+		action_but_pressed = false
 		
-	if Input.is_action_just_pressed("pick"):
+	if Input.is_action_just_pressed("pick") or pick_but_pressed:
 		for pickup_item in $PickupZone.items_in_range.values():
 			# Trees/stumps also implement hit() and can overlap a dropped log.
 			# Prefer an actual pickup instead of stopping at the first hit-able body.
@@ -83,7 +99,11 @@ func get_basic_input():
 				pickup_item.pick_up_item(self)
 				$PickupZone.items_in_range.erase(pickup_item)
 				break
+		pick_but_pressed = false
 
+	if Input.is_action_just_pressed("interact") or chat_but_pressed:
+		chat_but_pressed = false
+		interact_with_nearest_npc()
 ##make player move 
 func move():
 	direction = Input.get_vector("left", "right", "down", "up")
@@ -156,3 +176,86 @@ func tool_use_emit():
 	# existing animation tracks but must not emit a second time.
 	var use_position : Vector2 =  global_position if current_tool == Enum.Tool.WATER else global_position + last_direction * Data.TILE_SIZE
 	tool_use.emit(current_tool, use_position, sprite2d.flip_h)
+	
+	
+
+
+func _on_tool_pressed() -> void:
+	tool_but_pressed = true
+
+
+func _on_seed_pressed() -> void:
+	seed_but_pressed = true
+
+
+func _on_inventory_pressed() -> void:
+	# Find the map menu instance safely by group name rather than hardcoded path
+	var map_menu = get_tree().get_first_node_in_group("MapMenu")
+	
+	if map_menu:
+		if map_menu.is_open:
+			map_menu.close()
+		else:
+			map_menu.open()
+
+
+
+func _on_chat_pressed() -> void:
+	chat_but_pressed = true
+	interact_with_nearest_npc()
+
+
+func _on_action_pressed() -> void:
+	action_but_pressed = true
+
+
+func _on_pick_pressed() -> void:
+	pick_but_pressed = true
+
+
+func interact_with_nearest_npc() -> void:
+	if not is_inside_tree():
+		return
+	var dialogic_node := get_node_or_null("/root/Dialogic")
+	if dialogic_node != null and dialogic_node.get("current_timeline") != null:
+		return
+
+	var candidates: Array = []
+	var npcs = get_tree().get_nodes_in_group("NPC")
+	for npc in npcs:
+		if not is_instance_valid(npc) or not (npc is Node2D):
+			continue
+		var dist: float = global_position.distance_to(npc.global_position)
+		var max_dist: float = float(npc.get("dialogue_distance")) if npc.get("dialogue_distance") != null else 32.0
+		var in_range: bool = dist <= max_dist or (npc.get("player_in_range") == true)
+		if in_range:
+			candidates.append({"node": npc, "dist": dist})
+
+	var shop = get_tree().current_scene.get_node_or_null("Objects/shop") if get_tree().current_scene else null
+	if shop != null and is_instance_valid(shop):
+		var dist: float = global_position.distance_to(shop.global_position)
+		if shop.get("player_in_range") == true or dist <= 36.0:
+			var already_added := false
+			for c in candidates:
+				if c["node"] == shop:
+					already_added = true
+					break
+			if not already_added:
+				candidates.append({"node": shop, "dist": dist})
+
+	if candidates.is_empty():
+		return
+
+	candidates.sort_custom(func(a, b): return a["dist"] < b["dist"])
+	var closest_target: Node = candidates[0]["node"]
+
+	if closest_target is Node2D:
+		var to_target: Vector2 = (closest_target.global_position - global_position).normalized()
+		if not to_target.is_zero_approx():
+			last_direction = Vector2(round(to_target.x), round(to_target.y))
+			if last_direction.is_zero_approx():
+				last_direction = Vector2.DOWN
+			animation_tree.set("parameters/MoveStateMachine/idle/blend_position", last_direction)
+
+	if closest_target.has_method("interact"):
+		closest_target.call("interact", self)

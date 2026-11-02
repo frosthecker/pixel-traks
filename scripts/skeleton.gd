@@ -17,7 +17,7 @@ var direction: Vector2
 var speed := 20.0
 var push_speed := 300.0  # Speed at which enemy is knocked back (pixels/sec)
 var knockback_velocity: Vector2 = Vector2.ZERO
-@onready var player = get_tree().get_first_node_in_group('Player')
+var player: Node2D
 @onready var level = get_tree().get_first_node_in_group('Level')
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 var health := 4:
@@ -39,6 +39,12 @@ var wander_direction := Vector2.ZERO
 func _ready() -> void:
 	add_to_group("Objects")
 	add_to_group("Skeletons")
+	player = _get_active_player()
+	# Do not rely solely on the scene's autoplay flag.  Skeletons are spawned at
+	# runtime, and an explicit idle animation keeps their visual state in sync
+	# with their active collision and AI state from their first frame.
+	if sprite_2d.sprite_frames.has_animation("idle"):
+		sprite_2d.play("idle")
 	think_elapsed = randf() * 0.25
 
 
@@ -52,8 +58,8 @@ func _physics_process(delta: float) -> void:
 		# a delayed spawn put it there before movement was initialized.
 		queue_free()
 		return
-	if player == null:
-		player = get_tree().get_first_node_in_group('Player')
+	if not is_instance_valid(player):
+		player = _get_active_player()
 		if player == null:
 			return
 
@@ -140,9 +146,12 @@ func _attack() -> void:
 	attacking = true
 	attack_id += 1
 	var this_attack := attack_id
+	if sprite_2d.sprite_frames.has_animation("attack"):
+		sprite_2d.play("attack")
 	sprite_2d.flip_h = player.global_position.x < global_position.x
 	await get_tree().create_timer(attack_windup).timeout
-	if dead or this_attack != attack_id:
+	if dead or this_attack != attack_id or not is_instance_valid(player):
+		attacking = false
 		return
 	if level == null:
 		level = get_tree().get_first_node_in_group('Level')
@@ -197,6 +206,22 @@ func hit(tool: Enum.Tool) -> void:
 func _on_animation_finished() -> void:
 	if sprite_2d.animation == "death":
 		queue_free()
+
+
+func _get_active_player() -> Node2D:
+	# The project has a Player autoload as well as the player inside the level.
+	# The autoload is not part of the rendered world, so selecting the first node
+	# in the Player group can make enemies pursue an invisible, off-map target.
+	if not is_instance_valid(level):
+		level = get_tree().get_first_node_in_group("Level")
+	if level != null:
+		var level_player := level.get_node_or_null("Objects/Player") as Node2D
+		if level_player != null:
+			return level_player
+	for candidate in get_tree().get_nodes_in_group("Player"):
+		if candidate is Node2D and candidate != get_node_or_null("/root/Player"):
+			return candidate as Node2D
+	return null
 
 func _is_land_at(world_position: Vector2) -> bool:
 	if level == null:

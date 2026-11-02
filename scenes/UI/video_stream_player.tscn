@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c6dv12fo26mei"]
+
+[ext_resource type="VideoStream" uid="uid://c75mqyb8sifyl" path="res://assets/boot/godot_intro_animation_hd.ogv" id="1_stj0h"]
+[ext_resource type="Script" uid="uid://b3etxm8y0xvyy" path="res://scripts/boot_anim.gd" id="2_bh7e1"]
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" unique_id=883209559]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("1_stj0h")
+autoplay = true
+expand = true
+script = ExtResource("2_bh7e1")
+next_scene = "uid://j17dw07f1l3i"

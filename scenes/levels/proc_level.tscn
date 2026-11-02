@@ -5,6 +5,7 @@
 [ext_resource type="TileSet" uid="uid://caenfd2q6s02v" path="res://assets/main_tileset.tres" id="2_7iper"]
 [ext_resource type="PackedScene" uid="uid://b0mnopqlx5dix" path="res://scenes/characters/player.tscn" id="3_7iper"]
 [ext_resource type="PackedScene" uid="uid://cpm07of23fq6r" path="res://scenes/characters/seller.tscn" id="4_0rint"]
+[ext_resource type="PackedScene" uid="uid://bi3rgl5amicrf" path="res://scenes/characters/skeleton.tscn" id="4_skeleton"]
 [ext_resource type="PackedScene" uid="uid://cvakiwj4a1x5n" path="res://AI/scenes/john.tscn" id="5_dute6"]
 [ext_resource type="Texture2D" uid="uid://dhsaihv6kjq6n" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="6_b4i4j"]
 [ext_resource type="Resource" path="res://resources/kaia_biodata.tres" id="7_cindd"]
@@ -18,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="16_5jnv5"]
 [ext_resource type="Texture2D" uid="uid://ct00lowdu4brr" path="res://assets/Sunnyside_World_Assets/UI/redbar_00.png" id="16_dute6"]
 [ext_resource type="Texture2D" uid="uid://bo38r0b2tab1k" path="res://assets/Sunnyside_World_Assets/UI/red_bar_progress.png" id="17_b4i4j"]
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="17_dex8e"]
 [ext_resource type="AudioStream" uid="uid://c6k5sn861d1rr" path="res://assets/Music/soundtrack/#58 Hour For Two - Orchestrated.WAV" id="18_bmstj"]
 [ext_resource type="Shader" uid="uid://w8gcice407vb" path="res://shaders/proc_water_fast.gdshader" id="18_pixelwater"]
 [ext_resource type="AudioStream" uid="uid://cxho3o1iiwea8" path="res://assets/Music/soundtrack/#59 She Will Try - Orchestrated.WAV" id="19_5jnv5"]
@@ -86,6 +88,7 @@ stream_10 = ExtResource("20_ifrkw")
 script = ExtResource("1_3jh03")
 noise_height_text = SubResource("NoiseTexture2D_ubuo4")
 noise_tree_text = SubResource("NoiseTexture2D_7iper")
+skeleton_scene = ExtResource("4_skeleton")
 
 [node name="Layers" type="Node2D" parent="." unique_id=991742646]
 
@@ -137,10 +140,10 @@ position = Vector2(-14, 47)
 [node name="Camera2D2" type="Camera2D" parent="Objects/Player" unique_id=29486257]
 zoom = Vector2(4, 4)
 limit_enabled = false
-limit_left = 0
-limit_top = 0
-limit_right = 4096
-limit_bottom = 4096
+limit_left = -128
+limit_top = -128
+limit_right = 128
+limit_bottom = 128
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
@@ -210,6 +213,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="Overlay/CanvasLayer" unique_id=1731943815]
+offset_left = 152.0
+offset_top = 512.0
+offset_right = 192.0
+offset_bottom = 552.0
+scale = Vector2(2, 2)
+theme = ExtResource("17_dex8e")
+joystick_mode = 1
+action_left = &"left"
+action_right = &"right"
+action_up = &"down"
+action_down = &"up"
 
 [node name="UserInterface" type="CanvasLayer" parent="Overlay" unique_id=508896233]
 script = ExtResource("14_rcits")

@@ -42,9 +42,9 @@ var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_nois
 @export_group("Skeletons")
 @export var skeleton_scene: PackedScene
 @export var max_skeletons: int = 2
-@export var skeleton_spawn_interval: float = 45.0
-@export var skeleton_spawn_min_distance: float = 240.0
-@export var skeleton_spawn_max_distance: float = 400.0
+@export var skeleton_spawn_interval: float = 20.0
+@export var skeleton_spawn_min_distance: float = 144.0
+@export var skeleton_spawn_max_distance: float = 280.0
 
 @export_group("Player")
 @export var player_max_health: int = 10
@@ -95,7 +95,7 @@ var _intro_active := false
 var _boot_msec := 0
 var _delete_dialog: ConfirmationDialog
 var _npcs_spread := false ## Saved per world: NPCs have been spread out (older worlds get a one-time spread)
-
+@onready var camera: Camera2D = $Objects/Player/Camera2D2
 
 func _ready() -> void:
 	if noise_height_text == null:
@@ -148,6 +148,9 @@ func _ready() -> void:
 	_set_world_visible(true)
 	_play_startup_transition()
 	_apply_intro_state()
+	# Let players encounter the first skeleton soon after the world finishes
+	# loading instead of waiting through a full spawn interval.
+	_skeleton_spawn_elapsed = maxf(skeleton_spawn_interval - 3.0, 0.0)
 	world_boot_complete = true
 	_update_health_bar()
 	world_boot_completed.emit()
@@ -409,11 +412,12 @@ func get_save_data() -> Dictionary:
 
 	var npcs: Dictionary = {}
 	for npc in get_tree().get_nodes_in_group("NPC"):
-		npcs[str(npc.get_path())] = {
-			"position": _vector_to_data(npc.global_position),
-			"last_direction": _vector_to_data(npc.last_direction),
-			"behavior_state": npc.behavior_state
-		}
+		if "last_direction" in npc and "behavior_state" in npc:
+			npcs[str(npc.get_path())] = {
+				"position": _vector_to_data(npc.global_position),
+				"last_direction": _vector_to_data(npc.last_direction),
+				"behavior_state": npc.behavior_state
+			}
 
 	var plants: Array = []
 	for plant in get_tree().get_nodes_in_group("Plants"):
@@ -774,7 +778,23 @@ func generate_world() -> void:
 	_place_entities_on_grass()
 	await _generate_forests(grass_tiles_arr)
 	_cache_terrain()
-
+	_setup_camera_limits()
+	
+func _setup_camera_limits() -> void:
+	if camera == null:
+		return
+		
+	var tile_size := 16 # Replace with your actual tileset size if different (e.g., 32)
+	
+	# Since your generation loop goes from -width/2 to width/2:
+	camera.limit_left = int((-width / 2.0) * tile_size)
+	camera.limit_right = int((width / 2.0) * tile_size)
+	camera.limit_top = int((-height / 2.0) * tile_size)
+	camera.limit_bottom = int((height / 2.0) * tile_size)
+	
+	# Make sure the limits are actively enforced
+	camera.limit_enabled = true
+	
 func _get_shop() -> Node2D:
 	var found: Node2D = get_node_or_null("Objects/shop")
 	if found != null:
@@ -1115,16 +1135,37 @@ func _try_spawn_skeleton() -> void:
 	var scene := _get_skeleton_scene()
 	if scene == null:
 		return
-	for attempt in 16:
+	for attempt in 64:
 		var spawn_pos: Vector2 = player.global_position + Vector2.from_angle(randf() * TAU) * randf_range(skeleton_spawn_min_distance, skeleton_spawn_max_distance)
 		var cell: Vector2i = ground_2.local_to_map(ground_2.to_local(spawn_pos))
 		var env_cell: Vector2i = environment.local_to_map(environment.to_local(spawn_pos))
 		if not _has_land_clearing(cell) or environment.get_cell_source_id(env_cell) != -1:
 			continue
-		var skeleton: Node2D = scene.instantiate()
-		$Objects.add_child(skeleton)
-		skeleton.global_position = ground_2.to_global(ground_2.map_to_local(cell))
+		_spawn_skeleton_at(scene, cell)
 		return
+	# A noisy or densely forested island can have no random point that meets the
+	# clearing test. Search the generated land so a failed random batch does not
+	# make skeletons appear to stop spawning altogether.
+	var candidates: Array[Vector2i] = []
+	for cell in ground_2.get_used_cells():
+		var cell_position := ground_2.to_global(ground_2.map_to_local(cell))
+		var distance := cell_position.distance_to(player.global_position)
+		if distance < skeleton_spawn_min_distance or distance > skeleton_spawn_max_distance:
+			continue
+		var env_cell := environment.local_to_map(environment.to_local(cell_position))
+		if _has_land_clearing(cell) and environment.get_cell_source_id(env_cell) == -1:
+			candidates.append(cell)
+	if not candidates.is_empty():
+		_spawn_skeleton_at(scene, candidates.pick_random())
+
+
+func _spawn_skeleton_at(scene: PackedScene, cell: Vector2i) -> void:
+	var skeleton := scene.instantiate() as Node2D
+	if skeleton == null:
+		push_warning("Skeleton scene did not instantiate a Node2D.")
+		return
+	$Objects.add_child(skeleton)
+	skeleton.global_position = ground_2.to_global(ground_2.map_to_local(cell))
 
 func _get_skeleton_scene() -> PackedScene:
 	if skeleton_scene != null:

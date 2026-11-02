@@ -76,15 +76,23 @@ func _ready() -> void:
 	key_timer.one_shot = true
 	key_timer.wait_time = key_prompt_delay
 	key_ui.hide()
-	player = get_tree().get_first_node_in_group("Player")
+	var scene = get_tree().current_scene if get_tree() else null
+	if scene != null:
+		player = scene.get_node_or_null("Objects/Player")
+	if player == null:
+		for p in get_tree().get_nodes_in_group("Player"):
+			if p != get_tree().root.get_node_or_null("Player"):
+				player = p
+				break
 	dialogic = get_node_or_null("/root/Dialogic")
 	if dialogic:
 		if not dialogic.is_connected("timeline_ended", Callable(self, "_on_dialogue_ended")):
 			dialogic.connect("timeline_ended", Callable(self, "_on_dialogue_ended"))
 		if not dialogic.is_connected("signal_event", Callable(self, "_on_dialogic_signal")):
 			dialogic.connect("signal_event", Callable(self, "_on_dialogic_signal"))
-	if not WorldTime.time_changed.is_connected(_on_world_time_changed):
-		WorldTime.time_changed.connect(_on_world_time_changed)
+	var clock := get_node_or_null("/root/WorldTime")
+	if clock and clock.has_signal("time_changed") and not clock.time_changed.is_connected(_on_world_time_changed):
+		clock.time_changed.connect(_on_world_time_changed)
 	_update_schedule_state()
 	# The intro is a first-run event. Once a save exists, loading the game should
 	# never restart John's opening conversation.
@@ -148,9 +156,24 @@ func _schedule_activity_to_state(activity: String) -> String:
 func get_basic_input() -> void:
 	if not Input.is_action_just_pressed("interact"):
 		return
+	interact()
+
+
+func interact(interactor: Node2D = null) -> void:
+	if interactor != null:
+		player = interactor
+	if player == null or not is_instance_valid(player) or (get_tree() and player == get_tree().root.get_node_or_null("Player")):
+		var scene = get_tree().current_scene if get_tree() else null
+		if scene != null:
+			player = scene.get_node_or_null("Objects/Player")
+		if player == null and get_tree():
+			for p in get_tree().get_nodes_in_group("Player"):
+				if p != get_tree().root.get_node_or_null("Player"):
+					player = p
+					break
 	if player == null:
 		return
-	if global_position.distance_to(player.global_position) > dialogue_distance:
+	if global_position.distance_to(player.global_position) > dialogue_distance and not player_in_range:
 		return
 	if dialogue_running or is_requesting_ai:
 		return
@@ -502,6 +525,7 @@ func _on_timer_timeout() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body != player and not body.is_in_group("Player"):
 		return
+	player = body
 	player_in_range = true
 	if not dialogue_running:
 		key_timer.start()

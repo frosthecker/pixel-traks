@@ -26,6 +26,9 @@ func _physics_process(delta: float) -> void:
 func get_basic_input():
 	pass
 
+func interact(_interactor: Node2D = null) -> void:
+	pass
+
 func move(move_direction: Vector2 = Vector2.ZERO, move_speed: float = 0.0) -> void:
 	if move_direction.is_zero_approx() or is_zero_approx(move_speed):
 		direction = Vector2.ZERO

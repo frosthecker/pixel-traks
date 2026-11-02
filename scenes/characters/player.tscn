@@ -8,6 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://qyyqqu3bmehk" path="res://assets/Sunnyside_World_Assets/UI/green_bar_progress.png" id="6_6eyoc"]
 [ext_resource type="Script" uid="uid://b8udj2lx4lwqu" path="res://scripts/pickup_slot.gd" id="7_6eyoc"]
 [ext_resource type="AudioStream" uid="uid://cc7f6h8crwb5n" path="res://assets/Music/sfx/swim.mp3" id="9_7vyk4"]
+[ext_resource type="Theme" uid="uid://dywbxg3hhdgio" path="res://scenes/UI/game_theme.tres" id="9_xhtjm"]
+[ext_resource type="Texture2D" uid="uid://baetqriigejh0" path="res://assets/Sunnyside_World_Assets/UI/sword.png" id="10_k4v7y"]
+[ext_resource type="Texture2D" uid="uid://dpghvy716i5is" path="res://assets/Sunnyside_World_Assets/UI/plan alt.png" id="11_xrqxk"]
+[ext_resource type="Texture2D" uid="uid://dol60tjd0lmqr" path="res://assets/Sunnyside_World_Assets/UI/basket.png" id="12_g66nw"]
+[ext_resource type="Texture2D" uid="uid://dcvdcb7npo65u" path="res://assets/Sunnyside_World_Assets/UI/expression_chat.png" id="13_rpnd8"]
+[ext_resource type="Texture2D" uid="uid://d2ft4qdmwo40l" path="res://assets/Sunnyside_World_Assets/UI/hammer.png" id="14_g66nw"]
+[ext_resource type="Texture2D" uid="uid://1ftqbvoi4eyu" path="res://assets/Sunnyside_World_Assets/UI/hand_open_02.png" id="14_xrqxk"]
+[ext_resource type="Texture2D" uid="uid://boly6bvxdkfm0" path="res://assets/Sunnyside_World_Assets/UI/hand_closed_02.png" id="15_g66nw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
 radius = 4.0
@@ -2470,5 +2478,67 @@ shape = SubResource("CircleShape2D_4ifi7")
 stream = ExtResource("9_7vyk4")
 bus = &"sfx"
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1253409784]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="tool" type="TextureButton" parent="CanvasLayer" unique_id=169437609]
+offset_left = 567.0
+offset_top = 294.0
+offset_right = 607.0
+offset_bottom = 334.0
+scale = Vector2(1.1, 1.1)
+theme = ExtResource("9_xhtjm")
+texture_normal = ExtResource("10_k4v7y")
+stretch_mode = 4
+
+[node name="seed" type="TextureButton" parent="CanvasLayer" unique_id=905890919]
+offset_left = 569.0
+offset_top = 248.0
+offset_right = 609.0
+offset_bottom = 288.0
+texture_normal = ExtResource("11_xrqxk")
+stretch_mode = 4
+
+[node name="inventory" type="TextureButton" parent="CanvasLayer" unique_id=233822661]
+offset_left = 513.0
+offset_top = 296.0
+offset_right = 553.0
+offset_bottom = 336.0
+texture_normal = ExtResource("12_g66nw")
+stretch_mode = 4
+
+[node name="chat" type="TextureButton" parent="CanvasLayer" unique_id=1537875703]
+offset_left = 513.0
+offset_top = 248.0
+offset_right = 553.0
+offset_bottom = 288.0
+texture_normal = ExtResource("13_rpnd8")
+stretch_mode = 4
+
+[node name="action" type="TextureButton" parent="CanvasLayer" unique_id=1337088604]
+offset_left = 457.0
+offset_top = 248.0
+offset_right = 497.0
+offset_bottom = 288.0
+texture_normal = ExtResource("14_g66nw")
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="pick" type="TextureButton" parent="CanvasLayer" unique_id=1415320109]
+offset_left = 457.0
+offset_top = 296.0
+offset_right = 497.0
+offset_bottom = 336.0
+texture_normal = ExtResource("14_xrqxk")
+texture_pressed = ExtResource("15_g66nw")
+stretch_mode = 4
+
 [connection signal="body_entered" from="PickupZone" to="PickupZone" method="_on_body_entered"]
 [connection signal="body_exited" from="PickupZone" to="PickupZone" method="_on_body_exited"]
+[connection signal="pressed" from="CanvasLayer/tool" to="." method="_on_tool_pressed"]
+[connection signal="pressed" from="CanvasLayer/seed" to="." method="_on_seed_pressed"]
+[connection signal="pressed" from="CanvasLayer/inventory" to="." method="_on_inventory_pressed"]
+[connection signal="pressed" from="CanvasLayer/chat" to="." method="_on_chat_pressed"]
+[connection signal="pressed" from="CanvasLayer/action" to="." method="_on_action_pressed"]
+[connection signal="pressed" from="CanvasLayer/pick" to="." method="_on_pick_pressed"]

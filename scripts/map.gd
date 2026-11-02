@@ -35,6 +35,8 @@ var displayed_clock_digits: Dictionary[AnimatedSprite2D, int] = {}
 func _ready() -> void:
 	visible = false
 	background.color.a = 0.0
+	add_to_group("MapMenu") # <-- ADD THIS LINE HERE
+	
 	player = get_tree().current_scene.get_node_or_null("Objects/Player")
 	WorldTime.time_changed.connect(_on_world_time_changed)
 	PlayerInventory.money_changed.connect(_on_money_changed)
@@ -43,43 +45,54 @@ func _ready() -> void:
 	_show_page(0)
 
 
+
 func _process(_delta: float) -> void:
-	# Normally the player is paused while this panel is open, but keeping this
-	# in sync also supports any direction changes made by game logic.
+	# 1. Check if our virtual UI button was pressed
+	if player and player.get("inventory_but_pressed"):
+		_toggle_map_menu(player)
+		
+	# Keep compass pointing in sync with player orientation
 	if is_open and (compass_tween == null or not compass_tween.is_valid()):
 		compass.rotation = _player_facing_angle()
 
 
 func _input(event: InputEvent) -> void:
+	# 2. Safely filter out anything that isn't a fresh keyboard key press
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
 
+	# 3. Check for keyboard menu toggles
 	if event.is_action_pressed("inventory"):
+		if player:
+			_toggle_map_menu(player)
+		return
+	elif event.is_action_pressed("ui_cancel") or event.keycode == KEY_ESCAPE:
 		if is_open:
 			close()
-		else:
-			open()
-		get_viewport().set_input_as_handled()
+			get_viewport().set_input_as_handled()
 		return
 
-	if not is_open:
-		return
+	# 4. Handle page controls ONLY if the map menu is actively open
+	if is_open:
+		if event.keycode == KEY_UP:
+			page_flip_anim.play("next")
+			await page_flip_anim.animation_finished
+			_show_page(posmod(current_page - 1, PAGE_NAMES.size()))
+			get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_DOWN:
+			page_flip_anim.play("previous")
+			await page_flip_anim.animation_finished
+			_show_page(posmod(current_page + 1, PAGE_NAMES.size()))
+			get_viewport().set_input_as_handled()
 
-	# W/S are the map's temporary up/down controls. They are consumed here and
-	# the player is locked while the panel is open, so they never move the player.
-	if event.keycode == KEY_UP:
-		page_flip_anim.play("next")
-		await  page_flip_anim.animation_finished
-		_show_page(posmod(current_page - 1, PAGE_NAMES.size()))
-		get_viewport().set_input_as_handled()
-	elif event.keycode == KEY_DOWN:
-		page_flip_anim.play("previous")
-		await  page_flip_anim.animation_finished
-		_show_page(posmod(current_page + 1, PAGE_NAMES.size()))
-		get_viewport().set_input_as_handled()
-	elif event.keycode == KEY_ESCAPE:
+
+func _toggle_map_menu(player_node: Node) -> void:
+	player_node.inventory_but_pressed = false
+	if is_open:
 		close()
-		get_viewport().set_input_as_handled()
+	else:
+		open()
+	get_viewport().set_input_as_handled()
 
 
 func open():
@@ -89,23 +102,15 @@ func open():
 	visible = true
 	if player == null:
 		player = get_tree().current_scene.get_node_or_null("Objects/Player")
-	#if player != null and player.get("can_move") != null:
-		#player_can_move_before_open = player.can_move
-		#player_physics_processing_before_open = player.is_physics_processing()
-		#player.can_move = false
-		#player.set_physics_process(false)
+		
 	_show_page(current_page)
-	#light_flicker.play("open")
-	#await light_flicker.animation_finished
-	#light_flicker.visible = true
-	# AnimationPlayer can play only one animation at a time. The compass uses a
-	# tween so it can calibrate while the tabs play in reverse.
+	
 	var tab_animation := animation_player.get_animation("tab_close")
 	animation_player.seek(tab_animation.length, true)
 	animation_player.play_backwards("tab_close")
 	await animation_player.animation_finished
-	#_tween_background(1.0)
 	_play_compass_calibration()
+
 
 func close():
 	if not is_open:
@@ -114,13 +119,9 @@ func close():
 	if player != null and player.get("can_move") != null:
 		player.can_move = player_can_move_before_open
 		player.set_physics_process(player_physics_processing_before_open)
+		
 	animation_player.seek(0.0, true)
 	animation_player.play("tab_close")
-	#light_flicker.play("close")
-	#await light_flicker.animation_finished
-	#_tween_background(0.0)
-	# The tab animation is the longest close animation and is reliable even if
-	# the light-flicker sprite has already completed a previous animation.
 	await animation_player.animation_finished
 	if not is_open:
 		visible = false
@@ -133,8 +134,6 @@ func _show_page(page_index: int) -> void:
 		var page := get_node(PAGE_PATHS[index]) as CanvasItem
 		var page_is_active := index == current_page
 		page.visible = page_is_active
-		# The embedded scenes were authored hidden. Explicitly restore their
-		# visibility when their enclosing page becomes active.
 		for content in page.get_children():
 			if content is CanvasItem:
 				(content as CanvasItem).visible = page_is_active
@@ -173,8 +172,6 @@ func _play_compass_calibration() -> void:
 	compass_tween = create_tween()
 	compass_tween.set_trans(Tween.TRANS_QUINT)
 	compass_tween.set_ease(Tween.EASE_OUT)
-	# The compass texture points up at zero rotation. Offset the vector angle
-	# so that its needle comes to rest facing the player after its calibration.
 	compass_tween.tween_property(compass, "rotation", TAU + _player_facing_angle(), 0.8)
 
 
@@ -212,8 +209,6 @@ func _set_clock_digit(digit_sprite: AnimatedSprite2D, digit: int) -> void:
 		return
 	displayed_clock_digits[digit_sprite] = digit
 
-	# Every supplied strip morphs N into N + 1.  To display target digit N,
-	# start the N - 1 strip and let it finish rather than freezing on a frame.
 	var transition_animation := StringName(str(posmod(digit - 1, 10)))
 	digit_sprite.stop()
 	digit_sprite.animation = transition_animation
@@ -231,13 +226,13 @@ func _on_cross_pressed() -> void:
 
 func _on_up_pressed() -> void:
 	page_flip_anim.play("next")
-	await  page_flip_anim.animation_finished
+	await page_flip_anim.animation_finished
 	_show_page(posmod(current_page - 1, PAGE_NAMES.size()))
 	get_viewport().set_input_as_handled()
 
 
 func _on_down_pressed() -> void:
 	page_flip_anim.play("previous")
-	await  page_flip_anim.animation_finished
+	await page_flip_anim.animation_finished
 	_show_page(posmod(current_page + 1, PAGE_NAMES.size()))
 	get_viewport().set_input_as_handled()
