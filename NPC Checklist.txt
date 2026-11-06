@@ -1,0 +1,5 @@
+1) NPC-to-NPC interactions: Let Kaia, Orin and Mira talk to each other.
+2) Persistent memories: Remember important events across conversations and save/load cycles.
+3) Relationship evolution: NPC opinions change based on player actions.
+4) Schedule-driven movement: Make NPCs actually travel to their scheduled locations.
+4) World awareness: NPCs react to harvesting, weather, discoveries and other events.

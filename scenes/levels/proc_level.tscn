@@ -215,17 +215,19 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="VirtualJoystick" type="VirtualJoystick" parent="Overlay/CanvasLayer" unique_id=1731943815]
-offset_left = 152.0
-offset_top = 512.0
-offset_right = 192.0
-offset_bottom = 552.0
-scale = Vector2(2, 2)
+custom_minimum_size = Vector2(0.32, 0)
+offset_left = 127.0
+offset_top = 475.00003
+offset_right = 167.0
+offset_bottom = 515.0
+scale = Vector2(3, 3)
 theme = ExtResource("17_dex8e")
-joystick_mode = 1
+joystick_mode = 2
 action_left = &"left"
 action_right = &"right"
 action_up = &"down"
 action_down = &"up"
+visibility_mode = 1
 
 [node name="UserInterface" type="CanvasLayer" parent="Overlay" unique_id=508896233]
 script = ExtResource("14_rcits")

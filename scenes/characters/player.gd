@@ -29,7 +29,12 @@ var inventory_but_pressed: bool = false
 var chat_but_pressed: bool = false
 var action_but_pressed: bool = false
 var pick_but_pressed: bool = false
+var style_but_pressed: bool = false
 
+#grass sfx variables
+@onready var grass_sfx = $grass
+var footstep_timer: float = 0.0
+@export var footstep_interval: float = 0.35
 
 func _ready() -> void:
 	animation_tree.active = true
@@ -48,7 +53,22 @@ func _physics_process(delta: float) -> void:
 			animate_swimming()
 		else:
 			animate()
+			update_footsteps(delta)
 		get_basic_input()
+
+func update_footsteps(delta: float) -> void:
+	if is_in_water or direction.is_zero_approx():
+		footstep_timer = 0.0
+		return
+							
+	footstep_timer -= delta
+								
+	if footstep_timer <= 0.0:
+		if not grass_sfx.playing:
+			grass_sfx.pitch_scale = randf_range(0.9, 1.1)
+			grass_sfx.play()
+																			
+		footstep_timer = footstep_interval
 
 ## store world layers in cache memory to make game load faster
 func _cache_world_layers() -> void:
@@ -63,9 +83,10 @@ func _cache_world_layers() -> void:
 
 ##fetch basic inputs from user and map it to expected functions and animations
 func get_basic_input():
-	if Input.is_action_just_pressed("style"):
+	if Input.is_action_just_pressed("style") or style_but_pressed == true:
 		current_style = posmod(current_style + 1, Enum.Style.size()) as Enum.Style
 		sprite.texture = Data.PLAYER_SKINS[current_style] 
+		style_but_pressed = false
 		
 	if Input.is_action_just_pressed("tool_backward") or tool_but_pressed:
 		current_tool = posmod(current_tool + 1, Enum.Tool.size()) as Enum.Tool
@@ -259,3 +280,7 @@ func interact_with_nearest_npc() -> void:
 
 	if closest_target.has_method("interact"):
 		closest_target.call("interact", self)
+
+
+func _on_style_pressed() -> void:
+	style_but_pressed = true

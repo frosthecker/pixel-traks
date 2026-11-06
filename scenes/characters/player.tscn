@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://d2ft4qdmwo40l" path="res://assets/Sunnyside_World_Assets/UI/hammer.png" id="14_g66nw"]
 [ext_resource type="Texture2D" uid="uid://1ftqbvoi4eyu" path="res://assets/Sunnyside_World_Assets/UI/hand_open_02.png" id="14_xrqxk"]
 [ext_resource type="Texture2D" uid="uid://boly6bvxdkfm0" path="res://assets/Sunnyside_World_Assets/UI/hand_closed_02.png" id="15_g66nw"]
+[ext_resource type="Texture2D" uid="uid://c4am4kpqxhpwq" path="res://assets/Sunnyside_World_Assets/UI/playercount.png" id="17_rpnd8"]
+[ext_resource type="AudioStream" uid="uid://cesanhhlge4xn" path="res://assets/Music/sfx/grass_walk.mp3" id="18_d6tgn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
 radius = 4.0
@@ -2534,6 +2536,19 @@ texture_normal = ExtResource("14_xrqxk")
 texture_pressed = ExtResource("15_g66nw")
 stretch_mode = 4
 
+[node name="style" type="TextureButton" parent="CanvasLayer" unique_id=903814506]
+offset_left = 570.0
+offset_top = 186.5
+offset_right = 610.0
+offset_bottom = 226.5
+scale = Vector2(1.2, 1.2)
+texture_normal = ExtResource("17_rpnd8")
+stretch_mode = 4
+
+[node name="grass" type="AudioStreamPlayer" parent="." unique_id=1903298981]
+stream = ExtResource("18_d6tgn")
+bus = &"sfx"
+
 [connection signal="body_entered" from="PickupZone" to="PickupZone" method="_on_body_entered"]
 [connection signal="body_exited" from="PickupZone" to="PickupZone" method="_on_body_exited"]
 [connection signal="pressed" from="CanvasLayer/tool" to="." method="_on_tool_pressed"]
@@ -2542,3 +2557,4 @@ stretch_mode = 4
 [connection signal="pressed" from="CanvasLayer/chat" to="." method="_on_chat_pressed"]
 [connection signal="pressed" from="CanvasLayer/action" to="." method="_on_action_pressed"]
 [connection signal="pressed" from="CanvasLayer/pick" to="." method="_on_pick_pressed"]
+[connection signal="pressed" from="CanvasLayer/style" to="." method="_on_style_pressed"]
