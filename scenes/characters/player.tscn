@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://boly6bvxdkfm0" path="res://assets/Sunnyside_World_Assets/UI/hand_closed_02.png" id="15_g66nw"]
 [ext_resource type="Texture2D" uid="uid://c4am4kpqxhpwq" path="res://assets/Sunnyside_World_Assets/UI/playercount.png" id="17_rpnd8"]
 [ext_resource type="AudioStream" uid="uid://cesanhhlge4xn" path="res://assets/Music/sfx/grass_walk.mp3" id="18_d6tgn"]
+[ext_resource type="AudioStream" uid="uid://d4m4n50shoaum" path="res://assets/Music/sfx/sword.mp3" id="19_3wg1y"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atpat"]
 radius = 4.0
@@ -44,6 +45,18 @@ tracks/1/path = NodePath("Sprite2D:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("sword:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -1288,6 +1301,18 @@ tracks/2/keys = {
 "method": &"tool_use_emit"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("sword:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_vwwfy"]
 resource_name = "sword_right"
@@ -2331,7 +2356,7 @@ transitions = ["Start", "Axe", SubResource("AnimationNodeStateMachineTransition_
 graph_offset = Vector2(124, 196.30896)
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_inhyd"]
-graph_offset = Vector2(-397.18262, -215.02263)
+graph_offset = Vector2(-83.720924, -321.5559)
 nodes/output/position = Vector2(960, -80)
 nodes/ToolStateMachine/node = SubResource("AnimationNodeStateMachine_w5sjy")
 nodes/ToolStateMachine/position = Vector2(120, -140)
@@ -2547,6 +2572,10 @@ stretch_mode = 4
 
 [node name="grass" type="AudioStreamPlayer" parent="." unique_id=1903298981]
 stream = ExtResource("18_d6tgn")
+bus = &"sfx"
+
+[node name="sword" type="AudioStreamPlayer" parent="." unique_id=735094646]
+stream = ExtResource("19_3wg1y")
 bus = &"sfx"
 
 [connection signal="body_entered" from="PickupZone" to="PickupZone" method="_on_body_entered"]

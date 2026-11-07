@@ -42,7 +42,7 @@ var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_nois
 @export_group("Skeletons")
 @export var skeleton_scene: PackedScene
 @export var max_skeletons: int = 2
-@export var skeleton_spawn_interval: float = 20.0
+@export var skeleton_spawn_interval: float = 40.0
 @export var skeleton_spawn_min_distance: float = 144.0
 @export var skeleton_spawn_max_distance: float = 280.0
 
@@ -96,6 +96,13 @@ var _boot_msec := 0
 var _delete_dialog: ConfirmationDialog
 var _npcs_spread := false ## Saved per world: NPCs have been spread out (older worlds get a one-time spread)
 @onready var camera: Camera2D = $Objects/Player/Camera2D2
+
+#player_sfx
+@onready var sword_wh = $player_sfx/sword_wh
+@onready var sword_st = $player_sfx/sword_st
+@onready var sword_wh2 = $player_sfx/sword_wh2
+@onready var sword_st2 = $player_sfx/sword_st2
+
 
 func _ready() -> void:
 	if noise_height_text == null:
@@ -350,10 +357,21 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 						plant_info.setup(plant_res)
 
 		Enum.Tool.AXE, Enum.Tool.SWORD:
+			var sfx_index = randi_range(0,1)
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.global_position.distance_to(pos) < 24:
+					if tool == Enum.Tool.SWORD:
+						if sfx_index == 1:
+							sword_st.play()
+						else:
+							sword_st2.play()
 					object.hit(tool)
-
+				else:
+					if tool == Enum.Tool.SWORD:
+						if sfx_index == 1:
+							sword_wh.play()
+						else:
+							sword_wh2.play()
 func _process(delta: float) -> void:
 	# The procedural level scene may not have a day-color gradient assigned yet.
 	# Skip the visual update until it does instead of calling sample() on null.

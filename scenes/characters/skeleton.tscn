@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://csrt5cv40fagg" path="res://assets/Sunnyside_World_Assets/Characters/Skeleton/PNG/skeleton_idle_strip6.png" id="5_7tan2"]
 [ext_resource type="Texture2D" uid="uid://cp2no757hxb8f" path="res://assets/Sunnyside_World_Assets/Characters/Skeleton/PNG/skeleton_jump_strip10.png" id="6_rmro7"]
 [ext_resource type="Texture2D" uid="uid://caea751wha5bp" path="res://assets/Sunnyside_World_Assets/Characters/Skeleton/PNG/skeleton_walk_strip8.png" id="7_hqqep"]
+[ext_resource type="AudioStream" uid="uid://hxj3hel80f3h" path="res://assets/Music/sfx/sword_sfx/Whooshes/WHSH_Whoosh_HoveAud_SwordCombat_07.wav" id="8_7y8xs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2y572"]
 atlas = ExtResource("2_7y8xs")
@@ -384,6 +385,10 @@ animations = [{
 radius = 5.0
 height = 16.0
 
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_ohjdn"]
+stream_count = 1
+stream_0 = ExtResource("8_7y8xs")
+
 [node name="skeleton" type="CharacterBody2D" unique_id=1654238461 groups=["Objects"]]
 collision_layer = 7
 collision_mask = 7
@@ -397,3 +402,10 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1492057117]
 position = Vector2(0.5, 0)
 shape = SubResource("CapsuleShape2D_4ifi7")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=117051295]
+
+[node name="sword_wh" type="AudioStreamPlayer" parent="Node2D" unique_id=1963200763]
+stream = SubResource("AudioStreamPlaylist_ohjdn")
+
+[node name="sword_st" type="AudioStreamPlayer" parent="Node2D" unique_id=278201658]

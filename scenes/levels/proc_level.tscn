@@ -31,6 +31,10 @@
 [ext_resource type="AudioStream" uid="uid://bfhph0mcmjv22" path="res://assets/Music/soundtrack/#68 Goodbye Tales - Orchestrated.WAV" id="25_4q8r1"]
 [ext_resource type="AudioStream" uid="uid://dstrifsg68wcp" path="res://assets/Music/soundtrack/#70 Call For Love - Orchestrated.WAV" id="26_b6tby"]
 [ext_resource type="AudioStream" uid="uid://2wyul0d2se4v" path="res://assets/Music/soundtrack/#71 Music Of Something - Orchestrated.WAV" id="27_6sbnb"]
+[ext_resource type="AudioStream" uid="uid://dvdpt8j83d57q" path="res://assets/Music/sfx/sword_sfx/Whooshes/WHSH_Whoosh_HoveAud_SwordCombat_26.wav" id="32_b6tby"]
+[ext_resource type="AudioStream" uid="uid://hxj3hel80f3h" path="res://assets/Music/sfx/sword_sfx/Whooshes/WHSH_Whoosh_HoveAud_SwordCombat_07.wav" id="32_qmt37"]
+[ext_resource type="AudioStream" uid="uid://bm4a8lw3baxji" path="res://assets/Music/sfx/sword_sfx/Main Sounds/Sword Stabs/Base Stabs/WEAPSwrd_SwordStab_HoveAud_SwordCombat_01.wav" id="33_wg1i5"]
+[ext_resource type="AudioStream" uid="uid://dsxf5ba5morpd" path="res://assets/Music/sfx/sword_sfx/Main Sounds/Sword Stabs/Base Stabs/WEAPSwrd_SwordStab_HoveAud_SwordCombat_11.wav" id="35_6sbnb"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hsok3"]
 
@@ -254,5 +258,23 @@ navigation_polygon = SubResource("NavigationPolygon_hydf3")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1908090457]
 stream = SubResource("AudioStreamPlaylist_6eyoc")
 autoplay = true
+
+[node name="player_sfx" type="Node2D" parent="." unique_id=880170446]
+
+[node name="sword_wh" type="AudioStreamPlayer" parent="player_sfx" unique_id=1679420867]
+stream = ExtResource("32_b6tby")
+bus = &"sfx"
+
+[node name="sword_wh2" type="AudioStreamPlayer" parent="player_sfx" unique_id=974036489]
+stream = ExtResource("32_qmt37")
+bus = &"sfx"
+
+[node name="sword_st" type="AudioStreamPlayer" parent="player_sfx" unique_id=638440271]
+stream = ExtResource("33_wg1i5")
+bus = &"sfx"
+
+[node name="sword_st2" type="AudioStreamPlayer" parent="player_sfx" unique_id=1459279833]
+stream = ExtResource("35_6sbnb")
+bus = &"sfx"
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
