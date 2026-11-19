@@ -12,9 +12,9 @@ config_version=5
 
 config/name="Traks"
 run/main_scene="uid://c6dv12fo26mei"
-config/features=PackedStringArray("4.7", "Mobile")
-config/icon="res://icon.svg"
+config/features=PackedStringArray("4.7", "C#", "Mobile")
 boot_splash/show_image=false
+config/icon="res://icon.svg"
 
 [autoload]
 
@@ -91,6 +91,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
+
+[dotnet]
+
+project/assembly_name="Traks"
 
 [editor_plugins]
 
