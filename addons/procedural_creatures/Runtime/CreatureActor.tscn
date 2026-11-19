@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://sq4qa0w2hbc3"]
+
+[ext_resource type="Script" uid="uid://nr32mq0n8gbh" path="res://addons/procedural_creatures/Runtime/CreatureActor.cs" id="1_actor"]
+
+[node name="CreatureActor" type="Node2D" unique_id=1743309176]
+script = ExtResource("1_actor")
+SeedText = "100"
+AnimationFps = 20
+SteppedMovement = true
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1567103345]
+texture_filter = 1
+centered = false
