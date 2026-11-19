@@ -36,7 +36,7 @@ var day_transition_tween: Tween
 @export var forest_block_size: int = 4 ## Tile grid block size for placing trees
 @export var min_tree_distance: int = 3 ## Minimum tile distance between trees to prevent collision overlap
 @export var solitary_tree_chance: float = 0.06 ## Chance of occasional lone trees in open plains
-@export_range(100, 2000, 25) var max_tree_count: int = 750 ## Keeps scene-tile physics affordable on low-end devices
+@export_range(100, 2000, 25) var max_tree_count: int = 400 ## Caps scene-tile collision work on lower-end devices
 var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_noise_threshold
 
 @export_group("Skeletons")
@@ -45,6 +45,21 @@ var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_nois
 @export var skeleton_spawn_interval: float = 40.0
 @export var skeleton_spawn_min_distance: float = 144.0
 @export var skeleton_spawn_max_distance: float = 280.0
+
+@export_group("Creature Spawning")
+## The creature wrapper scene to scatter across clear grass in each generated world.
+@export var creature_scene: PackedScene
+@export_range(0, 20, 1) var land_creature_count: int = 2
+@export_range(0, 20, 1) var aquatic_creature_count: int = 1
+@export_range(0, 20, 1) var winged_creature_count: int = 1
+## Optional quadruped presets. If set, land creatures randomly use one of these
+## instead of a generated body; assign cow.json and rabbit.json here in the Inspector.
+@export_file("*.json") var cow_preset_path: String = ""
+@export_file("*.json") var rabbit_preset_path: String = ""
+## Minimum world-space distance between creatures and the player, NPCs, and shop.
+@export var creature_spawn_clearance: float = 112.0
+## Minimum world-space distance between two spawned creatures.
+@export var creature_min_spacing: float = 80.0
 
 @export_group("Player")
 @export var player_max_health: int = 10
@@ -547,6 +562,7 @@ func apply_save_data(save_data: Dictionary) -> void:
 	_rescue_stranded_npcs()
 	_restore_plants(save_data.get("plants", []))
 	_restore_dropped_items(save_data.get("dropped_items", []))
+	_spawn_creatures()
 
 func _serialize_tile_layer(layer: TileMapLayer) -> Dictionary:
 	var packed := PackedInt32Array()
@@ -795,6 +811,7 @@ func generate_world() -> void:
 	await get_tree().process_frame
 	_place_entities_on_grass()
 	await _generate_forests(grass_tiles_arr)
+	_spawn_creatures()
 	_cache_terrain()
 	_setup_camera_limits()
 	
@@ -878,6 +895,119 @@ func _place_entities_on_grass() -> void:
 		npc.global_position = _cell_to_global(npc_cell)
 		placed.append(npc.global_position)
 	_npcs_spread = true
+
+## Creatures are runtime instances so every generated terrain receives a fresh
+## distribution. Land creatures are placed after forests so they never start in a tree.
+func _spawn_creatures() -> void:
+	_clear_procedural_creatures()
+	if creature_scene == null:
+		return
+
+	var grass_set: Dictionary = {}
+	for cell in ground_2.get_used_cells():
+		grass_set[cell] = true
+	var islands := _find_islands(grass_set)
+	var protected_positions: Array[Vector2] = []
+	if player != null:
+		protected_positions.append(player.global_position)
+	var shop := _get_shop()
+	if shop != null:
+		protected_positions.append(shop.global_position)
+	for npc in get_tree().get_nodes_in_group("NPC"):
+		protected_positions.append(npc.global_position)
+
+	var creature_positions: Array[Vector2] = []
+	if not islands.is_empty():
+		_spawn_creatures_for_habitat("land", land_creature_count, islands[0], grass_set, protected_positions, creature_positions)
+	_spawn_creatures_for_habitat("water", aquatic_creature_count, water.get_used_cells(), grass_set, protected_positions, creature_positions)
+	_spawn_creatures_for_habitat("air", winged_creature_count, water.get_used_cells(), grass_set, protected_positions, creature_positions)
+
+func _spawn_creatures_for_habitat(habitat: String, count: int, cells: Array, grass_set: Dictionary, protected_positions: Array[Vector2], creature_positions: Array[Vector2]) -> void:
+	if count <= 0 or cells.is_empty():
+		return
+	var spawned := 0
+	var attempts := count * 100
+	while spawned < count and attempts > 0:
+		attempts -= 1
+		var cell: Vector2i = cells[randi() % cells.size()]
+		if habitat == "land" and (not _has_grass_clearing(cell, grass_set) or _has_tree_near_cell(cell)):
+			continue
+		if habitat == "water" and not _has_water_clearing(cell):
+			continue
+		var position := _cell_to_global(cell)
+		var clear := true
+		for protected_position in protected_positions:
+			if position.distance_to(protected_position) < creature_spawn_clearance:
+				clear = false
+				break
+		if not clear:
+			continue
+		for other_position in creature_positions:
+			if position.distance_to(other_position) < creature_min_spacing:
+				clear = false
+				break
+		if not clear:
+			continue
+
+		var creature := creature_scene.instantiate() as Node2D
+		if creature == null:
+			push_error("Creature scene must inherit Node2D.")
+			return
+		creature.set("habitat", _creature_habitat_value(habitat))
+		if habitat == "land":
+			creature.set("preset_path", _random_land_preset())
+		$Objects.add_child(creature)
+		creature.global_position = position
+		creature.add_to_group("ProceduralCreatures")
+		creature_positions.append(position)
+		spawned += 1
+
+func _creature_habitat_value(habitat: String) -> int:
+	match habitat:
+		"water": return 1
+		"air": return 2
+		_: return 0
+
+func _random_land_preset() -> String:
+	var presets: Array[String] = []
+	for path in [cow_preset_path, rabbit_preset_path]:
+		if not path.is_empty() and FileAccess.file_exists(path):
+			presets.append(path)
+	return presets.pick_random() if not presets.is_empty() else ""
+
+func _has_water_clearing(cell: Vector2i) -> bool:
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			var neighbor := cell + Vector2i(x, y)
+			if ground_1.get_cell_source_id(neighbor) != -1 or ground_2.get_cell_source_id(neighbor) != -1:
+				return false
+	return true
+
+## Called by creature.gd before and during movement. This supplies the world
+## collision boundary the procedural CreatureActor does not have on its own.
+func can_creature_occupy(world_position: Vector2, habitat: int) -> bool:
+	if habitat == 2: # Winged creatures can fly over all terrain and obstacles.
+		return true
+	var cell := ground_2.local_to_map(ground_2.to_local(world_position))
+	var is_land := ground_1.get_cell_source_id(cell) != -1 or ground_2.get_cell_source_id(cell) != -1
+	if habitat == 1:
+		return not is_land
+	return is_land and not _has_tree_near_cell(cell)
+
+func _has_tree_near_cell(cell: Vector2i) -> bool:
+	if environment == null:
+		return false
+	for x in range(-1, 2):
+		for y in range(-1, 2):
+			var world_position := _cell_to_global(cell + Vector2i(x, y))
+			var environment_cell := environment.local_to_map(environment.to_local(world_position))
+			if environment.get_cell_source_id(environment_cell) != -1:
+				return true
+	return false
+
+func _clear_procedural_creatures() -> void:
+	for creature in get_tree().get_nodes_in_group("ProceduralCreatures"):
+		creature.queue_free()
 
 ## Picks a grass cell that is between the min/max distance from the player's start,
 ## away from the start/shop, and as far as possible from the NPCs already placed
@@ -1320,6 +1450,7 @@ func _clear_world_entities() -> void:
 	for item in get_tree().get_nodes_in_group("DroppedItems"):
 		item.free()
 	_clear_skeletons()
+	_clear_procedural_creatures()
 	used_cells.clear()
 	$Layers/LightDirtLayer.clear()
 	$Layers/DarkDirtLayer.clear()

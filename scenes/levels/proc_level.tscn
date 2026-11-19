@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cpm07of23fq6r" path="res://scenes/characters/seller.tscn" id="4_0rint"]
 [ext_resource type="PackedScene" uid="uid://bi3rgl5amicrf" path="res://scenes/characters/skeleton.tscn" id="4_skeleton"]
 [ext_resource type="PackedScene" uid="uid://cvakiwj4a1x5n" path="res://AI/scenes/john.tscn" id="5_dute6"]
+[ext_resource type="PackedScene" uid="uid://drypao5t20w8r" path="res://scenes/characters/creature.tscn" id="6_6sbnb"]
 [ext_resource type="Texture2D" uid="uid://dhsaihv6kjq6n" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="6_b4i4j"]
 [ext_resource type="Resource" path="res://resources/kaia_biodata.tres" id="7_cindd"]
 [ext_resource type="Texture2D" uid="uid://cagb0uq47yrn0" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_long_hair.png" id="8_wbfq5"]
@@ -93,6 +94,9 @@ script = ExtResource("1_3jh03")
 noise_height_text = SubResource("NoiseTexture2D_ubuo4")
 noise_tree_text = SubResource("NoiseTexture2D_7iper")
 skeleton_scene = ExtResource("4_skeleton")
+creature_scene = ExtResource("6_6sbnb")
+cow_preset_path = "res://assets/animal_presets/cow.json"
+rabbit_preset_path = "res://assets/animal_presets/rabbit.json"
 
 [node name="Layers" type="Node2D" parent="." unique_id=991742646]
 
