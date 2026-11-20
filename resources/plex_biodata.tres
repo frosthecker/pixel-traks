@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://plex_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Plex"
+personality = "Plex is the island's tinkerer - part engineer, part mad scientist, all curiosity. She builds windmills, water wheels, strange contraptions that click and whir. She scavenges everything - shipwreck debris, ancient ruins, broken tools. Her workshop is organized chaos. She talks to her machines, names them, believes they have souls. She's trying to build a flying machine. Everyone says it's impossible. She smiles."
+movement_speed = 24.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(250, -180)}, {"activity": "socialize", "start_minute": 780, "end_minute": 900}, {"activity": "work", "start_minute": 900, "end_minute": 1200, "target_location": Vector2(250, -180)}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(250, -180), Vector2(300, -200), Vector2(200, -150)]
+relationship_values = {}
+current_mood = "inventive"
+social_traits = {"friendliness": 65, "trustfulness": 60, "generosity": 70, "loyalty": 65, "competitiveness": 40, "aggressiveness": 15, "curiosity": 95, "extraversion": 55}
+skill_affinities = {"farming": 0.6, "mining": 0.7, "fishing": 0.4, "combat": 0.4, "social": 1.0, "crafting": 1.6}
+memory_retention = 1.0
+learning_rate = 1.4
+grudge_holding = 0.3
+forgiveness = 0.7
+home_location = Vector2(250, -180)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(250, -180), Vector2(300, -200), Vector2(200, -150)]
+preferred_topics = ["mechanics", "flight", "gears", "steam", "scavenging", "impossible", "perpetual motion"]
+avoided_topics = ["safety regulations", "her failed glider", "the mainland academy", "practicality", "impossible"]
+speech_patterns = ["*tightens bolt*", "*oils gear*", "What if...", "Physics is a suggestion.", "It almost flew."]

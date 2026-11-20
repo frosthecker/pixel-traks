@@ -36,7 +36,7 @@ func _serialize_slots(slots: Dictionary) -> Dictionary:
 	for slot_index in slots:
 		var item: Variant = slots[slot_index]
 		if item is Array and item.size() >= 2:
-			serialized[str(slot_index)] = [str(item[0]), int(item[1])]
+			serialized[str(slot_index)] = [str(item[0]), int(item[1]), get_slot_quality(item)]
 	return serialized
 
 func _deserialize_slots(serialized: Variant) -> Dictionary:
@@ -46,8 +46,14 @@ func _deserialize_slots(serialized: Variant) -> Dictionary:
 	for raw_index in serialized:
 		var item: Variant = serialized[raw_index]
 		if item is Array and item.size() >= 2:
-			slots[int(raw_index)] = [str(item[0]), int(item[1])]
+			var quality := int(item[2]) if item.size() >= 3 else int(Enum.Quality.NORMAL)
+			slots[int(raw_index)] = [str(item[0]), int(item[1]), clampi(quality, 0, 3)]
 	return slots
+
+func get_slot_quality(item: Variant) -> int:
+	if item is Array and item.size() >= 3:
+		return clampi(int(item[2]), 0, 3)
+	return int(Enum.Quality.NORMAL)
 
 func _refresh_inventory_ui() -> void:
 	var inventory_ui := get_tree().current_scene.get_node_or_null("Overlay/UserInterface/inventory")
@@ -60,27 +66,28 @@ func _refresh_inventory_ui() -> void:
 			slot.refresh_style()
 	inventory_ui.initialize_inventory()
 
-func add_item(item_name, item_quantity):
+func add_item(item_name, item_quantity, quality: int = Enum.Quality.NORMAL):
+	quality = clampi(quality, 0, 3)
 	for item in inventory:
-		if inventory[item][0] == item_name:
+		if inventory[item][0] == item_name and get_slot_quality(inventory[item]) == quality:
 			var stack_size = int(JsonData.item_data[item_name]["stack_size"])
 			var able_to_add = stack_size - inventory[item][1]
 			if able_to_add >= item_quantity:
 				inventory[item][1] += item_quantity
-				update_slot_visual(item, inventory[item][0], inventory[item][1])
+				update_slot_visual(item, inventory[item][0], inventory[item][1], quality)
 				return
 			else:
 				inventory[item][1] += able_to_add
-				update_slot_visual(item, inventory[item][0], inventory[item][1])
+				update_slot_visual(item, inventory[item][0], inventory[item][1], quality)
 				item_quantity = item_quantity-able_to_add
 	
 	for i in range(NUM_INVENTORY_SLOTS):
 		if inventory.has(i) == false:
-			inventory[i] = [item_name, item_quantity]
-			update_slot_visual(i, inventory[i][0], inventory[i][1])
+			inventory[i] = [item_name, item_quantity, quality]
+			update_slot_visual(i, inventory[i][0], inventory[i][1], quality)
 			return
 
-func update_slot_visual(slot_index, item_name, new_quantity):
+func update_slot_visual(slot_index, item_name, new_quantity, quality: int = Enum.Quality.NORMAL):
 	# The inventory UI may not have entered the scene tree yet (for example,
 	# when an item is picked up during level startup).  Keep the inventory data
 	# as the source of truth; inventory.gd will render it from _ready().
@@ -90,17 +97,26 @@ func update_slot_visual(slot_index, item_name, new_quantity):
 		return
 
 	if slot.item != null:
-		slot.item.set_item(item_name, new_quantity)
+		slot.item.set_item(item_name, new_quantity, quality)
 	else:
-		slot.initialize_item(item_name, new_quantity)
+		slot.initialize_item(item_name, new_quantity, quality)
 func remove_item(slot: SlotClass):
 	inventory.erase(slot.slot_index)
 
 func add_item_to_empty_slot(item: ItemClass, slot: SlotClass):
-	inventory[slot.slot_index] = [item.item_name, item.item_quantity]
+	inventory[slot.slot_index] = [item.item_name, item.item_quantity, int(item.item_quality)]
 	
 func add_item_quantity(slot: SlotClass, quantity_to_add: int):
 	inventory[slot.slot_index][1] += quantity_to_add
+
+func spend_money(amount: int) -> bool:
+	if amount < 0:
+		return false
+	if money < amount:
+		return false
+	money -= amount
+	money_changed.emit(money)
+	return true
 
 func sell_all_crops() -> int:
 	var earnings := 0
@@ -117,7 +133,8 @@ func sell_all_crops() -> int:
 		var sell_price := int(item_data.get("sell_price", 0))
 		if sell_price <= 0:
 			continue
-		earnings += int(item[1]) * sell_price
+		var quality_multiplier := Data.quality_multiplier(get_slot_quality(item))
+		earnings += int(round(float(item[1]) * float(sell_price) * quality_multiplier))
 		inventory.erase(slot_index)
 
 	if earnings > 0:

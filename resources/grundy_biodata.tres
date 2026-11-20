@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://grundy_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Grundy"
+personality = "Grundy is a deep miner who goes where the light doesn't. He's compact, immensely strong, and navigates by touch and air currents. He's found veins others missed, survived cave-ins that killed crews. He speaks in geological time - millions of years, not days. He's searching for the 'Heart of the Island' - a mythical ore body. He sings ancient mining songs that echo in the dark."
+movement_speed = 20.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 300}, {"activity": "work", "start_minute": 300, "end_minute": 720, "target_location": Vector2(400, -200)}, {"activity": "work", "start_minute": 720, "end_minute": 1140, "target_location": Vector2(400, -200)}, {"activity": "socialize", "start_minute": 1140, "end_minute": 1260}, {"activity": "sleep", "start_minute": 1260, "end_minute": 1440}]
+favorite_locations = [Vector2(400, -200), Vector2(450, -250), Vector2(350, -150)]
+relationship_values = {}
+current_mood = "deep"
+social_traits = {"friendliness": 45, "trustfulness": 55, "generosity": 60, "loyalty": 85, "competitiveness": 30, "aggressiveness": 25, "curiosity": 60, "extraversion": 30}
+skill_affinities = {"farming": 0.2, "mining": 1.7, "fishing": 0.2, "combat": 1.1, "social": 0.6, "crafting": 0.9}
+memory_retention = 1.1
+learning_rate = 0.8
+grudge_holding = 0.5
+forgiveness = 0.5
+home_location = Vector2(400, -200)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(400, -200), Vector2(450, -250), Vector2(350, -150), Vector2(500, -300)]
+preferred_topics = ["ore veins", "deep dark", "cave-ins", "the Heart", "pickaxes", "lamps", "the mountain's bones"]
+avoided_topics = ["the surface", "his lost crew", "open sky", "women", "retirement"]
+speech_patterns = ["*taps rock*", "*listens to earth*", "The mountain speaks.", "Deeper. Always deeper.", "Stone remembers."]

@@ -144,7 +144,8 @@ func _build_payload(level: Node, slot: int) -> Dictionary:
 		"saved_at_unix": Time.get_unix_time_from_system(),
 		"slot": slot,
 		"level": level.get_save_data(),
-		"inventory": PlayerInventory.get_save_data()
+		"inventory": PlayerInventory.get_save_data(),
+		"farming": FarmState.get_save_data()
 	}
 
 func _write_compressed(path: String, payload: Dictionary) -> bool:
@@ -179,6 +180,10 @@ func _apply_payload(save_data: Dictionary, level_override: Node) -> bool:
 	var inventory_data: Variant = save_data.get("inventory", {})
 	if inventory_data is Dictionary:
 		PlayerInventory.load_save_data(inventory_data)
+
+	var farming_data: Variant = save_data.get("farming", {})
+	if farming_data is Dictionary:
+		FarmState.load_save_data(farming_data)
 
 	var level := level_override if level_override != null else _get_level()
 	var level_data: Variant = save_data.get("level", {})

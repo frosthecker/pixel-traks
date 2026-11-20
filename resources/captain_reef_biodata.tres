@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://captain_reef_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Captain Reef"
+personality = "Captain Reef is the harbor master - a mountain of a man with a voice like foghorns. He's memorized every rock, current, and wreck in the harbor. He was a whaler, a pirate, a naval officer, and now he tends the dock. He treats ships like patients and captains like wayward children. He has a prosthetic leg carved from whalebone and a parrot that swears in six languages."
+movement_speed = 16.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(-150, 400)}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(-150, 400)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-150, 400), Vector2(-100, 350), Vector2(-200, 450)]
+relationship_values = {}
+current_mood = "authoritative"
+social_traits = {"friendliness": 60, "trustfulness": 50, "generosity": 65, "loyalty": 80, "competitiveness": 40, "aggressiveness": 30, "curiosity": 60, "extraversion": 75}
+skill_affinities = {"farming": 0.3, "mining": 0.4, "fishing": 0.8, "combat": 1.1, "social": 1.2, "crafting": 0.7}
+memory_retention = 1.0
+learning_rate = 0.8
+grudge_holding = 0.5
+forgiveness = 0.6
+home_location = Vector2(-150, 400)
+territory_radius = 200.0
+preferred_work_locations = [Vector2(-150, 400), Vector2(-200, 450), Vector2(-100, 350)]
+preferred_topics = ["harbor", "wrecks", "tides", "ships", "whales", "the parrot", "naval history"]
+avoided_topics = ["his leg", "the mutiny", "his wife ashore", "retirement", "peace"]
+speech_patterns = ["*leans on whalebone leg*", "*parrot squawks*", "Harbor's closed.", "Rocks don't move.", "She'll hold, or she won't."]

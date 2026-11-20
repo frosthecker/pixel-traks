@@ -1,12 +1,25 @@
-[gd_resource type="Resource" script_class="NPCBiodata" format=3]
+[gd_resource type="Resource" format=3 uid="uid://mira_biodata"]
 
-[ext_resource type="Script" path="res://resources/npc_biodata.gd" id="1_bio"]
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
 
 [resource]
 script = ExtResource("1_bio")
-display_name = "Mira Vale"
-personality = "An observant tidekeeper who speaks in warm, precise sentences. She knows the island's shoreline, weather, and hidden coves, and she likes helping newcomers prepare without frightening them."
+display_name = "Mira"
+personality = "Mira is a curious herbalist and potion-maker who arrived on the island seeking rare ingredients. She speaks with a slight accent and often references obscure plant lore. She's friendly but guarded about her past, preferring to trade knowledge for knowledge. She has a gentle demeanor but sharp wit."
 movement_speed = 22.0
-daily_schedule = [{"start_minute": 300, "end_minute": 600, "activity": "checking the tide pools", "target_location": Vector2(-80, -40)}, {"start_minute": 600, "end_minute": 960, "activity": "walking the shore path", "target_location": Vector2(-160, 20)}, {"start_minute": 960, "end_minute": 1200, "activity": "charting tomorrow's weather", "target_location": Vector2(-80, -40)}, {"start_minute": 1200, "end_minute": 300, "activity": "sleeping by the lighthouse", "target_location": Vector2(-64, -70)}]
-favorite_locations = [Vector2(-80, -40), Vector2(-160, 20)]
-current_mood = &"curious"
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 600, "target_location": Vector2(120, -80)}, {"activity": "wander", "start_minute": 600, "end_minute": 720}, {"activity": "work", "start_minute": 720, "end_minute": 960, "target_location": Vector2(200, 150)}, {"activity": "socialize", "start_minute": 960, "end_minute": 1080}, {"activity": "work", "start_minute": 1080, "end_minute": 1320, "target_location": Vector2(120, -80)}, {"activity": "wander", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(120, -80), Vector2(200, 150), Vector2(0, 0)]
+relationship_values = {}
+current_mood = "curious"
+social_traits = {"friendliness": 65, "trustfulness": 55, "generosity": 60, "loyalty": 70, "competitiveness": 25, "aggressiveness": 10, "curiosity": 90, "extraversion": 50}
+skill_affinities = {"farming": 1.2, "mining": 0.7, "fishing": 0.8, "combat": 0.4, "social": 1.0, "crafting": 1.4}
+memory_retention = 1.2
+learning_rate = 1.3
+grudge_holding = 0.4
+forgiveness = 0.7
+home_location = Vector2(120, -80)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(120, -80), Vector2(200, 150), Vector2(300, -100)]
+preferred_topics = ["herbs", "potions", "alchemy", "rare plants", "ancient remedies", "lore", "recipes"]
+avoided_topics = ["her past", "why she came here", "violence", "dark magic"]
+speech_patterns = ["*scribbles in notebook*", "*sniffs herb*", "Fascinating...", "In my studies,", "The properties of"]

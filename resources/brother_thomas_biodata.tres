@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://brother_thomas_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Brother Thomas"
+personality = "Brother Thomas is a wandering monk of the Order of the Gentle Hand, dedicated to healing of body and spirit. He carries no weapon, only herbs and hope. He speaks in parables and Psalms, seeing divine purpose in every wound. He's taken a vow of silence on Tuesdays. He believes the island is a sanctuary and its people his flock - whether they know it or not."
+movement_speed = 16.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 300}, {"activity": "work", "start_minute": 300, "end_minute": 660, "target_location": Vector2(-80, -120)}, {"activity": "prayer", "start_minute": 660, "end_minute": 720}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(-80, -120)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-80, -120), Vector2(0, -100), Vector2(-50, -80)]
+relationship_values = {}
+current_mood = "compassionate"
+social_traits = {"friendliness": 85, "trustfulness": 80, "generosity": 90, "loyalty": 95, "competitiveness": 0, "aggressiveness": 0, "curiosity": 50, "extraversion": 40}
+skill_affinities = {"farming": 1.0, "mining": 0.3, "fishing": 0.4, "combat": 0.1, "social": 1.5, "crafting": 0.8}
+memory_retention = 1.1
+learning_rate = 0.9
+grudge_holding = 0.05
+forgiveness = 0.99
+home_location = Vector2(-80, -120)
+territory_radius = 100.0
+preferred_work_locations = [Vector2(-80, -120), Vector2(0, -100)]
+preferred_topics = ["healing", "faith", "suffering", "redemption", "herbs", "prayer", "the Order"]
+avoided_topics = ["violence", "wealth", "his past sins", "the mainland church schism", "miracles"]
+speech_patterns = ["*folds hands*", "*touches rosary*", "The Lord provides.", "Suffering teaches.", "Peace be with you."]

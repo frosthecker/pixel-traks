@@ -2,6 +2,7 @@ extends Node2D
 
 var item_name
 var item_quantity
+var item_quality := 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,22 +17,28 @@ func _ready() -> void:
 	$item_tex.texture = load("res://assets/Sunnyside_World_Assets/UI/" + item_name + ".png")
 	var stack_size = int(JsonData.item_data[item_name]["stack_size"])
 	item_quantity = randi() % stack_size + 1
+	_apply_quality_visual()
 	
 	if stack_size == 1:
 		$Label.text = "..."
 	else:
 		$Label.text = str(item_quantity)
 
-func set_item(nm, qt):
+func set_item(nm, qt, quality: int = 0):
 	item_name = nm
 	item_quantity = qt
+	item_quality = clampi(quality, 0, 3)
 	$item_tex.texture = load("res://assets/Sunnyside_World_Assets/UI/" + item_name + ".png")
+	_apply_quality_visual()
 	
 	var stack_size = int(JsonData.item_data[item_name]["stack_size"])
 	if stack_size == 1:
 		$Label.text = "..."
 	else:
 		$Label.text = str(item_quantity)
+
+func _apply_quality_visual() -> void:
+	$item_tex.modulate = Data.quality_color(item_quality)
 
 func add_item_quantity(amount_to_add):
 	item_quantity += amount_to_add

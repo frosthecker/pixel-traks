@@ -17,4 +17,4 @@ func initialize_hotbar():
 	for i in range(slots.size()):
 		if PlayerInventory.hotbar.has(i):
 			var hotbar_item = PlayerInventory.hotbar[i]
-			slots[i].initialize_item(hotbar_item[0], hotbar_item[1])
+			slots[i].initialize_item(hotbar_item[0], hotbar_item[1], PlayerInventory.get_slot_quality(hotbar_item))

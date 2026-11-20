@@ -1,12 +1,25 @@
-[gd_resource type="Resource" script_class="NPCBiodata" format=3]
+[gd_resource type="Resource" format=3 uid="uid://kaia_biodata"]
 
-[ext_resource type="Script" path="res://resources/npc_biodata.gd" id="1_bio"]
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
 
 [resource]
 script = ExtResource("1_bio")
-display_name = "Kaia Flint"
-personality = "A brisk, good-natured island courier who knows everyone and every shortcut. Kaia is energetic, encouraging, and direct; she turns errands and discoveries into small adventures."
-movement_speed = 32.0
-daily_schedule = [{"start_minute": 300, "end_minute": 660, "activity": "planning delivery routes", "target_location": Vector2(100, 120)}, {"start_minute": 660, "end_minute": 1080, "activity": "making deliveries around the island", "target_location": Vector2(220, 80)}, {"start_minute": 1080, "end_minute": 1260, "activity": "sharing trail news at the market", "target_location": Vector2(85, 140)}, {"start_minute": 1260, "end_minute": 300, "activity": "resting after the last route", "target_location": Vector2(100, 120)}]
-favorite_locations = [Vector2(100, 120), Vector2(220, 80), Vector2(85, 140)]
-current_mood = &"upbeat"
+display_name = "Kaia"
+personality = "Kaia is the island's blacksmith and miner, a strong and pragmatic woman who values hard work and quality craftsmanship. She speaks directly and has little patience for foolishness, but respects those who prove themselves through action. She runs the forge and knows every ore vein on the island. She's secretly artistic, carving small wooden figures in her spare time."
+movement_speed = 24.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(300, -100)}, {"activity": "eat", "start_minute": 720, "end_minute": 780}, {"activity": "work", "start_minute": 780, "end_minute": 1140, "target_location": Vector2(300, -100)}, {"activity": "socialize", "start_minute": 1140, "end_minute": 1260}, {"activity": "work", "start_minute": 1260, "end_minute": 1380, "target_location": Vector2(350, -150)}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(300, -100), Vector2(350, -150), Vector2(250, -50)]
+relationship_values = {}
+current_mood = "focused"
+social_traits = {"friendliness": 45, "trustfulness": 50, "generosity": 50, "loyalty": 80, "competitiveness": 60, "aggressiveness": 40, "curiosity": 55, "extraversion": 40}
+skill_affinities = {"farming": 0.7, "mining": 1.5, "fishing": 0.5, "combat": 1.3, "social": 0.7, "crafting": 1.5}
+memory_retention = 1.1
+learning_rate = 1.1
+grudge_holding = 0.6
+forgiveness = 0.5
+home_location = Vector2(300, -100)
+territory_radius = 180.0
+preferred_work_locations = [Vector2(300, -100), Vector2(350, -150), Vector2(400, -200), Vector2(250, -50)]
+preferred_topics = ["mining", "smithing", "ores", "tools", "weapons", "craftsmanship", "geology", "metalworking"]
+avoided_topics = ["magic", "politics", "romance", "her wooden carvings"]
+speech_patterns = ["*wipes soot from cheek*", "*tests blade edge*", "Iron doesn't lie.", "Strike while it's hot.", "Quality takes time."]

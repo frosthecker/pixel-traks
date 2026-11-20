@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://elena_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Elena"
+personality = "Elena is a master potter who finds poetry in mud. Her hands are permanently stained with clay, her nails rimmed with glaze. She speaks of fire as a living thing that transforms, not destroys. She's patient to a fault - some pieces take months. She teaches that cracks are where the light enters. She's searching for the perfect clay body, a quest her grandmother began."
+movement_speed = 18.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(-200, -100)}, {"activity": "eat", "start_minute": 780, "end_minute": 840}, {"activity": "work", "start_minute": 840, "end_minute": 1140, "target_location": Vector2(-200, -100)}, {"activity": "socialize", "start_minute": 1140, "end_minute": 1260}, {"activity": "wander", "start_minute": 1260, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-200, -100), Vector2(-250, -150), Vector2(-150, -50)]
+relationship_values = {}
+current_mood = "centered"
+social_traits = {"friendliness": 65, "trustfulness": 60, "generosity": 70, "loyalty": 75, "competitiveness": 20, "aggressiveness": 5, "curiosity": 75, "extraversion": 40}
+skill_affinities = {"farming": 0.8, "mining": 0.7, "fishing": 0.4, "combat": 0.3, "social": 1.0, "crafting": 1.5}
+memory_retention = 1.1
+learning_rate = 1.0
+grudge_holding = 0.3
+forgiveness = 0.8
+home_location = Vector2(-200, -100)
+territory_radius = 100.0
+preferred_work_locations = [Vector2(-200, -100), Vector2(-250, -150), Vector2(-150, -50)]
+preferred_topics = ["clay bodies", "glaze chemistry", "kiln gods", "centering", "wabi-sabi", "ancient forms", "fire"]
+avoided_topics = ["mass production", "perfectionism", "her failed marriage", "the kiln accident", "plastic"]
+speech_patterns = ["*wets fingers*", "*spins wheel*", "Clay has memory.", "The kiln decides.", "Centering is a prayer."]

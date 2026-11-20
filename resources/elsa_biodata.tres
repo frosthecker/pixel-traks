@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://elsa_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Elsa"
+personality = "Elsa is a forager who knows every edible, medicinal, and poisonous plant on the island. She moves through the undergrowth like a deer, gathering mushrooms at dawn, berries at noon, roots at dusk. She's quietly competitive with Mira about botanical knowledge. She trades in flavors - rare mushrooms to the chef, medicinal roots to the healer, hallucinogenic fungi to... select clients."
+movement_speed = 24.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(-200, -200)}, {"activity": "wander", "start_minute": 780, "end_minute": 900}, {"activity": "work", "start_minute": 900, "end_minute": 1200, "target_location": Vector2(-200, -200)}, {"activity": "socialize", "start_minute": 1200, "end_minute": 1320}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(-200, -200), Vector2(-250, -250), Vector2(-150, -150)]
+relationship_values = {}
+current_mood = "alert"
+social_traits = {"friendliness": 50, "trustfulness": 40, "generosity": 55, "loyalty": 65, "competitiveness": 55, "aggressiveness": 20, "curiosity": 85, "extraversion": 35}
+skill_affinities = {"farming": 1.1, "mining": 0.4, "fishing": 0.5, "combat": 0.4, "social": 0.8, "crafting": 1.0}
+memory_retention = 1.2
+learning_rate = 1.2
+grudge_holding = 0.4
+forgiveness = 0.6
+home_location = Vector2(-200, -200)
+territory_radius = 200.0
+preferred_work_locations = [Vector2(-200, -200), Vector2(-250, -250), Vector2(-150, -150)]
+preferred_topics = ["mushrooms", "wild edibles", "poisonous plants", "seasonal cycles", "preservation", "flavors", "the deep forest"]
+avoided_topics = ["cultivation", "her buyers", "the bad trip incident", "trespassing", "domesticated plants"]
+speech_patterns = ["*sniffs air*", "*brushes fern*", "The forest provides.", "Know your mushrooms.", "Roots remember."]

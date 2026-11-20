@@ -84,7 +84,9 @@ func _family_for_habitat() -> String:
 	match habitat:
 		Habitat.WATER: return "aquatic"
 		Habitat.AIR: return "winged"
-		_: return "quadruped"
+		_: # Land: pick from all land families
+			var land_families := ["quadruped", "biped", "reptile", "arthropod", "amorphous", "serpent"]
+			return land_families.pick_random()
 
 func _can_occupy(world_position: Vector2) -> bool:
 	var level := get_tree().get_first_node_in_group("Level")

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://rival_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Rook"
+personality = "Rook is a competitive farmer who sees the player as a rival. He's ambitious, proud, and constantly compares his progress to others. He's not evil - just driven to be the best. He respects skill and hard work but despises shortcuts. He speaks with a challenge in his voice and often turns conversations into competitions."
+movement_speed = 28.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(200, 200)}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(200, 200)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1140}, {"activity": "work", "start_minute": 1140, "end_minute": 1320, "target_location": Vector2(200, 200)}, {"activity": "wander", "start_minute": 1320, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(200, 200), Vector2(250, 250), Vector2(150, 150)]
+relationship_values = {}
+current_mood = "determined"
+social_traits = {"friendliness": 35, "trustfulness": 30, "generosity": 25, "loyalty": 50, "competitiveness": 95, "aggressiveness": 45, "curiosity": 60, "extraversion": 55}
+skill_affinities = {"farming": 1.4, "mining": 0.8, "fishing": 0.6, "combat": 1.0, "social": 0.5, "crafting": 1.1}
+memory_retention = 1.0
+learning_rate = 1.2
+grudge_holding = 0.7
+forgiveness = 0.4
+home_location = Vector2(200, 200)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(200, 200), Vector2(250, 250), Vector2(150, 150)]
+preferred_topics = ["competition", "best crops", "records", "efficiency", "technique", "winning", "training", "challenges"]
+avoided_topics = ["losing", "help", "charity", "luck", "shortcuts", "his insecurities"]
+speech_patterns = ["*wipes sweat*", "*measures stalk*", "Think you can beat that?", "Second place is first loser.", "Show me what you've got."]

@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://finn_npc_scene"]
+
+[ext_resource type="Texture2D" uid="uid://dhsaihv6kjq6n" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="1_finn_tex"]
+[ext_resource type="Script" uid="uid://finn_script" path="res://AI/scripts/finn.gd" id="2_finn_script"]
+[ext_resource type="BehaviorTree" uid="uid://enhanced_npc_tree" path="res://AI/trees/enhanced_npc.tres" id="3_btree"]
+[ext_resource type="Resource" uid="uid://finn_biodata" path="res://resources/finn_biodata.tres" id="4_finn_bio"]
+[ext_resource type="PackedScene" uid="uid://key_ui_scene" path="res://scenes/UI/key_ui.tscn" id="5_key_ui"]
+[ext_resource type="Texture2D" uid="uid://expr_chat" path="res://assets/Sunnyside_World_Assets/UI/expression_chat.png" id="6_expr_chat"]
+[ext_resource type="Texture2D" uid="uid://expr_alert" path="res://assets/Sunnyside_World_Assets/UI/expression_alerted.png" id="7_expr_alert"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_finn"]
+radius = 4.0
+height = 8.0
+
+[node name="Finn" type="CharacterBody2D" unique_id=1001]
+script = ExtResource("2_finn_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1002]
+texture = ExtResource("1_finn_tex")
+region_enabled = true
+region = Rect2(0, 0, 96, 64)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1003]
+shape = SubResource("CapsuleShape2D_finn")
+
+[node name="PlayerAnimation" type="AnimationTree" parent="." unique_id=1004]
+tree_root = SubResource("AnimationNodeStateMachine_finn")
+
+[node name="BTPlayer" type="BehaviorTreePlayer" parent="." unique_id=1005]
+behavior_tree = ExtResource("3_btree")
+autoplay = true
+
+[node name="Key_UI" type="Node2D" parent="." unique_id=1006]
+position = Vector2(0, -40)
+
+[node name="key_UI" type="AnimatedSprite2D" parent="Key_UI" unique_id=1007]
+sprite_frames = ExtResource("5_key_ui")
+animation = "R"
+autoplay = false
+visible = false
+
+[node name="Timer" type="Timer" parent="Key_UI" unique_id=1008]
+one_shot = true
+wait_time = 5.0
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1009]
+collision_layer = 0
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1010]
+shape = SubResource("CapsuleShape2D_finn")
+
+[node name="emoticonAnimation" type="AnimationPlayer" parent="." unique_id=1011]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="timeout" from="Key_UI/Timer" to="." method="_on_timer_timeout"]

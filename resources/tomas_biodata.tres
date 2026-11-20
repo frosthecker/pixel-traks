@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://tomas_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Tomas"
+personality = "Tomas is a grizzled veteran farmer who has worked the land for sixty years. He knows every rock, every drainage pattern, every microclimate on the island. He speaks in weather proverbs and farming aphorisms. He's seen droughts, floods, blights, and bumper crops. He's gruff but deeply cares about passing on knowledge. He refuses to use modern tools, preferring his grandfather's hoe."
+movement_speed = 18.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 300}, {"activity": "work", "start_minute": 300, "end_minute": 660, "target_location": Vector2(250, 150)}, {"activity": "work", "start_minute": 660, "end_minute": 1020, "target_location": Vector2(250, 150)}, {"activity": "socialize", "start_minute": 1020, "end_minute": 1140}, {"activity": "work", "start_minute": 1140, "end_minute": 1320, "target_location": Vector2(250, 150)}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(250, 150), Vector2(200, 100), Vector2(300, 200)]
+relationship_values = {}
+current_mood = "weathered"
+social_traits = {"friendliness": 45, "trustfulness": 50, "generosity": 60, "loyalty": 85, "competitiveness": 30, "aggressiveness": 25, "curiosity": 40, "extraversion": 35}
+skill_affinities = {"farming": 1.6, "mining": 0.5, "fishing": 0.6, "combat": 0.7, "social": 0.7, "crafting": 0.9}
+memory_retention = 1.2
+learning_rate = 0.6
+grudge_holding = 0.6
+forgiveness = 0.5
+home_location = Vector2(250, 150)
+territory_radius = 200.0
+preferred_work_locations = [Vector2(250, 150), Vector2(300, 200), Vector2(200, 100)]
+preferred_topics = ["old farming ways", "weather signs", "seed saving", "tool maintenance", "the hard years", "patience"]
+avoided_topics = ["newfangled gadgets", "easy money", "laziness", "disrespecting the land", "his late wife"]
+speech_patterns = ["*leans on hoe*", "*spits*", "Rain's coming by noon.", "Don't plant by the calendar.", "I've buried better men than drought."]

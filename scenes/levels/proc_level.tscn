@@ -95,6 +95,9 @@ noise_height_text = SubResource("NoiseTexture2D_ubuo4")
 noise_tree_text = SubResource("NoiseTexture2D_7iper")
 skeleton_scene = ExtResource("4_skeleton")
 creature_scene = ExtResource("6_6sbnb")
+land_creature_count = 20
+aquatic_creature_count = 20
+winged_creature_count = 20
 cow_preset_path = "res://assets/animal_presets/cow.json"
 rabbit_preset_path = "res://assets/animal_presets/rabbit.json"
 

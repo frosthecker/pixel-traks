@@ -9,15 +9,16 @@
 [ext_resource type="PackedScene" uid="uid://vvabtrd83usx" path="res://scenes/UI/plant_info_container.tscn" id="6_mbbpy"]
 [ext_resource type="PackedScene" uid="uid://cpm07of23fq6r" path="res://scenes/characters/seller.tscn" id="6_qogh7"]
 [ext_resource type="PackedScene" uid="uid://cvakiwj4a1x5n" path="res://AI/scenes/john.tscn" id="7_john"]
-[ext_resource type="Texture2D" uid="uid://dhsaihv6kjq6n" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="8_kaia_texture"]
-[ext_resource type="Resource" path="res://resources/kaia_biodata.tres" id="9_kaia_biodata"]
-[ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="9_rmjfq"]
-[ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="10_7pb6i"]
-[ext_resource type="Texture2D" uid="uid://cagb0uq47yrn0" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_long_hair.png" id="10_mira_texture"]
-[ext_resource type="Resource" path="res://resources/mira_biodata.tres" id="11_mira_biodata"]
-[ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="12_map"]
-[ext_resource type="Texture2D" uid="uid://b6o85d7o5jmyx" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_curly_hair.png" id="12_orin_texture"]
-[ext_resource type="Resource" path="res://resources/orin_biodata.tres" id="13_orin_biodata"]
+[ext_resource type="Script" path="res://scripts/npc_spawner.gd" id="8_npc_spawner"]
+[ext_resource type="Texture2D" uid="uid://dhsaihv6kjq6n" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_mop_hair.png" id="9_kaia_texture"]
+[ext_resource type="Resource" path="res://resources/kaia_biodata.tres" id="10_kaia_biodata"]
+[ext_resource type="Script" uid="uid://c1p5x8nmv71d8" path="res://scripts/user_interface.gd" id="10_rmjfq"]
+[ext_resource type="PackedScene" uid="uid://c3xg7cgii4k65" path="res://scenes/UI/inventory.tscn" id="11_7pb6i"]
+[ext_resource type="Texture2D" uid="uid://cagb0uq47yrn0" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_long_hair.png" id="11_mira_texture"]
+[ext_resource type="Resource" path="res://resources/mira_biodata.tres" id="12_mira_biodata"]
+[ext_resource type="PackedScene" uid="uid://eh20dww40ce2" path="res://scenes/UI/map.tscn" id="13_map"]
+[ext_resource type="Texture2D" uid="uid://b6o85d7o5jmyx" path="res://assets/Sunnyside_World_Assets/Characters/Human/sunnyside_world_chatacter_anim_human_curly_hair.png" id="14_orin_texture"]
+[ext_resource type="Resource" path="res://resources/orin_biodata.tres" id="15_orin_biodata"]
 
 [sub_resource type="Gradient" id="Gradient_u86jo"]
 offsets = PackedFloat32Array(0, 0.35945946, 0.5162162, 1)
@@ -259,4 +260,10 @@ autostart = true
 visible = false
 navigation_polygon = SubResource("NavigationPolygon_u86jo")
 
+[node name="NPCSpawner" type="Node" parent="." unique_id=999999999]
+script = ExtResource("8_npc_spawner")
+spawn_on_start = true
+
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
+[connection signal="npc_spawned" from="NPCSpawner" to="." method="_on_npc_spawned"]
+[connection signal="all_npcs_spawned" from="NPCSpawner" to="." method="_on_all_npcs_spawned"]

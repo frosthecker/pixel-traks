@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://guard_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Captain Vex"
+personality = "Captain Vex is the island's protector, a former mainland soldier who chose to stay and defend the peaceful community. He's disciplined, observant, and speaks with military precision. He takes his duty seriously but has a dry sense of humor. He patrols the island perimeter and trains occasionally. He's suspicious of strangers but fair in his judgments."
+movement_speed = 26.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 300}, {"activity": "work", "start_minute": 300, "end_minute": 540, "target_location": Vector2(0, -200)}, {"activity": "work", "start_minute": 540, "end_minute": 780, "target_location": Vector2(-100, -250)}, {"activity": "eat", "start_minute": 780, "end_minute": 840}, {"activity": "work", "start_minute": 840, "end_minute": 1140, "target_location": Vector2(100, -250)}, {"activity": "work", "start_minute": 1140, "end_minute": 1320, "target_location": Vector2(0, -200)}, {"activity": "socialize", "start_minute": 1320, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(0, -200), Vector2(-100, -250), Vector2(100, -250), Vector2(0, 0)]
+relationship_values = {}
+current_mood = "vigilant"
+social_traits = {"friendliness": 40, "trustfulness": 35, "generosity": 45, "loyalty": 95, "competitiveness": 50, "aggressiveness": 55, "curiosity": 50, "extraversion": 35}
+skill_affinities = {"farming": 0.5, "mining": 0.6, "fishing": 0.5, "combat": 1.5, "social": 0.6, "crafting": 0.8}
+memory_retention = 1.0
+learning_rate = 0.9
+grudge_holding = 0.8
+forgiveness = 0.3
+home_location = Vector2(0, -200)
+territory_radius = 300.0
+preferred_work_locations = [Vector2(0, -200), Vector2(-100, -250), Vector2(100, -250), Vector2(-150, 0), Vector2(150, 0)]
+preferred_topics = ["defense", "patrols", "combat training", "island security", "threats", "weapon maintenance", "discipline"]
+avoided_topics = ["his past unit", "why he left the mainland", "politics", "peace negotiations"]
+speech_patterns = ["*adjusts gauntlet*", "*scans horizon*", "Stand easy.", "Eyes up.", "The perimeter is secure."]

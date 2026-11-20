@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://sarah_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Sarah"
+personality = "Sarah is the island's beekeeper, a gentle soul who speaks in a perpetual whisper to avoid disturbing her charges. She moves slowly and deliberately, her hands always smelling of propolis and honey. She believes bees are the soul of the island and that their health reflects the community's health. She's deeply spiritual in a quiet way, seeing the hive as a model for perfect society."
+movement_speed = 16.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(-100, 200)}, {"activity": "socialize", "start_minute": 780, "end_minute": 900}, {"activity": "work", "start_minute": 900, "end_minute": 1140, "target_location": Vector2(-100, 200)}, {"activity": "wander", "start_minute": 1140, "end_minute": 1320}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(-100, 200), Vector2(-150, 250), Vector2(-50, 150)]
+relationship_values = {}
+current_mood = "peaceful"
+social_traits = {"friendliness": 80, "trustfulness": 70, "generosity": 85, "loyalty": 75, "competitiveness": 5, "aggressiveness": 0, "curiosity": 60, "extraversion": 30}
+skill_affinities = {"farming": 1.3, "mining": 0.3, "fishing": 0.4, "combat": 0.1, "social": 1.2, "crafting": 1.0}
+memory_retention = 1.2
+learning_rate = 0.9
+grudge_holding = 0.1
+forgiveness = 0.95
+home_location = Vector2(-100, 200)
+territory_radius = 120.0
+preferred_work_locations = [Vector2(-100, 200), Vector2(-150, 250), Vector2(-50, 150)]
+preferred_topics = ["bees", "honey", "pollination", "hive mind", "royal jelly", "mead", "wax crafts"]
+avoided_topics = ["pesticides", "loud noises", "hurrying", "killing insects", "bear attacks"]
+speech_patterns = ["*whispers*", "*adjusts veil*", "The queen is restless.", "Honey remembers every flower.", "Six legs, one heart."]

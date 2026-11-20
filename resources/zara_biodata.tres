@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://zara_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Zara"
+personality = "Zara reads futures in tea leaves, cards, and the patterns of spilled salt. She's uncannily accurate, which terrifies some and fascinates others. She charges what you can afford - a coin, a secret, a memory. She claims she doesn't see the future, only the most probable path, and that knowing it changes it. She's never wrong about rain."
+movement_speed = 14.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 480}, {"activity": "meditate", "start_minute": 480, "end_minute": 600}, {"activity": "work", "start_minute": 600, "end_minute": 1020, "target_location": Vector2(0, -250)}, {"activity": "socialize", "start_minute": 1020, "end_minute": 1140}, {"activity": "work", "start_minute": 1140, "end_minute": 1320, "target_location": Vector2(0, -250)}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(0, -250), Vector2(50, -200), Vector2(-50, -200)]
+relationship_values = {}
+current_mood = "mysterious"
+social_traits = {"friendliness": 55, "trustfulness": 45, "generosity": 50, "loyalty": 60, "competitiveness": 30, "aggressiveness": 10, "curiosity": 90, "extraversion": 35}
+skill_affinities = {"farming": 0.5, "mining": 0.4, "fishing": 0.5, "combat": 0.2, "social": 1.4, "crafting": 0.7}
+memory_retention = 1.4
+learning_rate = 1.1
+grudge_holding = 0.3
+forgiveness = 0.7
+home_location = Vector2(0, -250)
+territory_radius = 80.0
+preferred_work_locations = [Vector2(0, -250)]
+preferred_topics = ["fortunes", "destiny", "tea leaves", "cards", "dreams", "omens", "choices"]
+avoided_topics = ["her own future", "how it works", "skeptics", "the price of knowing", "her teacher"]
+speech_patterns = ["*shuffles cards*", "*swirls cup*", "The leaves show...", "Two paths. One choice.", "Fortune favors the informed."]

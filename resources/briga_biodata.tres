@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://briga_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Sergeant Briga"
+personality = "Briga is Vex's right hand - where he's the shield, she's the sword. She's seen combat on three continents and chose this post for the peace. She runs drills at dawn, inspects gear at noon, patrols at dusk. She's stern but fair, and the guards trust her with their lives. She knits socks for the garrison in quiet moments."
+movement_speed = 24.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(-50, -220)}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(50, -220)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-50, -220), Vector2(50, -220), Vector2(0, -200)]
+relationship_values = {}
+current_mood = "disciplined"
+social_traits = {"friendliness": 45, "trustfulness": 50, "generosity": 55, "loyalty": 90, "competitiveness": 50, "aggressiveness": 50, "curiosity": 55, "extraversion": 45}
+skill_affinities = {"farming": 0.4, "mining": 0.5, "fishing": 0.4, "combat": 1.4, "social": 0.9, "crafting": 0.8}
+memory_retention = 1.0
+learning_rate = 0.9
+grudge_holding = 0.5
+forgiveness = 0.5
+home_location = Vector2(-50, -220)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(-50, -220), Vector2(50, -220), Vector2(0, -200)]
+preferred_topics = ["drills", "discipline", "gear maintenance", "tactics", "the old wars", "recruits", "duty"]
+avoided_topics = ["her discharge", "the massacre at Hollow Pass", "politics", "retirement", "weakness"]
+speech_patterns = ["*adjusts pauldron*", "*inspects blade*", "Formation holds.", "Eyes front.", "We drill for the day we pray never comes."]

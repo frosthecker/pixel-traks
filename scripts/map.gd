@@ -151,18 +151,34 @@ func _refresh_world_page() -> void:
 	for npc in get_tree().get_nodes_in_group("NPC"):
 		var activity := str(npc.get("behavior_state") if npc.get("behavior_state") != null else "nearby")
 		traders.append("%s — %s" % [npc.name, activity.capitalize()])
-	var trader_summary := get_node_or_null("pages/worldmap/WorldSections/TradersScroll/TraderList/TraderSummary") as Label
-	if trader_summary != null:
-		trader_summary.text = "No traders nearby" if traders.is_empty() else "\n".join(traders.slice(0, 3))
-
-	var world_summary := get_node_or_null("pages/worldmap/WorldSections/WorldScroll/WorldList/WorldSummary") as Label
-	if world_summary == null:
+	
+	var world_sections := get_node_or_null("pages/worldmap/WorldSections")
+	if world_sections == null:
 		return
-	var level := get_tree().current_scene
-	var map_size := "Unknown"
-	if level != null and level.get("width") != null and level.get("height") != null:
-		map_size = "%d × %d" % [int(level.get("width")), int(level.get("height"))]
-	world_summary.text = "Day %d  •  %s\nWorld size: %s" % [WorldTime.day_count, WorldTime.format_time(), map_size]
+	
+	# Update traders label (exists at pages/traders in WorldSections)
+	var trader_label := world_sections.get_node_or_null("pages/traders") as Label
+	if trader_label != null:
+		trader_label.text = "No traders nearby" if traders.is_empty() else "\n".join(traders.slice(0, 3))
+	
+	# Add/update world summary label in WorldSections pages
+	var pages := world_sections.get_node_or_null("pages")
+	if pages != null:
+		var world_label := pages.get_node_or_null("world")
+		if world_label == null:
+			world_label = Label.new()
+			world_label.name = "world"
+			world_label.horizontal_alignment = 1
+			world_label.vertical_alignment = 1
+			world_label.theme = world_sections.theme
+			pages.add_child(world_label)
+		var level := get_tree().current_scene
+		var map_size := "Unknown"
+		if level != null and level.get("width") != null and level.get("height") != null:
+			map_size = "%d × %d" % [int(level.get("width")), int(level.get("height"))]
+		world_label.text = "Day %d  •  %s\n%s  •  World size: %s" % [WorldTime.day_count, WorldTime.format_time(), WorldTime.format_date(), map_size]
+		# Note: WorldSections._show_section controls visibility, so world label
+		# will be visible when its section is shown. For now it's always in pages.
 
 
 func _play_compass_calibration() -> void:

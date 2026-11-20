@@ -21,8 +21,12 @@ func show_slot_item_name(slot: SlotClass) -> void:
 		clear_item_name()
 		return
 
-	item_name_label.text = str(slot.item.item_name).capitalize()
-
+	var quality := int(slot.item.item_quality)
+	var display_name := str(slot.item.item_name).capitalize()
+	if quality > 0:
+		display_name = "%s %s" % [Data.quality_name(quality), display_name]
+	item_name_label.text = display_name
+	
 func clear_item_name() -> void:
 	item_name_label.text = ""
 	
@@ -31,7 +35,7 @@ func initialize_inventory():
 	for i in range(slots.size()):
 		if PlayerInventory.inventory.has(i):
 			var inventory_item = PlayerInventory.inventory[i]
-			slots[i].initialize_item(inventory_item[0], inventory_item[1])
+			slots[i].initialize_item(inventory_item[0], inventory_item[1], PlayerInventory.get_slot_quality(inventory_item))
 
 func slot_gui_input(event: InputEvent, slot: SlotClass):
 	if event is InputEventMouseButton:
@@ -40,8 +44,8 @@ func slot_gui_input(event: InputEvent, slot: SlotClass):
 				if !slot.item:
 					left_click_empty_slot(slot)
 				else:
-					#different item, so swap
-					if holding_item.item_name != slot.item.item_name:
+					#different item or quality, so swap
+					if holding_item.item_name != slot.item.item_name or int(holding_item.item_quality) != int(slot.item.item_quality):
 						left_click_different_item(event, slot)
 					#same item, so try to merge
 					else:

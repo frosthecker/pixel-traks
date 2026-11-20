@@ -29,14 +29,26 @@ func setup(grid_coord: Vector2i, parent: Node2D, new_res: PlantResource, plant_d
 	sprite_2d.vframes = 1
 	sprite_2d.frame = 0
 func grow(watered: bool):
+	if res.get_complete():
+		return
+	res.tick_care(watered)
+	if not res.is_in_season(WorldTime.current_season):
+		# Out-of-season crops stop growing and eventually wither. This makes
+		# the season calendar matter without deleting a crop instantly.
+		res.decay(self)
+		return
 	if watered:
-		res.grow(sprite_2d)
+		res.grow(sprite_2d, WorldTime.current_season)
 	else:
 		res.decay(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if player_inside and res.get_complete() and event.is_action_pressed("pick"):
-		PlayerInventory.add_item(item_name, 1)
+		var harvest_amount := res.get_harvest_amount()
+		PlayerInventory.add_item(item_name, harvest_amount, res.quality)
+		FarmState.add_farming_xp(6 + res.quality * 4)
+		if res.quality > Enum.Quality.NORMAL:
+			FarmHud.notice("%s harvested!" % res.get_display_name(), Data.quality_color(res.quality))
 		queue_free()
 		death.emit(coord)
 		res.dead = true

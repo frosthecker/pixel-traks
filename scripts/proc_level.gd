@@ -15,6 +15,7 @@ const DAYLIGHT_UPDATE_INTERVAL := 0.1
 
 var plant_scene = preload("res://scenes/objects/plant.tscn")
 var log_scene = preload("res://scenes/objects/log.tscn")
+var sprinkler_scene = preload("res://scenes/objects/sprinkler.tscn")
 var plant_info_scene = preload("res://scenes/UI/panel_container.tscn")
 var used_cells: Array[Vector2i]
 @onready var player: CharacterBody2D = $Objects/Player
@@ -314,44 +315,13 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 		Enum.Tool.HOE:
 			# proc_level uses ground_2 for grass; GrassLayer only exists in the
 			# hand-authored level scene.
-			var grass_layer: TileMapLayer = $Layers/ground_2
-			var cell = grass_layer.get_cell_tile_data(grid_coord)
-			if cell and cell.get_custom_data('farmable'):
-				var connected_cells: Array[Vector2i] = [grid_coord]
-				for y in range(-1, 2):
-					for x in range(-1, 2):
-						if x == 0 and y == 0:
-							continue
-						var neighbor := grid_coord + Vector2i(x, y)
-						if light_dirt_layer.get_cell_source_id(neighbor) != -1:
-							connected_cells.append(neighbor)
-
-				# An isolated cell must start as a complete dirt tile. Once it has
-				# a dirt neighbor, terrain-connect can safely create the borders.
-				light_dirt_layer.set_cell(grid_coord, 0, Vector2i(6, 35), 0)
-				if connected_cells.size() > 1:
-					light_dirt_layer.set_cells_terrain_connect(connected_cells, 0, 1)
+			for target_cell in _area_offsets(grid_coord, FarmState.get_tool_area_radius(Enum.Tool.HOE)):
+				_till_cell(target_cell, light_dirt_layer)
 		Enum.Tool.WATER:
-			var cell = light_dirt_layer.get_cell_tile_data(grid_coord)
-			if cell:
-				var dark_coord: Vector2i = dark_dirt_layer.local_to_map(dark_dirt_layer.to_local(pos))
-				var connected_cells: Array[Vector2i] = [dark_coord]
-				for y in range(-1, 2):
-					for x in range(-1, 2):
-						if x == 0 and y == 0:
-							continue
-						var neighbor := dark_coord + Vector2i(x, y)
-						if dark_dirt_layer.get_cell_source_id(neighbor) != -1:
-							connected_cells.append(neighbor)
-
-				# Terrain-connect cannot create an isolated terrain reliably.
-				# Place the complete dark-dirt tile first, then connect neighbors.
-				if dir:
-					dark_dirt_layer.set_cell(dark_coord + tile_adjuster*(-1), 0, Vector2i(12, 7), 0)
-				else:
-					dark_dirt_layer.set_cell(dark_coord + tile_adjuster, 0, Vector2i(12, 7), 0)
-				if connected_cells.size() > 1:
-					dark_dirt_layer.set_cells_terrain_connect(connected_cells, 0, 3)
+			for target_cell in _area_offsets(grid_coord, FarmState.get_tool_area_radius(Enum.Tool.WATER)):
+				_water_cell_at(target_cell, light_dirt_layer, dark_dirt_layer)
+		Enum.Tool.HAMMER:
+			_place_sprinkler(grid_coord)
 		Enum.Tool.FISH:
 			if has_soil:
 				print('fishing')
@@ -359,6 +329,10 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 			if has_soil and grid_coord not in used_cells:
 				var cell = light_dirt_layer.get_cell_tile_data(grid_coord)
 				if cell and cell.get_custom_data('seedable'):
+					if not Data.seed_in_season(seed, WorldTime.current_season):
+						if show_plant_info:
+							FarmHud.notice("%s cannot grow in %s." % [str(Data.PLANT_DATA[seed]['name']), WorldTime.get_season_name()], Color(1.0, 0.55, 0.45))
+						return
 					var plant_res = PlantResource.new()
 					plant_res.setup(seed)
 					var plant = plant_scene.instantiate()
@@ -373,6 +347,7 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 
 		Enum.Tool.AXE, Enum.Tool.SWORD:
 			var sfx_index = randi_range(0,1)
+			var hit_count := FarmState.get_axe_hits() if tool == Enum.Tool.AXE else 1
 			for object in get_tree().get_nodes_in_group('Objects'):
 				if object.global_position.distance_to(pos) < 24:
 					if tool == Enum.Tool.SWORD:
@@ -380,13 +355,109 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 							sword_st.play()
 						else:
 							sword_st2.play()
-					object.hit(tool)
+					for _hit in range(hit_count):
+						object.hit(tool)
 				else:
 					if tool == Enum.Tool.SWORD:
 						if sfx_index == 1:
 							sword_wh.play()
 						else:
 							sword_wh2.play()
+
+func _area_offsets(center: Vector2i, radius: int) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	radius = maxi(0, radius)
+	for y in range(-radius, radius + 1):
+		for x in range(-radius, radius + 1):
+			cells.append(center + Vector2i(x, y))
+	return cells
+
+func _till_cell(grid_coord: Vector2i, light_dirt_layer: TileMapLayer) -> void:
+	var grass_layer: TileMapLayer = $Layers/ground_2
+	var cell = grass_layer.get_cell_tile_data(grid_coord)
+	if not (cell and cell.get_custom_data('farmable')):
+		return
+	if light_dirt_layer.get_cell_source_id(grid_coord) != -1:
+		return
+	var connected_cells: Array[Vector2i] = [grid_coord]
+	for y in range(-1, 2):
+		for x in range(-1, 2):
+			if x == 0 and y == 0:
+				continue
+			var neighbor := grid_coord + Vector2i(x, y)
+			if light_dirt_layer.get_cell_source_id(neighbor) != -1:
+				connected_cells.append(neighbor)
+
+	# An isolated cell must start as a complete dirt tile. Once it has a dirt
+	# neighbor, terrain-connect can safely create the borders.
+	light_dirt_layer.set_cell(grid_coord, 0, Vector2i(6, 35), 0)
+	if connected_cells.size() > 1:
+		light_dirt_layer.set_cells_terrain_connect(connected_cells, 0, 1)
+
+func _water_cell_at(light_cell: Vector2i, light_dirt_layer: TileMapLayer, dark_layer: TileMapLayer) -> void:
+	if light_dirt_layer.get_cell_source_id(light_cell) == -1:
+		return
+	var world_pos := light_dirt_layer.to_global(light_dirt_layer.map_to_local(light_cell))
+	var dark_coord: Vector2i = dark_layer.local_to_map(dark_layer.to_local(world_pos))
+	if dark_layer.get_cell_source_id(dark_coord) != -1:
+		return
+	var connected_cells: Array[Vector2i] = [dark_coord]
+	for y in range(-1, 2):
+		for x in range(-1, 2):
+			if x == 0 and y == 0:
+				continue
+			var neighbor := dark_coord + Vector2i(x, y)
+			if dark_layer.get_cell_source_id(neighbor) != -1:
+				connected_cells.append(neighbor)
+
+	# Terrain-connect cannot create an isolated terrain reliably.
+	# Place the complete dark-dirt tile first, then connect neighbors.
+	dark_layer.set_cell(dark_coord, 0, Vector2i(12, 7), 0)
+	if connected_cells.size() > 1:
+		dark_layer.set_cells_terrain_connect(connected_cells, 0, 3)
+
+func _place_sprinkler(grid_coord: Vector2i) -> void:
+	var light_dirt_layer: TileMapLayer = $Layers/LightDirtLayer
+	if light_dirt_layer.get_cell_source_id(grid_coord) == -1:
+		FarmHud.notice("Sprinklers must be placed on tilled soil.", Color(1.0, 0.55, 0.45))
+		return
+	if grid_coord in used_cells:
+		FarmHud.notice("There is already a crop in that soil.", Color(1.0, 0.55, 0.45))
+		return
+	for machine in get_tree().get_nodes_in_group("FarmMachines"):
+		if machine.coord == grid_coord:
+			FarmHud.notice("A sprinkler is already there.", Color(1.0, 0.55, 0.45))
+			return
+
+	var machine_data: Dictionary = Data.MACHINE_DATA.get(Enum.Machine.SPRINKLER, {})
+	var cost := int(machine_data.get("cost_money", 0))
+	if not PlayerInventory.spend_money(cost):
+		FarmHud.notice("Need %d TC to place a sprinkler." % cost, Color(1.0, 0.55, 0.45))
+		return
+	var machine = sprinkler_scene.instantiate()
+	machine.setup(grid_coord, $Objects, int(machine_data.get("radius", 2)))
+	_align_plant_to_grid(machine)
+	FarmHud.notice("Sprinkler placed. It waters every morning.", Color(0.65, 1.0, 0.65))
+
+## Repaints the soil around each sprinkler so automated watering is visible
+## after the morning reset clears the previous day's dark dirt.
+func _refresh_sprinkler_water() -> void:
+	var light_dirt_layer: TileMapLayer = $Layers/LightDirtLayer
+	for machine in get_tree().get_nodes_in_group("FarmMachines"):
+		if int(machine.machine_type) != Enum.Machine.SPRINKLER:
+			continue
+		for target_cell in _area_offsets(machine.coord, int(machine.radius)):
+			_water_cell_at(target_cell, light_dirt_layer, dark_dirt_layer)
+
+func _collect_watered_cells() -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	cells.append_array(dark_dirt_layer.get_used_cells())
+	for machine in get_tree().get_nodes_in_group("FarmMachines"):
+		if int(machine.machine_type) != Enum.Machine.SPRINKLER:
+			continue
+		var machine_coord: Vector2i = machine.coord
+		cells.append_array(_area_offsets(machine_coord, int(machine.radius)))
+	return cells
 func _process(delta: float) -> void:
 	# The procedural level scene may not have a day-color gradient assigned yet.
 	# Skip the visual update until it does instead of calling sample() on null.
@@ -420,11 +491,13 @@ func _finish_day_transition() -> void:
 	day_transition_layer.visible = false
 
 func level_reset():
+	WorldTime.advance_days(1)
+	var watered_cells := _collect_watered_cells()
 	for plant in get_tree().get_nodes_in_group('Plants'):
-		plant.grow(plant.coord in dark_dirt_layer.get_used_cells())
+		plant.grow(plant.coord in watered_cells)
 	dark_dirt_layer.clear()
+	_refresh_sprinkler_water()
 	plant_info_container.update_all()
-	WorldTime.day_count += 1
 	WorldTime.set_time(WorldTime.start_minutes)
 	_clear_skeletons()
 	var died := player_health <= 0
@@ -439,9 +512,25 @@ func plant_death(coord: Vector2i):
 
 func get_save_data() -> Dictionary:
 	var trees: Dictionary = {}
-	for tree in get_tree().get_nodes_in_group("Objects"):
-		if tree.get_script() != null and tree.get_script().resource_path == "res://scripts/tree.gd":
-			trees[str(tree.get_path())] = int(tree.health)
+	# Save tree health by environment cell coordinate (stable across loads)
+	if environment != null:
+		for cell in environment.get_used_cells():
+			var tile_data = environment.get_cell_tile_data(cell)
+			if tile_data != null:
+				var scene_path = tile_data.get_scene_path()
+				if scene_path != "" and scene_path.ends_with("tree.tscn"):
+					# Find the tree instance at this cell
+					var tree_node = environment.get_node_or_null(NodePath(str(cell.x) + ":" + str(cell.y)))
+					if tree_node == null:
+						# Try finding by iterating children of environment
+						for child in environment.get_children():
+							if child.get_script() != null and child.get_script().resource_path == "res://scripts/tree.gd":
+								var child_cell = environment.local_to_map(environment.to_local(child.global_position))
+								if child_cell == cell:
+									tree_node = child
+									break
+					if tree_node != null and tree_node.get_script() != null and tree_node.get_script().resource_path == "res://scripts/tree.gd":
+						trees["%s,%s" % [cell.x, cell.y]] = int(tree_node.health)
 
 	var npcs: Dictionary = {}
 	for npc in get_tree().get_nodes_in_group("NPC"):
@@ -458,7 +547,17 @@ func get_save_data() -> Dictionary:
 			"coord": _vector_to_data(plant.coord),
 			"seed": _seed_for_plant(plant.res),
 			"age": plant.res.age,
-			"death_count": plant.res.death_count
+			"death_count": plant.res.death_count,
+			"quality": int(plant.res.quality),
+			"care_days": int(plant.res.care_days),
+			"watered_days": int(plant.res.watered_days)
+		})
+
+	var machines: Array = []
+	for machine in get_tree().get_nodes_in_group("FarmMachines"):
+		machines.append({
+			"coord": _vector_to_data(Vector2(machine.coord)),
+			"type": int(machine.machine_type)
 		})
 
 	var dropped_items: Array = []
@@ -497,6 +596,7 @@ func get_save_data() -> Dictionary:
 		"light_dirt": _serialize_tile_layer($Layers/LightDirtLayer),
 		"dark_dirt": _serialize_tile_layer($Layers/DarkDirtLayer),
 		"plants": plants,
+		"machines": machines,
 		"dropped_items": dropped_items,
 		"trees": trees,
 		"npcs": npcs,
@@ -550,13 +650,14 @@ func apply_save_data(save_data: Dictionary) -> void:
 
 	var time_data: Variant = save_data.get("world_time", {})
 	if time_data is Dictionary:
-		WorldTime.day_count = max(1, int(time_data.get("day_count", 1)))
+		WorldTime.set_day_count(int(time_data.get("day_count", 1)))
 		WorldTime.set_time(int(time_data.get("minutes", WorldTime.start_minutes)))
 		var remaining := float(time_data.get("day_timer_remaining", day_timer.wait_time))
 		day_timer.start(clampf(remaining, 0.01, day_timer.wait_time))
 
 	_restore_tile_layer($Layers/LightDirtLayer, save_data.get("light_dirt", []))
 	_restore_tile_layer($Layers/DarkDirtLayer, save_data.get("dark_dirt", []))
+	_restore_machines(save_data.get("machines", []))
 	_restore_trees(save_data.get("trees", {}))
 	_restore_npcs(save_data.get("npcs", {}))
 	_rescue_stranded_npcs()
@@ -574,6 +675,8 @@ func _serialize_tile_layer(layer: TileMapLayer) -> Dictionary:
 		packed.append(atlas.x)
 		packed.append(atlas.y)
 		packed.append(layer.get_cell_alternative_tile(coord))
+	if packed.is_empty():
+		return {"packed": ""}
 	return {"packed": Marshalls.raw_to_base64(packed.to_byte_array())}
 
 func _cache_terrain() -> void:
@@ -609,13 +712,50 @@ func _restore_tile_layer(layer: TileMapLayer, cell_data: Variant) -> void:
 				int(cell.get("alternative", 0))
 			)
 
+func _restore_machines(machine_data: Variant) -> void:
+	for machine in get_tree().get_nodes_in_group("FarmMachines"):
+		machine.free()
+	if not (machine_data is Array):
+		return
+	for entry in machine_data:
+		if not (entry is Dictionary):
+			continue
+		var type := int(entry.get("type", Enum.Machine.SPRINKLER))
+		if type != Enum.Machine.SPRINKLER:
+			continue
+		var coord := Vector2i(_data_to_vector(entry.get("coord", [])))
+		var data: Dictionary = Data.MACHINE_DATA.get(type, {})
+		var machine = sprinkler_scene.instantiate()
+		machine.setup(coord, $Objects, int(data.get("radius", 2)))
+		_align_plant_to_grid(machine)
+
 func _restore_trees(tree_data: Variant) -> void:
 	if not (tree_data is Dictionary):
 		return
-	for path in tree_data:
-		var tree := get_node_or_null(NodePath(path))
-		if tree != null and tree.get_script() != null and tree.get_script().resource_path == "res://scripts/tree.gd":
-			tree.health = int(tree_data[path])
+	if environment == null:
+		return
+	# Wait a frame for scene tiles to instantiate
+	call_deferred("_do_restore_trees", tree_data)
+
+func _do_restore_trees(tree_data: Dictionary) -> void:
+	if environment == null:
+		return
+	for key in tree_data:
+		var parts = key.split(",", false)
+		if parts.size() != 2:
+			continue
+		var cell := Vector2i(int(parts[0]), int(parts[1]))
+		# Find the tree instance at this cell
+		var tree_node = environment.get_node_or_null(NodePath(str(cell.x) + ":" + str(cell.y)))
+		if tree_node == null:
+			for child in environment.get_children():
+				if child.get_script() != null and child.get_script().resource_path == "res://scripts/tree.gd":
+					var child_cell = environment.local_to_map(environment.to_local(child.global_position))
+					if child_cell == cell:
+						tree_node = child
+						break
+		if tree_node != null and tree_node.get_script() != null and tree_node.get_script().resource_path == "res://scripts/tree.gd":
+			tree_node.health = int(tree_data[key])
 
 func _restore_npcs(npc_data: Variant) -> void:
 	if not (npc_data is Dictionary):
@@ -698,6 +838,9 @@ func _restore_plants(plants_data: Variant) -> void:
 		plant_res.setup(seed as Enum.Seed)
 		plant_res.age = float(plant_data.get("age", 0.0))
 		plant_res.death_count = int(plant_data.get("death_count", 0))
+		plant_res.quality = int(plant_data.get("quality", Enum.Quality.NORMAL))
+		plant_res.care_days = int(plant_data.get("care_days", 0))
+		plant_res.watered_days = int(plant_data.get("watered_days", 0))
 		var plant = plant_scene.instantiate()
 		var coord := Vector2i(_data_to_vector(plant_data.get("coord", [])))
 		plant.setup(coord, $Objects, plant_res, plant_death)
@@ -713,9 +856,30 @@ func _restore_dropped_items(items_data: Variant) -> void:
 	var drop_parent: Node = get_node_or_null("Objects/trees")
 	if drop_parent == null:
 		drop_parent = environment if environment != null else $Objects
+
+	# Build a set of stump positions (chopped trees) to validate logs
+	var stump_positions: Array[Vector2] = []
+	if environment != null:
+		for child in environment.get_children():
+			if child.get_script() != null and child.get_script().resource_path == "res://scripts/tree.gd":
+				if int(child.health) <= 0:
+					stump_positions.append(child.global_position)
+
+	# Prune orphan logs: only keep logs within 64px of a stump
+	var valid_items: Array = []
 	for item_data in items_data:
 		if not (item_data is Dictionary) or str(item_data.get("item_name", "")) != "wood":
 			continue
+		var pos := _data_to_vector(item_data.get("position", []))
+		var near_stump := false
+		for stump_pos in stump_positions:
+			if pos.distance_to(stump_pos) < 64.0:
+				near_stump = true
+				break
+		if near_stump or stump_positions.is_empty(): # If no stumps exist, keep logs (new world)
+			valid_items.append(item_data)
+
+	for item_data in valid_items:
 		var item = log_scene.instantiate()
 		drop_parent.add_child(item)
 		item.global_position = _data_to_vector(item_data.get("position", []))
@@ -969,11 +1133,10 @@ func _creature_habitat_value(habitat: String) -> int:
 		_: return 0
 
 func _random_land_preset() -> String:
-	var presets: Array[String] = []
-	for path in [cow_preset_path, rabbit_preset_path]:
-		if not path.is_empty() and FileAccess.file_exists(path):
-			presets.append(path)
-	return presets.pick_random() if not presets.is_empty() else ""
+	# Return empty to let CreatureActor pick a random land family for variety
+	# (quadruped, biped, reptile, arthropod, amorphous, serpent)
+	# Custom presets (cow/rabbit) are ignored to ensure diverse wildlife
+	return ""
 
 func _has_water_clearing(cell: Vector2i) -> bool:
 	for x in range(-1, 2):
@@ -1437,7 +1600,8 @@ func _begin_new_world() -> void:
 	_npcs_spread = false
 	_clear_world_entities()
 	PlayerInventory.load_save_data(default_inventory.duplicate(true))
-	WorldTime.day_count = 1
+	FarmState.reset()
+	WorldTime.set_day_count(1)
 	WorldTime.set_time(WorldTime.start_minutes)
 	player_health = player_max_health
 	_update_health_bar()
@@ -1447,6 +1611,8 @@ func _begin_new_world() -> void:
 func _clear_world_entities() -> void:
 	for plant in get_tree().get_nodes_in_group("Plants"):
 		plant.free()
+	for machine in get_tree().get_nodes_in_group("FarmMachines"):
+		machine.free()
 	for item in get_tree().get_nodes_in_group("DroppedItems"):
 		item.free()
 	_clear_skeletons()

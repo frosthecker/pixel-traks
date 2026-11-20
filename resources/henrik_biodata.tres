@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://henrik_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Henrik"
+personality = "Henrik is a hunter who moves like a shadow through the island's wild interior. He knows every game trail, every den, every water source. He takes only what's needed, uses every part, and leaves offerings for the spirits of the hunt. He speaks rarely, prefers gestures, and his eyes miss nothing. He's mapping the deep forest - a map he'll never share."
+movement_speed = 26.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 300}, {"activity": "work", "start_minute": 300, "end_minute": 660, "target_location": Vector2(-300, 100)}, {"activity": "work", "start_minute": 660, "end_minute": 1020, "target_location": Vector2(-300, 100)}, {"activity": "socialize", "start_minute": 1020, "end_minute": 1140}, {"activity": "wander", "start_minute": 1140, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-300, 100), Vector2(-350, 150), Vector2(-250, 50)]
+relationship_values = {}
+current_mood = "watchful"
+social_traits = {"friendliness": 40, "trustfulness": 35, "generosity": 50, "loyalty": 80, "competitiveness": 45, "aggressiveness": 40, "curiosity": 70, "extraversion": 25}
+skill_affinities = {"farming": 0.3, "mining": 0.4, "fishing": 0.5, "combat": 1.3, "social": 0.6, "crafting": 1.1}
+memory_retention = 1.1
+learning_rate = 1.0
+grudge_holding = 0.6
+forgiveness = 0.4
+home_location = Vector2(-300, 100)
+territory_radius = 300.0
+preferred_work_locations = [Vector2(-300, 100), Vector2(-350, 150), Vector2(-250, 50), Vector2(-400, 0)]
+preferred_topics = ["tracking", "game behavior", "bows", "traps", "the deep woods", "spirits", "survival"]
+avoided_topics = ["trophy hunting", "waste", "cities", "his family", "the white stag"]
+speech_patterns = ["*nocks arrow*", "*reads tracks*", "The forest watches.", "Waste nothing.", "Silence is a weapon."]

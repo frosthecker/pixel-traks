@@ -120,14 +120,14 @@ namespace PixelCreatures.Runtime
 		private bool _needRaster = true;
 		private double _lastFlash;
 
-        // LOD: distance based work reduction (screen-space distance from the viewport centre).
-        // Colours are never degraded: level 1 freezes the last composed frame, level 2 hides the
-        // sprite. Thresholds sit outside the visible rect so the player never sees a change.
-        private int _lodLevel = 0;          // 0=full, 1=frozen last frame, 2=hidden
-        private const float LOD_DIST_FREEZE = 1000f; // stop re-rendering (frame is kept)
-        private const float LOD_DIST_HIDE = 1400f;   // hide the sprite entirely
+		// LOD: distance based work reduction (screen-space distance from the viewport centre).
+		// Colours are never degraded: level 1 freezes the last composed frame, level 2 hides the
+		// sprite. Thresholds sit outside the visible rect so the player never sees a change.
+		private int _lodLevel = 0;          // 0=full, 1=frozen last frame, 2=hidden
+		private const float LOD_DIST_FREEZE = 1000f; // stop re-rendering (frame is kept)
+		private const float LOD_DIST_HIDE = 1400f;   // hide the sprite entirely
 
-        private ViewSpec _view;
+		private ViewSpec _view;
 		private CreaturePose? _renderPose;
 		private int _pendingGrowL, _pendingGrowR, _pendingGrowT, _pendingGrowB;
 		private int _pendingSteps;

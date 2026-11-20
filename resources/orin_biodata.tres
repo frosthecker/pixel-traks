@@ -1,12 +1,25 @@
-[gd_resource type="Resource" script_class="NPCBiodata" format=3]
+[gd_resource type="Resource" format=3 uid="uid://orin_biodata"]
 
-[ext_resource type="Script" path="res://resources/npc_biodata.gd" id="1_bio"]
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
 
 [resource]
 script = ExtResource("1_bio")
-display_name = "Orin Moss"
-personality = "A patient, slightly eccentric botanist. Orin loves seeds, soil, and unusual mushrooms. He explains practical things with dry humor and is quietly delighted when the player asks good questions."
-movement_speed = 18.0
-daily_schedule = [{"start_minute": 360, "end_minute": 720, "activity": "collecting herbs in the forest", "target_location": Vector2(-120, 110)}, {"start_minute": 720, "end_minute": 1020, "activity": "sorting seeds at the garden bench", "target_location": Vector2(-40, 130)}, {"start_minute": 1020, "end_minute": 1260, "activity": "taking a slow garden walk", "target_location": Vector2(-80, 150)}, {"start_minute": 1260, "end_minute": 360, "activity": "sleeping in the greenhouse", "target_location": Vector2(-40, 130)}]
-favorite_locations = [Vector2(-120, 110), Vector2(-40, 130)]
-current_mood = &"thoughtful"
+display_name = "Orin"
+personality = "Orin is a weathered fisherman who has lived on the island his entire life. He speaks in a gruff but warm manner, with a deep knowledge of the sea, tides, and marine life. He's skeptical of newcomers but fiercely loyal to those who earn his respect. He has many stories about the island's history and strange occurrences in the waters."
+movement_speed = 20.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 300}, {"activity": "work", "start_minute": 300, "end_minute": 660, "target_location": Vector2(-200, 300)}, {"activity": "eat", "start_minute": 660, "end_minute": 720}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(-200, 300)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-200, 300), Vector2(-150, 250), Vector2(-100, 350)]
+relationship_values = {}
+current_mood = "contemplative"
+social_traits = {"friendliness": 50, "trustfulness": 40, "generosity": 55, "loyalty": 85, "competitiveness": 40, "aggressiveness": 30, "curiosity": 60, "extraversion": 45}
+skill_affinities = {"farming": 0.6, "mining": 0.5, "fishing": 1.5, "combat": 1.1, "social": 0.8, "crafting": 0.9}
+memory_retention = 1.0
+learning_rate = 0.8
+grudge_holding = 0.7
+forgiveness = 0.4
+home_location = Vector2(-200, 300)
+territory_radius = 200.0
+preferred_work_locations = [Vector2(-200, 300), Vector2(-250, 350), Vector2(-150, 280)]
+preferred_topics = ["fishing", "the sea", "tides", "storms", "shipwrecks", "island history", "marine life", "knots"]
+avoided_topics = ["mainland", "modern technology", "his family", "the lighthouse incident"]
+speech_patterns = ["*spits over shoulder*", "*mends net*", "Ay, the tide...", "Back in my day,", "The sea doesn't forgive"]

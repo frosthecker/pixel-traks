@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://marina_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Marina"
+personality = "Marina is Orin's counterpart - where he uses line and hook, she commands great nets. She's strong as an anchor rope, weathered by salt and sun. She reads currents like others read books. She's pragmatic, superstitious in the old ways, and fiercely protective of her crew. She sings sea shanties that make fish swim into her nets - or so the islanders say."
+movement_speed = 22.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(-250, 350)}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(-250, 350)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-250, 350), Vector2(-200, 300), Vector2(-300, 400)]
+relationship_values = {}
+current_mood = "steadfast"
+social_traits = {"friendliness": 60, "trustfulness": 55, "generosity": 65, "loyalty": 85, "competitiveness": 50, "aggressiveness": 35, "curiosity": 55, "extraversion": 65}
+skill_affinities = {"farming": 0.4, "mining": 0.3, "fishing": 1.6, "combat": 1.0, "social": 1.0, "crafting": 0.8}
+memory_retention = 1.0
+learning_rate = 0.9
+grudge_holding = 0.5
+forgiveness = 0.6
+home_location = Vector2(-250, 350)
+territory_radius = 180.0
+preferred_work_locations = [Vector2(-250, 350), Vector2(-300, 400), Vector2(-200, 300)]
+preferred_topics = ["net mending", "tides", "fish migrations", "storms", "the deeps", "crew", "sea songs"]
+avoided_topics = ["overfishing", "factory ships", "her lost brother", "calm seas", "landlubbers"]
+speech_patterns = ["*mends net*", "*spits over rail*", "The sea gives. The sea takes.", "Pull together!", "Salt in the blood."]

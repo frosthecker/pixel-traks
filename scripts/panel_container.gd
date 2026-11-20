@@ -8,12 +8,14 @@ var res: PlantResource
 
 func setup(new_res: PlantResource):
 	res = new_res
-	name_label.text = res.name
+	name_label.text = res.get_display_name()
 	icon_texture.texture = res.icon_texture
 	growth_bar.max_value = res.h_frames
 	death_bar.max_value = res.death_max
 	update()
 	res.connect('changed', queue_free)
 func update():
+	name_label.text = res.get_display_name()
+	name_label.add_theme_color_override("font_color", Data.quality_color(res.quality))
 	growth_bar.value = res.age
 	death_bar.value = res.death_count

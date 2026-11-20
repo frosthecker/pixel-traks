@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://elara_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Elara"
+personality = "Elara is a passionate organic farmer who believes in working with nature, not against it. She sings to her plants, uses only natural fertilizers, and can often be found talking to earthworms. She's warm and nurturing but fierce when her methods are questioned. She came to the island seeking pure soil untouched by industrial farming."
+movement_speed = 22.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(-150, -150)}, {"activity": "eat", "start_minute": 780, "end_minute": 840}, {"activity": "work", "start_minute": 840, "end_minute": 1140, "target_location": Vector2(-150, -150)}, {"activity": "socialize", "start_minute": 1140, "end_minute": 1260}, {"activity": "wander", "start_minute": 1260, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-150, -150), Vector2(-100, -100), Vector2(-200, -200)]
+relationship_values = {}
+current_mood = "nurturing"
+social_traits = {"friendliness": 75, "trustfulness": 65, "generosity": 80, "loyalty": 70, "competitiveness": 20, "aggressiveness": 10, "curiosity": 70, "extraversion": 60}
+skill_affinities = {"farming": 1.5, "mining": 0.4, "fishing": 0.5, "combat": 0.3, "social": 1.1, "crafting": 0.8}
+memory_retention = 1.1
+learning_rate = 1.1
+grudge_holding = 0.3
+forgiveness = 0.8
+home_location = Vector2(-150, -150)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(-150, -150), Vector2(-200, -200), Vector2(-100, -100)]
+preferred_topics = ["composting", "companion planting", "heirloom seeds", "soil health", "nature spirits", "sustainable living"]
+avoided_topics = ["chemical fertilizers", "monoculture", "factory farming", "greed", "shortcuts"]
+speech_patterns = ["*brushes dirt from knees*", "*inhales soil scent*", "The earth provides.", "Listen to the roots.", "Every seed has a song."]

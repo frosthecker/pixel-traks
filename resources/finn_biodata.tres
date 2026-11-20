@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://finn_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Finn"
+personality = "Finn is a burly carpenter who builds things that last generations. He measures twice, cuts once, and believes a joint should hold without glue. He's loud, laughs at his own jokes, and treats wood like a living partner. He's building a boat in his spare time - has been for fifteen years. He says the island's trees tell him what they want to become."
+movement_speed = 24.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(180, 220)}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(180, 220)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(180, 220), Vector2(150, 180), Vector2(200, 250)]
+relationship_values = {}
+current_mood = "hearty"
+social_traits = {"friendliness": 75, "trustfulness": 65, "generosity": 70, "loyalty": 80, "competitiveness": 40, "aggressiveness": 20, "curiosity": 55, "extraversion": 80}
+skill_affinities = {"farming": 0.6, "mining": 0.5, "fishing": 0.5, "combat": 1.0, "social": 1.1, "crafting": 1.4}
+memory_retention = 1.0
+learning_rate = 1.1
+grudge_holding = 0.4
+forgiveness = 0.7
+home_location = Vector2(180, 220)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(180, 220), Vector2(200, 250), Vector2(150, 180)]
+preferred_topics = ["joinery", "boat building", "wood grain", "tools", "the great boat", "apprentices", "storms"]
+avoided_topics = ["particle board", "nails over screws", "rushed work", "his father's workshop fire", "the boat's launch date"]
+speech_patterns = ["*planes a board*", "*sniffs wood*", "Wood breathes.", "Measure thrice.", "A good joint outlives us all."]

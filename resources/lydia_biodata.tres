@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://lydia_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Lydia"
+personality = "Lydia is a traveling trader who rides the seasonal winds between islands. Her wagon is a treasure trove of curiosities from a dozen ports. She's sharp-tongued, quick-witted, and never makes the same deal twice. She knows which islands need what, when the monsoons turn, and which captains can be trusted. She's seen the mainland's wars and chose the sea instead."
+movement_speed = 22.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "travel", "start_minute": 360, "end_minute": 540}, {"activity": "trade", "start_minute": 540, "end_minute": 900, "target_location": Vector2(-50, 250)}, {"activity": "travel", "start_minute": 900, "end_minute": 1080}, {"activity": "trade", "start_minute": 1080, "end_minute": 1320, "target_location": Vector2(-50, 250)}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(-50, 250), Vector2(0, 300), Vector2(50, 200)]
+relationship_values = {}
+current_mood = "wandering"
+social_traits = {"friendliness": 60, "trustfulness": 35, "generosity": 45, "loyalty": 55, "competitiveness": 70, "aggressiveness": 25, "curiosity": 85, "extraversion": 75}
+skill_affinities = {"farming": 0.8, "mining": 0.6, "fishing": 0.7, "combat": 0.8, "social": 1.3, "crafting": 0.9}
+memory_retention = 1.0
+learning_rate = 1.3
+grudge_holding = 0.6
+forgiveness = 0.5
+home_location = Vector2(-50, 250)
+territory_radius = 500.0
+preferred_work_locations = [Vector2(-50, 250), Vector2(0, 300), Vector2(50, 200)]
+preferred_topics = ["trade routes", "exotic goods", "sea lanes", "port gossip", "currency exchange", "smuggling", "monsoons"]
+avoided_topics = ["her family", "the mainland war", "pirates", "settling down", "her lost ship"]
+speech_patterns = ["*checks compass*", "*tastes wind*", "The tide waits for no merchant.", "Profit favors the bold.", "Every port has its price."]

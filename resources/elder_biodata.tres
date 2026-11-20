@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://elder_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Elder Thom"
+personality = "Elder Thom is the island's unofficial historian and spiritual guide. He's lived on the island longer than anyone remembers, and some say he arrived with the first settlers. He speaks slowly and deliberately, often in riddles or parables. He knows the island's secrets, ancient ruins, and forgotten lore. He's kind but enigmatic, offering wisdom to those who listen closely."
+movement_speed = 12.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 660, "target_location": Vector2(-50, -50)}, {"activity": "socialize", "start_minute": 660, "end_minute": 900}, {"activity": "work", "start_minute": 900, "end_minute": 1140, "target_location": Vector2(-50, -50)}, {"activity": "wander", "start_minute": 1140, "end_minute": 1260}, {"activity": "socialize", "start_minute": 1260, "end_minute": 1320}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(-50, -50), Vector2(0, 0), Vector2(50, 50), Vector2(-100, 100)]
+relationship_values = {}
+current_mood = "serene"
+social_traits = {"friendliness": 80, "trustfulness": 75, "generosity": 85, "loyalty": 90, "competitiveness": 5, "aggressiveness": 0, "curiosity": 70, "extraversion": 30}
+skill_affinities = {"farming": 1.0, "mining": 0.4, "fishing": 0.6, "combat": 0.2, "social": 1.5, "crafting": 0.8}
+memory_retention = 1.5
+learning_rate = 0.7
+grudge_holding = 0.1
+forgiveness = 0.95
+home_location = Vector2(-50, -50)
+territory_radius = 100.0
+preferred_work_locations = [Vector2(-50, -50)]
+preferred_topics = ["island history", "ancient ruins", "legends", "spirits", "the old ways", "seasons", "wisdom", "balance"]
+avoided_topics = ["modern technology", "mainland wars", "greed", "his true age"]
+speech_patterns = ["*strokes beard*", "*gazes at horizon*", "In the old days...", "The island remembers.", "Balance in all things."]

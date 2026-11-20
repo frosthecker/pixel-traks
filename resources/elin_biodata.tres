@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://elin_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Scribe Elin"
+personality = "Elin is the island's unofficial record keeper - births, deaths, marriages, land transfers, promises made and broken. She writes in a cipher only she understands. She knows everyone's secrets because they tell her, thinking she's just a clerk. She's building a true history of the island, one entry at a time. She never forgets a name, a date, or a debt."
+movement_speed = 16.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(-100, 0)}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(-100, 0)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(-100, 0), Vector2(-50, -50), Vector2(-150, 50)]
+relationship_values = {}
+current_mood = "methodical"
+social_traits = {"friendliness": 60, "trustfulness": 55, "generosity": 50, "loyalty": 85, "competitiveness": 25, "aggressiveness": 5, "curiosity": 80, "extraversion": 35}
+skill_affinities = {"farming": 0.5, "mining": 0.4, "fishing": 0.4, "combat": 0.2, "social": 1.1, "crafting": 1.0}
+memory_retention = 1.5
+learning_rate = 1.0
+grudge_holding = 0.4
+forgiveness = 0.6
+home_location = Vector2(-100, 0)
+territory_radius = 80.0
+preferred_work_locations = [Vector2(-100, 0)]
+preferred_topics = ["records", "genealogy", "land deeds", "promises", "cipher", "the island's true history", "secrets"]
+avoided_topics = ["her cipher key", "the missing ledger", "who she works for", "burning records", "her own history"]
+speech_patterns = ["*dips quill*", "*checks ledger*", "It is written.", "Memory fails. Ink endures.", "Every name has a story."]

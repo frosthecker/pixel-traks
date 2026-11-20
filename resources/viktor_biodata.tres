@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://viktor_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Viktor"
+personality = "Viktor is Marcus's antithesis - where Marcus builds relationships, Viktor exploits them. He's a predator in merchant's clothing, using predatory lending, cornered markets, and blackmail. He's charming, impeccably dressed, and utterly ruthless. He wants Marcus's shop, his routes, his life. He plays the long game. The islanders sense something wrong but can't prove it."
+movement_speed = 20.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 900, "target_location": Vector2(80, 180)}, {"activity": "socialize", "start_minute": 900, "end_minute": 1020}, {"activity": "work", "start_minute": 1020, "end_minute": 1320, "target_location": Vector2(80, 180)}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(80, 180), Vector2(50, 200), Vector2(120, 220)]
+relationship_values = {}
+current_mood = "calculating"
+social_traits = {"friendliness": 65, "trustfulness": 20, "generosity": 15, "loyalty": 30, "competitiveness": 95, "aggressiveness": 40, "curiosity": 70, "extraversion": 70}
+skill_affinities = {"farming": 0.6, "mining": 0.5, "fishing": 0.5, "combat": 0.7, "social": 1.4, "crafting": 0.8}
+memory_retention = 1.1
+learning_rate = 1.3
+grudge_holding = 0.8
+forgiveness = 0.2
+home_location = Vector2(80, 180)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(80, 180), Vector2(120, 220)]
+preferred_topics = ["market manipulation", "contracts", "leverage", "Marcus", "opportunity", "the long game", "weakness"]
+avoided_topics = ["his past", "conscience", "fair play", "his creditors", "the mainland warrant"]
+speech_patterns = ["*steeples fingers*", "*checks ledger*", "Every man has his price.", "Contracts are... flexible.", "I'm not the villain. I'm the inevitable."]

@@ -26,6 +26,8 @@ JsonData="*uid://h0kdt251magh"
 PlayerInventory="*uid://dulpok11oldcd"
 Dialogic="*uid://ds2q0uclmolvu"
 SaveGame="*uid://rq2k6xt1leh6"
+FarmState="*res://scripts/singleton/farm_state.gd"
+FarmHud="*res://scripts/singleton/farm_hud.gd"
 
 [dialogic]
 

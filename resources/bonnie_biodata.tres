@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://bonnie_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Chef Bonnie"
+personality = "Bonnie runs the island's only proper restaurant - a converted fish shack that smells of herbs, butter, and possibility. She cooks with island ingredients and mainland technique. She's loud, generous, and feeds anyone hungry regardless of coin. She remembers every preference, every allergy, every comfort food. Her kitchen is the island's true town hall. She's searching for the perfect recipe - she doesn't know what it is yet."
+movement_speed = 18.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 300}, {"activity": "work", "start_minute": 300, "end_minute": 660, "target_location": Vector2(20, 100)}, {"activity": "work", "start_minute": 660, "end_minute": 900, "target_location": Vector2(20, 100)}, {"activity": "socialize", "start_minute": 900, "end_minute": 1140}, {"activity": "work", "start_minute": 1140, "end_minute": 1320, "target_location": Vector2(20, 100)}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(20, 100), Vector2(50, 120), Vector2(0, 80)]
+relationship_values = {}
+current_mood = "nourishing"
+social_traits = {"friendliness": 85, "trustfulness": 70, "generosity": 90, "loyalty": 75, "competitiveness": 20, "aggressiveness": 10, "curiosity": 70, "extraversion": 85}
+skill_affinities = {"farming": 1.1, "mining": 0.3, "fishing": 0.9, "combat": 0.3, "social": 1.4, "crafting": 1.2}
+memory_retention = 1.0
+learning_rate = 1.1
+grudge_holding = 0.2
+forgiveness = 0.9
+home_location = Vector2(20, 100)
+territory_radius = 100.0
+preferred_work_locations = [Vector2(20, 100)]
+preferred_topics = ["recipes", "ingredients", "flavors", "feeding people", "comfort food", "her mother", "the perfect dish"]
+avoided_topics = ["food critics", "waste", "her failed restaurant", "diets", "portion control"]
+speech_patterns = ["*tastes spoon*", "*wipes hands*", "Hungry? Sit.", "Food is love made visible.", "Secret ingredient? Care."]

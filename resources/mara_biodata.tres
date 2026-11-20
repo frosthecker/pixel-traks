@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://mara_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Mara"
+personality = "Mara is Orin's daughter - she has his sea-legs and her mother's song. She's learning every knot, every tide, every fish's habit. She wants her own boat but knows the sea doesn't give them freely. She's caught between the harbor and the horizon - Orin wants her safe, the sea calls her name. She writes poetry on sailcloth scraps."
+movement_speed = 24.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(-200, 300)}, {"activity": "socialize", "start_minute": 780, "end_minute": 900}, {"activity": "work", "start_minute": 900, "end_minute": 1140, "target_location": Vector2(-200, 300)}, {"activity": "wander", "start_minute": 1140, "end_minute": 1320}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(-200, 300), Vector2(-250, 350), Vector2(-150, 250)]
+relationship_values = {}
+current_mood = "yearning"
+social_traits = {"friendliness": 65, "trustfulness": 60, "generosity": 65, "loyalty": 80, "competitiveness": 40, "aggressiveness": 20, "curiosity": 75, "extraversion": 50}
+skill_affinities = {"farming": 0.4, "mining": 0.3, "fishing": 1.3, "combat": 0.7, "social": 1.1, "crafting": 0.9}
+memory_retention = 1.0
+learning_rate = 1.2
+grudge_holding = 0.3
+forgiveness = 0.7
+home_location = Vector2(-200, 300)
+territory_radius = 150.0
+preferred_work_locations = [Vector2(-200, 300), Vector2(-250, 350), Vector2(-150, 250)]
+preferred_topics = ["sailing", "horizons", "her own boat", "poetry", "Orin", "the deeps", "storms"]
+avoided_topics = ["settling down", "marriage", "the lighthouse", "her mother", "fear"]
+speech_patterns = ["*mends sail*", "*gazes at horizon*", "The wind knows.", "Land is just paused sea.", "One day. My boat."]

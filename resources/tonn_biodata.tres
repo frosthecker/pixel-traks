@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://tonn_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Corporal Tonn"
+personality = "Tonn is the garrison's scout - fast, quiet, and obsessively thorough. He knows every inch of the coastline, every cave, every smuggling cove. He reports in sketches, not words. He's Vex's eyes and Briga's blades. He joined the guard to pay off a debt he won't discuss. He has a secret stash of mainland novels he reads by lantern light."
+movement_speed = 28.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 360}, {"activity": "work", "start_minute": 360, "end_minute": 720, "target_location": Vector2(50, -220)}, {"activity": "work", "start_minute": 720, "end_minute": 1080, "target_location": Vector2(-50, -220)}, {"activity": "socialize", "start_minute": 1080, "end_minute": 1200}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(50, -220), Vector2(-50, -220), Vector2(100, -250), Vector2(0, -200)]
+relationship_values = {}
+current_mood = "observant"
+social_traits = {"friendliness": 50, "trustfulness": 45, "generosity": 50, "loyalty": 80, "competitiveness": 40, "aggressiveness": 35, "curiosity": 80, "extraversion": 30}
+skill_affinities = {"farming": 0.3, "mining": 0.4, "fishing": 0.5, "combat": 1.2, "social": 0.7, "crafting": 0.9}
+memory_retention = 1.1
+learning_rate = 1.1
+grudge_holding = 0.4
+forgiveness = 0.6
+home_location = Vector2(50, -220)
+territory_radius = 200.0
+preferred_work_locations = [Vector2(50, -220), Vector2(-50, -220), Vector2(100, -250), Vector2(0, -200)]
+preferred_topics = ["scouting", "coastline", "smugglers", "maps", "stealth", "the mainland", "novels"]
+avoided_topics = ["his debt", "his family", "promotion", "close combat", "feelings"]
+speech_patterns = ["*sketches rapidly*", "*listens*", "Tracks lead north.", "Nothing moves unseen.", "Report."]

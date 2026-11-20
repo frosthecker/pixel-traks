@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://seller_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Marcus"
+personality = "Marcus is a traveling merchant who set up a permanent shop on the island. He's shrewd but fair, always looking for a good deal. He speaks with a merchant's cadence, sprinkling his speech with trade terminology. He knows the value of everything and has connections to mainland markets. He's amiable but never gives anything away for free."
+movement_speed = 18.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 1020, "target_location": Vector2(50, 200)}, {"activity": "socialize", "start_minute": 1020, "end_minute": 1140}, {"activity": "work", "start_minute": 1140, "end_minute": 1260, "target_location": Vector2(50, 200)}, {"activity": "wander", "start_minute": 1260, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(50, 200), Vector2(0, 150), Vector2(100, 250)]
+relationship_values = {}
+current_mood = "businesslike"
+social_traits = {"friendliness": 70, "trustfulness": 45, "generosity": 35, "loyalty": 60, "competitiveness": 70, "aggressiveness": 15, "curiosity": 75, "extraversion": 80}
+skill_affinities = {"farming": 1.0, "mining": 0.8, "fishing": 0.8, "combat": 0.6, "social": 1.4, "crafting": 1.0}
+memory_retention = 1.0
+learning_rate = 1.2
+grudge_holding = 0.5
+forgiveness = 0.6
+home_location = Vector2(50, 200)
+territory_radius = 100.0
+preferred_work_locations = [Vector2(50, 200)]
+preferred_topics = ["trade", "prices", "market trends", "rare goods", "mainland news", "shipping", "barter", "investments"]
+avoided_topics = ["his suppliers", "past debts", "the mainland authorities", "personal life"]
+speech_patterns = ["*calculates on abacus*", "*polishes scales*", "A fair trade.", "Everything has its price.", "Buy low, sell high."]

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://omar_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Omar"
+personality = "Omar deals in the strange and wondrous - artifacts from ruins, feathers from birds that don't exist in any book, stones that hum in moonlight. He's perpetually amused, speaks in riddles, and never reveals his sources. Some say he's a smuggler of forbidden things; others say he's a scholar of the impossible. He pays in coin, secrets, or favors - buyer's choice."
+movement_speed = 18.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 480}, {"activity": "work", "start_minute": 480, "end_minute": 900, "target_location": Vector2(120, 280)}, {"activity": "socialize", "start_minute": 900, "end_minute": 1020}, {"activity": "work", "start_minute": 1020, "end_minute": 1320, "target_location": Vector2(120, 280)}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(120, 280), Vector2(180, 300), Vector2(80, 250)]
+relationship_values = {}
+current_mood = "enigmatic"
+social_traits = {"friendliness": 50, "trustfulness": 25, "generosity": 40, "loyalty": 50, "competitiveness": 60, "aggressiveness": 20, "curiosity": 95, "extraversion": 55}
+skill_affinities = {"farming": 0.4, "mining": 0.5, "fishing": 0.4, "combat": 0.6, "social": 1.2, "crafting": 1.1}
+memory_retention = 1.3
+learning_rate = 1.2
+grudge_holding = 0.4
+forgiveness = 0.6
+home_location = Vector2(120, 280)
+territory_radius = 200.0
+preferred_work_locations = [Vector2(120, 280), Vector2(180, 300)]
+preferred_topics = ["artifacts", "ruins", "forbidden knowledge", "strange creatures", "ancient tech", "collectors", "curses"]
+avoided_topics = ["his suppliers", "the Inquisition", "provenance", "guarantees", "refunds"]
+speech_patterns = ["*polishes oddity*", "*weighs coin*", "Curiosity costs.", "Some doors open once.", "I don't sell. I place."]

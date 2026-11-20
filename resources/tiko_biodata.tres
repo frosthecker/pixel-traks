@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://tiko_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Tiko"
+personality = "Tiko is Kaia's apprentice - a lanky teenager with soot-stained fingers and a hunger to create. He worships Kaia but dreams of building things she'd call frivolous - music boxes, automata, clockwork birds. He's clumsy with a hammer but brilliant with delicate mechanisms. He keeps a sketchbook of impossible machines. He's terrified of disappointing her."
+movement_speed = 26.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(300, -100)}, {"activity": "socialize", "start_minute": 780, "end_minute": 900}, {"activity": "work", "start_minute": 900, "end_minute": 1140, "target_location": Vector2(300, -100)}, {"activity": "wander", "start_minute": 1140, "end_minute": 1320}, {"activity": "sleep", "start_minute": 1320, "end_minute": 1440}]
+favorite_locations = [Vector2(300, -100), Vector2(350, -150), Vector2(250, -50)]
+relationship_values = {}
+current_mood = "eager"
+social_traits = {"friendliness": 70, "trustfulness": 65, "generosity": 60, "loyalty": 80, "competitiveness": 35, "aggressiveness": 10, "curiosity": 90, "extraversion": 55}
+skill_affinities = {"farming": 0.3, "mining": 0.5, "fishing": 0.4, "combat": 0.4, "social": 1.0, "crafting": 1.3}
+memory_retention = 1.0
+learning_rate = 1.5
+grudge_holding = 0.2
+forgiveness = 0.8
+home_location = Vector2(300, -100)
+territory_radius = 100.0
+preferred_work_locations = [Vector2(300, -100), Vector2(350, -150)]
+preferred_topics = ["clockwork", "automata", "Kaia", "impossible machines", "gears", "springs", "music boxes"]
+avoided_topics = ["disappointment", "heavy lifting", "his parents", "wasted metal", "practicality"]
+speech_patterns = ["*sketches furiously*", "*tests gear*", "What if it...", "Kaia would say...", "Perpetual motion. Maybe."]

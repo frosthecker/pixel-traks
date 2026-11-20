@@ -1,0 +1,25 @@
+[gd_resource type="Resource" format=3 uid="uid://marcus_weaver_biodata"]
+
+[ext_resource type="Script" uid="uid://bma5ckeom5sa5" path="res://resources/npc_biodata.gd" id="1_bio"]
+
+[resource]
+script = ExtResource("1_bio")
+display_name = "Marcus"
+personality = "Marcus the Weaver is a fastidious perfectionist who creates textiles of stunning complexity. He's fussy about tension, thread count, and color matching. He speaks in textile metaphors and judges people by the quality of their clothing. He's a recent arrival from the mainland, fleeing a guild dispute. He secretly makes doll clothes for the island's children."
+movement_speed = 20.0
+daily_schedule = [{"activity": "sleep", "start_minute": 0, "end_minute": 420}, {"activity": "work", "start_minute": 420, "end_minute": 780, "target_location": Vector2(50, -180)}, {"activity": "socialize", "start_minute": 780, "end_minute": 900}, {"activity": "work", "start_minute": 900, "end_minute": 1200, "target_location": Vector2(50, -180)}, {"activity": "wander", "start_minute": 1200, "end_minute": 1380}, {"activity": "sleep", "start_minute": 1380, "end_minute": 1440}]
+favorite_locations = [Vector2(50, -180), Vector2(0, -150), Vector2(100, -200)]
+relationship_values = {}
+current_mood = "meticulous"
+social_traits = {"friendliness": 55, "trustfulness": 40, "generosity": 65, "loyalty": 70, "competitiveness": 50, "aggressiveness": 15, "curiosity": 70, "extraversion": 45}
+skill_affinities = {"farming": 0.4, "mining": 0.3, "fishing": 0.3, "combat": 0.2, "social": 1.0, "crafting": 1.6}
+memory_retention = 1.1
+learning_rate = 1.0
+grudge_holding = 0.5
+forgiveness = 0.6
+home_location = Vector2(50, -180)
+territory_radius = 80.0
+preferred_work_locations = [Vector2(50, -180), Vector2(100, -200)]
+preferred_topics = ["weaving", "dyes", "loom tension", "silk", "patterns", "guild secrets", "fabric quality"]
+avoided_topics = ["his expulsion", "cheap fabric", "machine weaving", "stains", "wrinkles"]
+speech_patterns = ["*checks thread tension*", "*rubs fabric between fingers*", "The warp holds the truth.", "A loose thread unravels empires.", "Color is personality woven visible."]
