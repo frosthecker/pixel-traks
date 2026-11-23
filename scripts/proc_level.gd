@@ -37,7 +37,7 @@ var day_transition_tween: Tween
 @export var forest_block_size: int = 4 ## Tile grid block size for placing trees
 @export var min_tree_distance: int = 3 ## Minimum tile distance between trees to prevent collision overlap
 @export var solitary_tree_chance: float = 0.06 ## Chance of occasional lone trees in open plains
-@export_range(100, 2000, 25) var max_tree_count: int = 400 ## Caps scene-tile collision work on lower-end devices
+@export_range(100, 2000, 25) var max_tree_count: int = 500 ## Caps scene-tile collision work on lower-end devices
 var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_noise_threshold
 
 @export_group("Skeletons")
@@ -50,9 +50,9 @@ var tree_frequency: float = 0.12 ## Backward-compatibility alias for forest_nois
 @export_group("Creature Spawning")
 ## The creature wrapper scene to scatter across clear grass in each generated world.
 @export var creature_scene: PackedScene
-@export_range(0, 20, 1) var land_creature_count: int = 2
-@export_range(0, 20, 1) var aquatic_creature_count: int = 1
-@export_range(0, 20, 1) var winged_creature_count: int = 1
+@export_range(0, 30, 1) var land_creature_count: int = 20
+@export_range(0, 30, 1) var aquatic_creature_count: int = 20
+@export_range(0, 30, 1) var winged_creature_count: int = 20
 ## Optional quadruped presets. If set, land creatures randomly use one of these
 ## instead of a generated body; assign cow.json and rabbit.json here in the Inspector.
 @export_file("*.json") var cow_preset_path: String = ""
@@ -102,6 +102,13 @@ var _damage_immune_until := 0.0
 var _last_damage_time := -1000.0
 var _regen_elapsed := 0.0
 var _terrain_cache: Dictionary = {}
+## Environment-layer cells that currently hold a tree. Used by creature
+## occupancy checks so they never have to query the TileMap nine times.
+var _tree_cells: Dictionary = {}
+var _env_cell_offset := Vector2i.ZERO
+var _env_cell_offset_ready := false
+## Cache for _has_grass_clearing results to avoid repeated TileMap lookups.
+var _grass_clearing_cache: Dictionary = {}
 var _stuck_elapsed := 0.0
 ## True once John's opening intro has played in THIS world. It is stored inside the
 ## world's own save data, so it persists with the world and resets for a new one.
@@ -324,7 +331,7 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 			_place_sprinkler(grid_coord)
 		Enum.Tool.FISH:
 			if has_soil:
-				print('fishing')
+				# print('fishing')
 		Enum.Tool.SEED:
 			if has_soil and grid_coord not in used_cells:
 				var cell = light_dirt_layer.get_cell_tile_data(grid_coord)
@@ -512,25 +519,18 @@ func plant_death(coord: Vector2i):
 
 func get_save_data() -> Dictionary:
 	var trees: Dictionary = {}
-	# Save tree health by environment cell coordinate (stable across loads)
+	# Save tree health by environment cell coordinate (stable across loads).
+	# Walking the environment's children once is far cheaper than looking up
+	# every used cell and falling back to an O(n) child scan per miss.
 	if environment != null:
-		for cell in environment.get_used_cells():
-			var tile_data = environment.get_cell_tile_data(cell)
-			if tile_data != null:
-				var scene_path = tile_data.get_scene_path()
-				if scene_path != "" and scene_path.ends_with("tree.tscn"):
-					# Find the tree instance at this cell
-					var tree_node = environment.get_node_or_null(NodePath(str(cell.x) + ":" + str(cell.y)))
-					if tree_node == null:
-						# Try finding by iterating children of environment
-						for child in environment.get_children():
-							if child.get_script() != null and child.get_script().resource_path == "res://scripts/tree.gd":
-								var child_cell = environment.local_to_map(environment.to_local(child.global_position))
-								if child_cell == cell:
-									tree_node = child
-									break
-					if tree_node != null and tree_node.get_script() != null and tree_node.get_script().resource_path == "res://scripts/tree.gd":
-						trees["%s,%s" % [cell.x, cell.y]] = int(tree_node.health)
+		for child in environment.get_children():
+			var child_script := child.get_script() as Script
+			if child_script == null or child_script.resource_path != "res://scripts/tree.gd":
+				continue
+			var cell: Vector2i = environment.local_to_map(environment.to_local(child.global_position))
+			if environment.get_cell_source_id(cell) != tree_source_id:
+				continue
+			trees["%s,%s" % [cell.x, cell.y]] = int(child.health)
 
 	var npcs: Dictionary = {}
 	for npc in get_tree().get_nodes_in_group("NPC"):
@@ -606,8 +606,8 @@ func get_save_data() -> Dictionary:
 
 func apply_save_data(save_data: Dictionary) -> void:
 	# Saves made before this flag existed were already past the intro.
-	intro_played = bool(save_data.get("intro_played", true))
-	_npcs_spread = bool(save_data.get("npcs_spread_v2", false))
+	intro_played = save_data.get("intro_played", true) == true
+	_npcs_spread = save_data.get("npcs_spread_v2", false) == true
 	world_seed = int(save_data.get("world_seed", 0))
 
 	var world_data: Variant = save_data.get("world", {})
@@ -618,6 +618,7 @@ func apply_save_data(save_data: Dictionary) -> void:
 		_restore_tile_layer(environment, world_data.get("environment", []))
 		_remove_water_trees()
 		_limit_tree_count()
+		_rebuild_tree_cells()
 		_cache_terrain()
 		_restored_world_data = true
 	else:
@@ -685,11 +686,18 @@ func _cache_terrain() -> void:
 		"ground_1": _serialize_tile_layer(ground_1),
 		"ground_2": _serialize_tile_layer(ground_2)
 	}
+	_clear_grass_clearing_cache()
 
 func _fill_water(layer: TileMapLayer) -> void:
+	# Only fill water where there's no land (ground_1 or ground_2).
+	# Land tiles render on top (z_index -1 and 0 vs water's -2), so water
+	# underneath is never visible. This saves ~50% fill work and VRAM.
 	for x in range(-width / 2, width / 2):
 		for y in range(-height / 2, height / 2):
-			layer.set_cell(Vector2i(x, y), source_id, water_atlas)
+			var cell := Vector2i(x, y)
+			if ground_1.get_cell_source_id(cell) != -1 or ground_2.get_cell_source_id(cell) != -1:
+				continue
+			layer.set_cell(cell, source_id, water_atlas)
 
 func _restore_tile_layer(layer: TileMapLayer, cell_data: Variant) -> void:
 	layer.clear()
@@ -711,6 +719,9 @@ func _restore_tile_layer(layer: TileMapLayer, cell_data: Variant) -> void:
 				Vector2i(_data_to_vector(cell.get("atlas", []))),
 				int(cell.get("alternative", 0))
 			)
+	# Ground layers changed - clear grass clearing cache
+	if layer == ground_1 or layer == ground_2:
+		_clear_grass_clearing_cache()
 
 func _restore_machines(machine_data: Variant) -> void:
 	for machine in get_tree().get_nodes_in_group("FarmMachines"):
@@ -740,21 +751,22 @@ func _restore_trees(tree_data: Variant) -> void:
 func _do_restore_trees(tree_data: Dictionary) -> void:
 	if environment == null:
 		return
+	# Index the instantiated tree scene-tiles once instead of scanning all
+	# children for every saved coordinate.
+	var nodes_by_cell: Dictionary = {}
+	for child in environment.get_children():
+		var child_script := child.get_script() as Script
+		if child_script == null or child_script.resource_path != "res://scripts/tree.gd":
+			continue
+		var child_cell: Vector2i = environment.local_to_map(environment.to_local(child.global_position))
+		nodes_by_cell[child_cell] = child
 	for key in tree_data:
 		var parts = key.split(",", false)
 		if parts.size() != 2:
 			continue
 		var cell := Vector2i(int(parts[0]), int(parts[1]))
-		# Find the tree instance at this cell
-		var tree_node = environment.get_node_or_null(NodePath(str(cell.x) + ":" + str(cell.y)))
-		if tree_node == null:
-			for child in environment.get_children():
-				if child.get_script() != null and child.get_script().resource_path == "res://scripts/tree.gd":
-					var child_cell = environment.local_to_map(environment.to_local(child.global_position))
-					if child_cell == cell:
-						tree_node = child
-						break
-		if tree_node != null and tree_node.get_script() != null and tree_node.get_script().resource_path == "res://scripts/tree.gd":
+		var tree_node = nodes_by_cell.get(cell)
+		if tree_node != null:
 			tree_node.health = int(tree_data[key])
 
 func _restore_npcs(npc_data: Variant) -> void:
@@ -1158,15 +1170,28 @@ func can_creature_occupy(world_position: Vector2, habitat: int) -> bool:
 	return is_land and not _has_tree_near_cell(cell)
 
 func _has_tree_near_cell(cell: Vector2i) -> bool:
-	if environment == null:
+	if environment == null or _tree_cells.is_empty():
 		return false
+	var base: Vector2i = cell + _env_cell_offset
 	for x in range(-1, 2):
 		for y in range(-1, 2):
-			var world_position := _cell_to_global(cell + Vector2i(x, y))
-			var environment_cell := environment.local_to_map(environment.to_local(world_position))
-			if environment.get_cell_source_id(environment_cell) != -1:
+			if _tree_cells.has(base + Vector2i(x, y)):
 				return true
 	return false
+
+## Rebuilds the environment-cell lookup used by creature occupancy checks.
+## Called after trees are generated, restored, or trimmed.
+func _rebuild_tree_cells() -> void:
+	_tree_cells.clear()
+	if environment == null:
+		return
+	if not _env_cell_offset_ready:
+		var world: Vector2 = _cell_to_global(Vector2i.ZERO)
+		_env_cell_offset = environment.local_to_map(environment.to_local(world))
+		_env_cell_offset_ready = true
+	for cell in environment.get_used_cells():
+		if environment.get_cell_source_id(cell) == tree_source_id:
+			_tree_cells[cell] = true
 
 func _clear_procedural_creatures() -> void:
 	for creature in get_tree().get_nodes_in_group("ProceduralCreatures"):
@@ -1388,13 +1413,18 @@ func _generate_forests(grass_cells_arr: Array[Vector2i]) -> void:
 		# Place tree scene tile in environment layer (scene tile 2 in collection source 2)
 		environment.set_cell(env_cell, tree_source_id, Vector2i(0, 0), 2)
 		occupied_cells[cell] = true
+	_rebuild_tree_cells()
 
 func _has_grass_clearing(cell: Vector2i, grass_set: Dictionary) -> bool:
+	if _grass_clearing_cache.has(cell):
+		return _grass_clearing_cache[cell]
 	for x in range(-1, 2):
 		for y in range(-1, 2):
 			var neighbor := cell + Vector2i(x, y)
 			if not grass_set.has(neighbor) or not _is_grass_tile(neighbor):
+				_grass_clearing_cache[cell] = false
 				return false
+	_grass_clearing_cache[cell] = true
 	return true
 
 func _has_grass_tile_clearing(cell: Vector2i) -> bool:
@@ -1403,6 +1433,9 @@ func _has_grass_tile_clearing(cell: Vector2i) -> bool:
 			if not _is_grass_tile(cell + Vector2i(x, y)):
 				return false
 	return true
+
+func _clear_grass_clearing_cache() -> void:
+	_grass_clearing_cache.clear()
 
 func _is_grass_tile(cell: Vector2i) -> bool:
 	return ground_2.get_cell_source_id(cell) != -1
@@ -1417,14 +1450,26 @@ func _remove_water_trees() -> void:
 			environment.erase_cell(env_cell)
 
 func _limit_tree_count() -> void:
-	var kept := 0
+	var cells: Array[Vector2i] = []
 	for cell in environment.get_used_cells():
-		if environment.get_cell_source_id(cell) != tree_source_id:
-			continue
-		if kept >= max_tree_count:
-			environment.erase_cell(cell)
-		else:
-			kept += 1
+		if environment.get_cell_source_id(cell) == tree_source_id:
+			cells.append(cell)
+	if cells.size() <= max_tree_count:
+		return
+	# Keep the trees closest to the player instead of an arbitrary slice, so a
+	# trimmed save still looks dense where the player actually is.
+	var anchor: Vector2 = spawn_position
+	if is_instance_valid(player):
+		anchor = player.global_position
+	if not anchor.is_finite():
+		anchor = Vector2.ZERO
+	var scored: Array = []
+	for cell in cells:
+		var world_position: Vector2 = environment.to_global(environment.map_to_local(cell))
+		scored.append([world_position.distance_squared_to(anchor), cell])
+	scored.sort_custom(func(a, b): return a[0] < b[0])
+	for index in range(max_tree_count, scored.size()):
+		environment.erase_cell(scored[index][1])
 
 
 func _physics_process(delta: float) -> void:
@@ -1677,10 +1722,10 @@ func _check_player_stuck(delta: float) -> void:
 	if player == null or player.get("can_move") == null:
 		return
 	var map_ui := get_node_or_null("Overlay/UserInterface/map")
-	var ui_open: bool = map_ui != null and bool(map_ui.get("is_open"))
+	var ui_open: bool = map_ui != null and map_ui.get("is_open") == true
 	var dialogic_node := get_node_or_null("/root/Dialogic")
 	var in_dialogue: bool = dialogic_node != null and dialogic_node.get("current_timeline") != null
-	var locked: bool = not bool(player.get("can_move")) or not player.is_physics_processing()
+	var locked: bool = player.get("can_move") != true or not player.is_physics_processing()
 	if not locked or ui_open or in_dialogue:
 		_stuck_elapsed = 0.0
 		return

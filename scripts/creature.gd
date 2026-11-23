@@ -22,6 +22,17 @@ var move_velocity: Vector2 = Vector2.ZERO
 @export var max_walk_time: float = 3.0
 
 var last_safe_ground_position := Vector2.ZERO
+var _level: Node
+var _player: Node2D
+var _occupy_check_elapsed := 0.0
+var _actor_check_elapsed := 0.0
+var _actor_processing := true
+const OCCUPY_CHECK_INTERVAL := 0.15
+## Creatures farther than this from the player are frozen until the player
+## comes back. Their C# actor still renders when visible, but idle distant
+## actors no longer consume per-frame simulation time.
+const ACTIVE_DISTANCE_SQ := 1000.0 * 1000.0
+const ACTOR_CHECK_INTERVAL := 0.5
 
 func _ready() -> void:
 	# The actor generates a texture every animation tick. These settings keep a
@@ -39,21 +50,36 @@ func _ready() -> void:
 	creature_actor.set("CullMargin", 32)
 	add_child(creature_actor)
 	last_safe_ground_position = creature_actor.get("GroundPosition")
+	_level = get_tree().get_first_node_in_group("Level")
+	_player = get_tree().get_first_node_in_group("Player") as Node2D
+	_occupy_check_elapsed = randf() * OCCUPY_CHECK_INTERVAL
 	_enter_idle_state()
 
 func _physics_process(delta: float) -> void:
 	if not creature_actor:
 		return
 
+	_actor_check_elapsed += delta
+	if _actor_check_elapsed >= ACTOR_CHECK_INTERVAL:
+		_actor_check_elapsed = 0.0
+		_update_actor_processing()
+	if not _actor_processing:
+		return
+
 	# CreatureActor is a visual/motor node, not a PhysicsBody2D. Validate its
 	# position against the generated TileMaps and undo any step that crosses the
-	# habitat boundary or a tree.
-	if _can_occupy(creature_actor.global_position):
+	# habitat boundary or a tree. Checking a few times per second instead of
+	# twice every physics frame keeps dozens of creatures cheap.
+	_occupy_check_elapsed += delta
+	var check_now := _occupy_check_elapsed >= OCCUPY_CHECK_INTERVAL
+	if check_now:
+		_occupy_check_elapsed = 0.0
+		if not _can_occupy(creature_actor.global_position):
+			creature_actor.call("Teleport", last_safe_ground_position)
+			_enter_idle_state()
+			creature_actor.set("MoveVelocity", Vector2.ZERO)
+			return
 		last_safe_ground_position = creature_actor.get("GroundPosition")
-	else:
-		creature_actor.call("Teleport", last_safe_ground_position)
-		_enter_idle_state()
-		return
 
 	# Count down the current state timer
 	state_timer -= delta
@@ -62,11 +88,28 @@ func _physics_process(delta: float) -> void:
 			_enter_walk_state()
 		else:
 			_enter_idle_state()
-			
+
 	# Feed the current velocity (either zero or walking) to the C# motor
-	if not _can_occupy(creature_actor.global_position + move_velocity * delta):
-		_enter_idle_state()
+	if check_now and not move_velocity.is_zero_approx():
+		if not _can_occupy(creature_actor.global_position + move_velocity * delta):
+			_enter_idle_state()
 	creature_actor.set("MoveVelocity", move_velocity)
+
+func _update_actor_processing() -> void:
+	if _player == null or not is_instance_valid(_player):
+		_player = get_tree().get_first_node_in_group("Player") as Node2D
+	if _player == null:
+		return
+	var should_process := global_position.distance_squared_to(_player.global_position) <= ACTIVE_DISTANCE_SQ
+	if should_process == _actor_processing:
+		return
+	_actor_processing = should_process
+	creature_actor.set_process(should_process)
+	creature_actor.set_physics_process(should_process)
+	creature_actor.set("Paused", not should_process)
+	if not should_process:
+		_enter_idle_state()
+		creature_actor.set("MoveVelocity", Vector2.ZERO)
 
 func _enter_idle_state() -> void:
 	current_state = State.IDLE
@@ -89,5 +132,6 @@ func _family_for_habitat() -> String:
 			return land_families.pick_random()
 
 func _can_occupy(world_position: Vector2) -> bool:
-	var level := get_tree().get_first_node_in_group("Level")
-	return level != null and level.can_creature_occupy(world_position, habitat)
+	if _level == null or not is_instance_valid(_level):
+		_level = get_tree().get_first_node_in_group("Level")
+	return _level != null and _level.can_creature_occupy(world_position, habitat)

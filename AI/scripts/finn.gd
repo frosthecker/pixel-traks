@@ -48,7 +48,7 @@ func carpenter_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -57,11 +57,11 @@ func carpenter_work_step() -> bool:
 func _prepare_carpenter_work(level: Node) -> void:
 	# Finn works at his shop, on his boat, or gathering wood
 	var work_sites := [
-		{"pos": Vector2(180, 220), "tool": Tool.HAMMER},   # Shop
-		{"pos": Vector2(200, 250), "tool": Tool.HAMMER},   # Boat
-		{"pos": Vector2(150, 180), "tool": Tool.AXE},      # Wood gathering
+		{"pos": Vector2(180, 220), "tool": Enum.Tool.HAMMER},   # Shop
+		{"pos": Vector2(200, 250), "tool": Enum.Tool.HAMMER},   # Boat
+		{"pos": Vector2(150, 180), "tool": Enum.Tool.AXE},      # Wood gathering
 	]
-	var site := work_sites[worker_work_phase % work_sites.size()]
+	var site: Dictionary = work_sites[worker_work_phase % work_sites.size()]
 	worker_target_position = site.pos
 	worker_target_tool = site.tool
 

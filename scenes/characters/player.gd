@@ -36,19 +36,27 @@ var style_but_pressed: bool = false
 var footstep_timer: float = 0.0
 @export var footstep_interval: float = 0.35
 
+const WATER_CHECK_INTERVAL := 0.1
+var _water_check_elapsed := 0.0
+var _last_sprite_style := -1
+var _last_anim_direction := Vector2(9999.0, 9999.0)
+var _last_swim_direction := Vector2(9999.0, 9999.0)
+var _last_move_state: String = ""
+var _last_water_check_cell := Vector2i(-9999, -9999)
+var _last_water_check_result := false
+
 func _ready() -> void:
 	animation_tree.active = true
 
 func _physics_process(delta: float) -> void:
-	if current_style == 2:
-		sprite2d.vframes = 18
-	else:
-		sprite2d.vframes = 17
+	if current_style != _last_sprite_style:
+		_last_sprite_style = current_style
+		sprite2d.vframes = 18 if current_style == 2 else 17
 	if not can_move and not animation_tree.get("parameters/ToolOneShot/active"):
 		can_move = true
 	if can_move:
 		move()
-		_update_water_state()
+		_update_water_state(delta)
 		if is_in_water:
 			animate_swimming()
 		else:
@@ -90,20 +98,18 @@ func get_basic_input():
 		
 	if Input.is_action_just_pressed("tool_backward") or tool_but_pressed:
 		current_tool = posmod(current_tool + 1, Enum.Tool.size()) as Enum.Tool
-		print(current_tool)
 		tool_ui.reveal(true)
 		tool_but_pressed = false
 		
 	if Input.is_action_just_pressed("seed_forward") or seed_but_pressed:
 		current_seed = posmod(current_seed + 1, Enum.Seed.size()) as Enum.Seed
 		tool_ui.reveal(false)
-		print(current_seed)
 		seed_but_pressed = false
 		
 	if Input.is_action_just_pressed("action") or action_but_pressed:
 		# Check if the player is facing up or down
 		if last_direction == Vector2.UP or last_direction == Vector2.DOWN:
-			print("Cannot use tools while facing up or down!")
+			# print("Cannot use tools while facing up or down!")
 			action_but_pressed = false
 			return # Exit the block early so the tool is not used
 			
@@ -137,15 +143,20 @@ func move():
 func animate():
 	if direction:
 		var direction_animation = Vector2(round(direction.x), round(direction.y))
-		move_state_machine.travel("walk")
-		animation_tree.set("parameters/MoveStateMachine/idle/blend_position", direction_animation)
-		animation_tree.set("parameters/MoveStateMachine/walk/blend_position", direction_animation)
-		var tool_direction = Vector2(round(direction.x), round(direction.y)) if direction else Vector2.DOWN
-		for animation in Data.TOOL_STATE_ANIMATIONS.values():
-			var animation_name: String = "parameters/ToolStateMachine/" + animation + "/blend_position"
-			animation_tree.set(animation_name, tool_direction)
+		if _last_move_state != "walk":
+			move_state_machine.travel("walk")
+			_last_move_state = "walk"
+		if direction_animation != _last_anim_direction:
+			animation_tree.set("parameters/MoveStateMachine/idle/blend_position", direction_animation)
+			animation_tree.set("parameters/MoveStateMachine/walk/blend_position", direction_animation)
+			for animation in Data.TOOL_STATE_ANIMATIONS.values():
+				var animation_name: String = "parameters/ToolStateMachine/" + animation + "/blend_position"
+				animation_tree.set(animation_name, direction_animation)
+			_last_anim_direction = direction_animation
 	else:
-		move_state_machine.travel("idle")
+		if _last_move_state != "idle":
+			move_state_machine.travel("idle")
+			_last_move_state = "idle"
 
 ##animates swimming section (requires separate function because it needs checking of whether player is on water or not)
 func animate_swimming() -> void:
@@ -157,10 +168,13 @@ func play_swim_animation() -> void:
 	var look_direction = Vector2(round(last_direction.x), round(last_direction.y))
 	
 	# Always keep the blend position updated so your character faces the correct way
-	animation_tree.set("parameters/MoveStateMachine/swim/blend_position", look_direction)
+	if look_direction != _last_swim_direction:
+		animation_tree.set("parameters/MoveStateMachine/swim/blend_position", look_direction)
+		_last_swim_direction = look_direction
 	
-	if direction:
+	if direction and _last_move_state != "swim":
 		move_state_machine.travel("swim")
+		_last_move_state = "swim"
 	#else:
 		# If you don't have a distinct "swim_idle" state, traveling to "idle" is fine,
 		# but if your "idle" state doesn't look like swimming, the character will pop out of the water.
@@ -172,7 +186,12 @@ func _is_water_cell() -> bool:
 	if not is_instance_valid(water_layer):
 		return false
 	var cell := water_layer.local_to_map(water_layer.to_local(global_position))
+	# Cache result per cell to avoid repeated TileMap lookups
+	if cell == _last_water_check_cell:
+		return _last_water_check_result
+	_last_water_check_cell = cell
 	if water_layer.get_cell_source_id(cell) == -1:
+		_last_water_check_result = false
 		return false
 	# The procedural map uses water as its base layer, then paints land over it.
 	# A cell is therefore water only when it has no ground tile on either land layer.
@@ -181,10 +200,15 @@ func _is_water_cell() -> bool:
 		has_land = ground_1_layer.get_cell_source_id(cell) != -1
 	if is_instance_valid(ground_2_layer):
 		has_land = has_land or ground_2_layer.get_cell_source_id(cell) != -1
-	return not has_land
+	_last_water_check_result = not has_land
+	return _last_water_check_result
 
 ##updates the water animation state
-func _update_water_state() -> void:
+func _update_water_state(delta: float) -> void:
+	_water_check_elapsed += delta
+	if _water_check_elapsed < WATER_CHECK_INTERVAL:
+		return
+	_water_check_elapsed = 0.0
 	var now_in_water := _is_water_cell()
 	if now_in_water == is_in_water:
 		return

@@ -69,7 +69,7 @@ func fisherman_work_step() -> bool:
 		last_direction = Vector2.RIGHT
 	
 	# Fisherman uses fishing tool at water spots
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -87,7 +87,7 @@ func _prepare_fisherman_work(level: Node) -> void:
 	# Cycle through fishing spots
 	var spot_index := worker_work_phase % fishing_spots.size()
 	worker_target_position = fishing_spots[spot_index]
-	worker_target_tool = Tool.FISH
+	worker_target_tool = Enum.Tool.FISH
 
 func _on_dialogic_signal(argument: Variant) -> void:
 	var sig_str := str(argument)

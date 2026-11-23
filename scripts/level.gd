@@ -40,12 +40,11 @@ func _play_startup_transition() -> void:
 	transition.tween_property(day_transition_layer_material, "shader_parameter/progress", 0.0, 1.0)
 	transition.tween_callback(_finish_day_transition)
 
-func _on_npc_spawned(npc: Node) -> void:
-	print("[Level] NPC spawned: ", npc.npc_name if npc.has_method("npc_name") else npc.name)
+func _on_npc_spawned(_npc: Node) -> void:
+	pass
 
 func _on_all_npcs_spawned() -> void:
-	print("[Level] All NPCs spawned and initialized")
-	# NPCs are now ready for social group resolution
+	pass
 
 func _on_player_tool_use(tool: Enum.Tool, pos: Vector2, dir) -> void:
 	_apply_tool_use(tool, pos, dir, player.current_seed, true)
@@ -72,7 +71,8 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 			_place_sprinkler(grid_coord)
 		Enum.Tool.FISH:
 			if has_soil:
-				print('fishing')
+				# print('fishing')
+				pass
 		Enum.Tool.SEED:
 			if has_soil and grid_coord not in used_cells:
 				var cell = $Layers/LightDirtLayer.get_cell_tile_data(grid_coord)
@@ -86,7 +86,7 @@ func _apply_tool_use(tool: Enum.Tool, pos: Vector2, dir: bool, seed: Enum.Seed, 
 					var plant = plant_scene.instantiate()
 					plant.setup(grid_coord + tile_adjuster, $Objects, plant_res, plant_death)
 					used_cells.append(grid_coord)
-					print(used_cells)
+					# print(used_cells)
 				
 					if show_plant_info:
 						var plant_info = plant_info_scene.instantiate()
@@ -229,12 +229,12 @@ func level_reset():
 	_refresh_sprinkler_water()
 	plant_info_container.update_all()
 	WorldTime.set_time(WorldTime.start_minutes)
-	print('level reset')
+	# print('level reset')
 	day_timer.start()
 
 func plant_death(coord: Vector2i):
 	used_cells.erase(coord)
-	print(used_cells)
+	# print(used_cells)
 
 func get_save_data() -> Dictionary:
 	var trees: Dictionary = {}

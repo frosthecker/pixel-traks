@@ -33,7 +33,7 @@ func _load_level() -> void:
 	scene_tree.current_scene = level
 	# Procedural generation yields over multiple frames so this animation stays
 	# responsive. Keep the loading scene visible until that work is complete.
-	if not bool(level.get("world_boot_complete")) and level.has_signal("world_boot_completed"):
+	if not (level.get("world_boot_complete") == true) and level.has_signal("world_boot_completed"):
 		await level.world_boot_completed
 
 	await RenderingServer.frame_post_draw

@@ -7,14 +7,26 @@ extends StaticBody2D
 @export var log_scene: PackedScene
 @onready var tree_chop: AudioStreamPlayer = $tree_chop
 
+var _shake_material: ShaderMaterial
+var _shake_material_owned := false
+
 func _ready() -> void:
 	# A healthy tree should not render its stump.  The health setter is not run
 	# for the initial value, so this must be initialized explicitly.
 	if health > 0:
 		stump.hide()
-	if sprite_2d.material != null:
-		sprite_2d.material = sprite_2d.material.duplicate()
-		sprite_2d.material.set_shader_parameter("shake_intensity", 0.0)
+
+## Trees share the scene's shake material until one is actually hit. Duplicating
+## it lazily keeps hundreds of trees batched during normal play.
+func _ensure_shake_material() -> ShaderMaterial:
+	if not _shake_material_owned:
+		var source := sprite_2d.material
+		if source == null:
+			return null
+		_shake_material = source.duplicate() as ShaderMaterial
+		_shake_material_owned = true
+		sprite_2d.material = _shake_material
+	return _shake_material
 
 var health := 3:
 	set(value):
@@ -40,8 +52,9 @@ func hit(tool: Enum.Tool):
 	leaf_particles.restart()
 
 	# 3. Handle visual shake
-	if sprite_2d.material != null:
-		sprite_2d.material.set_shader_parameter("shake_intensity", 1.0)
+	var shake_material := _ensure_shake_material()
+	if shake_material != null:
+		shake_material.set_shader_parameter("shake_intensity", 1.0)
 
 	# 4. Reduce health immediately
 	health -= 1
@@ -68,5 +81,5 @@ func hit(tool: Enum.Tool):
 
 	# 6. Reset shake intensity after the timer completes
 	await get_tree().create_timer(1.0).timeout
-	if is_instance_valid(sprite_2d) and sprite_2d.material != null:
-		sprite_2d.material.set_shader_parameter("shake_intensity", 0.0)
+	if is_instance_valid(sprite_2d) and _shake_material != null:
+		_shake_material.set_shader_parameter("shake_intensity", 0.0)

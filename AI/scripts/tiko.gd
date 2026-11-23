@@ -48,7 +48,7 @@ func apprentice_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -58,10 +58,10 @@ func _prepare_apprentice_work(level: Node) -> void:
 	# Tiko helps Kaia at forge, works on own projects
 	if worker_work_phase % 2 == 0:
 		worker_target_position = Vector2(300, -100)  # Kaia's forge
-		worker_target_tool = Tool.HAMMER
+		worker_target_tool = Enum.Tool.HAMMER
 	else:
 		worker_target_position = Vector2(250, -180)  # Plex's workshop
-		worker_target_tool = Tool.HAMMER
+		worker_target_tool = Enum.Tool.HAMMER
 
 func _on_dialogic_signal(argument: Variant) -> void:
 	var sig_str := str(argument)

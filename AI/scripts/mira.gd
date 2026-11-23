@@ -4,7 +4,7 @@ class_name MiraEnhanced
 var mira_inventory: Array = []
 ## Mira - Herbalist/Alchemist NPC
 
-@export var herbalist_focus: Seed = Seed.WHEAT
+@export var herbalist_focus: Enum.Seed = Enum.Seed.WHEAT
 
 func _ready() -> void:
 	npc_name = "Mira"
@@ -82,22 +82,22 @@ func _prepare_herbalist_work(level: Node) -> void:
 	# Mira focuses on special herb spots and foraging
 	if worker_work_phase % 3 == 0:
 		worker_target_position = _find_herb_spot(level)
-		worker_target_tool = Tool.HOE
+		worker_target_tool = Enum.Tool.HOE
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_planting_spot(level)
-			worker_target_tool = Tool.SEED
+			worker_target_tool = Enum.Tool.SEED
 	elif worker_work_phase % 3 == 1:
 		worker_target_position = _find_planting_spot(level)
-		worker_target_tool = Tool.SEED
+		worker_target_tool = Enum.Tool.SEED
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_foraging_spot()
-			worker_target_tool = Tool.AXE
+			worker_target_tool = Enum.Tool.AXE
 	else:
 		worker_target_position = _find_foraging_spot()
-		worker_target_tool = Tool.AXE
+		worker_target_tool = Enum.Tool.AXE
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_herb_spot(level)
-			worker_target_tool = Tool.HOE
+			worker_target_tool = Enum.Tool.HOE
 
 func _find_herb_spot(level: Node) -> Vector2:
 	# Look for dark dirt (watered soil) for special herbs
@@ -197,7 +197,7 @@ func get_save_data() -> Dictionary:
 func load_save_data(data: Dictionary) -> void:
 	super.load_save_data(data)
 	mira_inventory = data.get("mira_inventory", [])
-	herbalist_focus = Seed.WHEAT
-	var seed_val := data.get("herbalist_focus", int(Seed.WHEAT))
+	herbalist_focus = Enum.Seed.WHEAT
+	var seed_val: int = data.get("herbalist_focus", int(Enum.Seed.WHEAT))
 	if seed_val:
-		herbalist_focus = Seed(seed_val)
+		herbalist_focus = seed_val

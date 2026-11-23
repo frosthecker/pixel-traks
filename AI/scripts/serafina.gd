@@ -48,7 +48,7 @@ func rival_artisan_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -64,7 +64,7 @@ func _prepare_artisan_work(level: Node) -> void:
 		return
 	
 	worker_target_position = studio_pos
-	worker_target_tool = Tool.HAMMER  # Glassblowing uses hammer-like tools
+	worker_target_tool = Enum.Tool.HAMMER  # Glassblowing uses hammer-like tools
 	worker_work_phase += 1
 
 func _on_dialogic_signal(argument: Variant) -> void:

@@ -56,18 +56,18 @@ func veteran_farmer_work_step() -> bool:
 
 func _prepare_veteran_work(level: Node) -> void:
 	# Tomas works his fields methodically - hoe, seed, water, repeat
-	var tools := [Tool.HOE, Tool.SEED, Tool.WATER]
-	var tool := tools[worker_work_phase % tools.size()]
+	var tools := [Enum.Tool.HOE, Enum.Tool.SEED, Enum.Tool.WATER]
+	var tool: Enum.Tool = tools[worker_work_phase % tools.size()]
 	
 	match tool:
-		Tool.HOE: worker_target_position = _find_hoeing_spot(level)
-		Tool.SEED: worker_target_position = _find_planting_spot(level)
-		Tool.WATER: worker_target_position = _find_water_spot(level)
+		Enum.Tool.HOE: worker_target_position = _find_hoeing_spot(level)
+		Enum.Tool.SEED: worker_target_position = _find_planting_spot(level)
+		Enum.Tool.WATER: worker_target_position = _find_water_spot(level)
 	
 	worker_target_tool = tool
 	if worker_target_position == Vector2.INF:
 		worker_target_position = _find_planting_spot(level)
-		worker_target_tool = Tool.SEED
+		worker_target_tool = Enum.Tool.SEED
 
 func _find_hoeing_spot(level: Node) -> Vector2:
 	var grass: TileMapLayer = level.get_node_or_null("Layers/GrassLayer")

@@ -11,8 +11,8 @@ func _tick(_delta: float) -> Status:
 	var pos: Vector2 = agent.global_position + dir * randf_range(range_min_in_dir, range_max_in_dir)
 
 	# Do not deliberately choose a target through a collision wall or obstacle.
-	# Try several random directions before accepting a fallback target.
-	for _attempt in range(8):
+	# Try fewer random directions (4 instead of 8) to reduce raycast overhead.
+	for _attempt in range(4):
 		dir = rando_dir()
 		var candidate: Vector2 = agent.global_position + dir * randf_range(range_min_in_dir, range_max_in_dir)
 		if _path_is_clear(candidate):
@@ -20,7 +20,6 @@ func _tick(_delta: float) -> Status:
 			break
 	
 	blackboard.set_var(position_var, pos)
-	print("random move ", dir, " -> ", pos)
 	return SUCCESS
 
 func _path_is_clear(target: Vector2) -> bool:

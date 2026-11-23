@@ -33,7 +33,7 @@ vertices = PackedVector2Array(219.57031, -0.7734375, 550.47656, -8.7421875, 546.
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 4, 5, 6, 7, 0), PackedInt32Array(7, 8, 0)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-287, -93, -285, 235, 448, 233, 461, 84, 556, 83, 561, -19, 229, -11, 224, -99, -265, -106)])
 
-[node name="Level" type="Node2D" unique_id=2141842218]
+[node name="Level" type="Node2D" unique_id=2141842218 groups=["Level"]]
 script = ExtResource("1_b2cq8")
 daytime_color = SubResource("Gradient_u86jo")
 
@@ -81,39 +81,6 @@ zoom = Vector2(4, 4)
 
 [node name="shop" parent="Objects" unique_id=1649823698 instance=ExtResource("6_qogh7")]
 position = Vector2(85, 140)
-
-[node name="John" parent="Objects" unique_id=13871660 instance=ExtResource("7_john")]
-position = Vector2(38, 47)
-
-[node name="Kaia" parent="Objects" unique_id=188550383 instance=ExtResource("7_john")]
-position = Vector2(100, 120)
-texture = ExtResource("8_kaia_texture")
-dialogue_character = "res://AI/characters/Kaia.dch"
-dialogue_timeline = "res://AI/timelines/kaia_fallback.dtl"
-intro_timeline = ""
-random_timelines = Array[String](["res://AI/timelines/kaia_fallback.dtl"])
-biodata = ExtResource("9_kaia_biodata")
-groq_character_id = "Kaia"
-
-[node name="Mira" parent="Objects" unique_id=1505955909 instance=ExtResource("7_john")]
-position = Vector2(-160, 20)
-texture = ExtResource("10_mira_texture")
-dialogue_character = "res://AI/characters/Mira.dch"
-dialogue_timeline = "res://AI/timelines/mira_fallback.dtl"
-intro_timeline = ""
-random_timelines = Array[String](["res://AI/timelines/mira_fallback.dtl"])
-biodata = ExtResource("11_mira_biodata")
-groq_character_id = "Mira"
-
-[node name="Orin" parent="Objects" unique_id=386319934 instance=ExtResource("7_john")]
-position = Vector2(-120, 110)
-texture = ExtResource("12_orin_texture")
-dialogue_character = "res://AI/characters/Orin.dch"
-dialogue_timeline = "res://AI/timelines/orin_fallback.dtl"
-intro_timeline = ""
-random_timelines = Array[String](["res://AI/timelines/orin_fallback.dtl"])
-biodata = ExtResource("13_orin_biodata")
-groq_character_id = "Orin"
 
 [node name="trees" type="Node2D" parent="Objects" unique_id=1965571586]
 
@@ -239,12 +206,12 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="UserInterface" type="CanvasLayer" parent="Overlay" unique_id=524568422]
-script = ExtResource("9_rmjfq")
+script = ExtResource("10_rmjfq")
 
-[node name="inventory" parent="Overlay/UserInterface" unique_id=344952141 instance=ExtResource("10_7pb6i")]
+[node name="inventory" parent="Overlay/UserInterface" unique_id=344952141 instance=ExtResource("11_7pb6i")]
 position = Vector2(633, 334)
 
-[node name="map" parent="Overlay/UserInterface" unique_id=685555245 instance=ExtResource("12_map")]
+[node name="map" parent="Overlay/UserInterface" unique_id=685555245 instance=ExtResource("13_map")]
 position = Vector2(640, 350)
 
 [node name="Timers" type="Node" parent="." unique_id=386833648]
@@ -262,7 +229,7 @@ navigation_polygon = SubResource("NavigationPolygon_u86jo")
 
 [node name="NPCSpawner" type="Node" parent="." unique_id=999999999]
 script = ExtResource("8_npc_spawner")
-spawn_on_start = true
+spawn_on_start = false
 
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]
 [connection signal="npc_spawned" from="NPCSpawner" to="." method="_on_npc_spawned"]

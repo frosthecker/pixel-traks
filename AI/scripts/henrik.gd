@@ -48,7 +48,7 @@ func hunter_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -63,11 +63,11 @@ func _prepare_hunter_work(level: Node) -> void:
 		Vector2(-400, 0),
 		Vector2(-350, -50),
 	]
-	var spot := hunt_spots[worker_work_phase % hunt_spots.size()]
+	var spot: Vector2 = hunt_spots[worker_work_phase % hunt_spots.size()]
 	worker_target_position = spot
 	
 	# Alternate between trapping (hoe), hunting (axe), checking traps (shovel)
-	var tools := [Tool.HOE, Tool.AXE, Tool.HOE]
+	var tools := [Enum.Tool.HOE, Enum.Tool.AXE, Enum.Tool.HOE]
 	worker_target_tool = tools[worker_work_phase % tools.size()]
 
 func _on_dialogic_signal(argument: Variant) -> void:

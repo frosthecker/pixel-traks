@@ -78,16 +78,16 @@ func _prepare_rival_work(level: Node) -> void:
 	# Rook works his own farm aggressively - mostly farming, some woodcutting
 	if worker_work_phase % 4 < 3:
 		worker_target_position = _find_planting_spot(level)
-		worker_target_tool = Tool.SEED
+		worker_target_tool = Enum.Tool.SEED
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_nearest_tree_position()
-			worker_target_tool = Tool.AXE
+			worker_target_tool = Enum.Tool.AXE
 	else:
 		worker_target_position = _find_nearest_tree_position()
-		worker_target_tool = Tool.AXE
+		worker_target_tool = Enum.Tool.AXE
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_planting_spot(level)
-			worker_target_tool = Tool.SEED
+			worker_target_tool = Enum.Tool.SEED
 
 func _on_dialogic_signal(argument: Variant) -> void:
 	var sig_str := str(argument)

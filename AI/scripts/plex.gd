@@ -48,7 +48,7 @@ func tinkerer_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -57,11 +57,11 @@ func tinkerer_work_step() -> bool:
 func _prepare_tinkerer_work(level: Node) -> void:
 	# Plex works at workshop, scavenges, tests flying machine
 	var sites := [
-		{"pos": Vector2(250, -180), "tool": Tool.HAMMER},   # Workshop
-		{"pos": Vector2(300, -200), "tool": Tool.HAMMER},   # Glider test site
-		{"pos": Vector2(200, -150), "tool": Tool.AXE},      # Scavenging
+		{"pos": Vector2(250, -180), "tool": Enum.Tool.HAMMER},   # Workshop
+		{"pos": Vector2(300, -200), "tool": Enum.Tool.HAMMER},   # Glider test site
+		{"pos": Vector2(200, -150), "tool": Enum.Tool.AXE},      # Scavenging
 	]
-	var site := sites[worker_work_phase % sites.size()]
+	var site: Dictionary = sites[worker_work_phase % sites.size()]
 	worker_target_position = site.pos
 	worker_target_tool = site.tool
 

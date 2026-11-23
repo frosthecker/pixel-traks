@@ -57,7 +57,7 @@ func patrol_step() -> bool:
 		Vector2(100, -250),
 	]
 	
-	var current_target := patrol_points[worker_work_phase % patrol_points.size()]
+	var current_target: Vector2 = patrol_points[worker_work_phase % patrol_points.size()]
 	
 	if global_position.distance_to(current_target) > 15.0:
 		var dir := global_position.direction_to(current_target)

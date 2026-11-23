@@ -21,6 +21,9 @@ mono_crash_*.log
 groq_config.json
 *.env
 
+# Local GGUF models (large; downloaded separately, never committed)
+models/
+
 #addons
 addons/nobodywho/
 addons/limboai/

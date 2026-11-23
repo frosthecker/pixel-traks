@@ -37,7 +37,7 @@ func guard_work_step() -> bool:
 	
 	# Patrol between guard posts
 	var posts := [Vector2(-50, -220), Vector2(50, -220), Vector2(0, -200)]
-	var target := posts[worker_work_phase % posts.size()]
+	var target: Vector2 = posts[worker_work_phase % posts.size()]
 	
 	if global_position.distance_to(target) > 15.0:
 		var dir := global_position.direction_to(target)

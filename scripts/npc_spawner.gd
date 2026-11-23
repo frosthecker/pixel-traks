@@ -27,12 +27,11 @@ func _create_missing_scenes() -> void:
 func spawn_all_npcs() -> void:
 	var level := get_tree().get_first_node_in_group("Level")
 	if not level:
-		print("[NPCSpawner] No level found!")
 		return
 	
 	var objects_parent := level.get_node_or_null("Objects")
 	if not objects_parent:
-		print("[NPCSpawner] No Objects parent found!")
+		# print("[NPCSpawner] No Objects parent found!")
 		return
 	
 	spawned_npcs.clear()
@@ -47,40 +46,38 @@ func spawn_all_npcs() -> void:
 	_resolve_social_groups()
 	
 	all_npcs_spawned.emit()
-	print("[NPCSpawner] Spawned ", spawned_npcs.size(), " NPCs")
+	# print("[NPCSpawner] Spawned ", spawned_npcs.size(), " NPCs")
 
 func _spawn_npc(def: Dictionary, parent: Node) -> Node:
 	var scene_path: String = def["scene"]
 	var position: Vector2 = def["position"]
-	var npc_id: String = def.get("npc_id", "")
-	var npc_name: String = def.get("name", "")
+	var npc_id: String = str(def.get("id", def.get("npc_id", "")))
+	var npc_name: String = str(def.get("name", ""))
 	
 	var scene := ResourceLoader.load(scene_path)
 	if not scene:
-		print("[NPCSpawner] Failed to load scene: ", scene_path)
+		# print("[NPCSpawner] Failed to load scene: ", scene_path)
 		return null
 	
 	var npc: Node = scene.instantiate()
 	if not npc:
-		print("[NPCSpawner] Failed to instantiate: ", scene_path)
+		# print("[NPCSpawner] Failed to instantiate: ", scene_path)
 		return null
 	
-	# Set position
-	npc.global_position = position
-	
-	# Set NPC ID and name if the script supports it
-	if npc.has_method("set_npc_id") and not npc_id.is_empty():
-		npc.set_npc_id(npc_id)
-	if npc.has_method("set_npc_name") and not npc_name.is_empty():
-		npc.set_npc_name(npc_name)
+	# Set the persistent identity before _ready runs.
+	if "npc_id" in npc and not npc_id.is_empty():
+		npc.set("npc_id", npc_id)
+	if "npc_name" in npc and not npc_name.is_empty():
+		npc.set("npc_name", npc_name)
 	
 	# Add to scene
 	parent.add_child(npc)
+	npc.global_position = position
 	
 	# Add to NPC group
 	npc.add_to_group("NPC")
 	
-	print("[NPCSpawner] Spawned ", npc_name, " at ", position)
+	# print("[NPCSpawner] Spawned ", npc_name, " at ", position)
 	return npc
 
 func _resolve_social_groups() -> void:

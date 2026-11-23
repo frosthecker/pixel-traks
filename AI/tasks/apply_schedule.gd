@@ -27,7 +27,7 @@ func _tick(_delta: float) -> Status:
 
 	if activity != last_activity:
 		last_activity = activity
-		print(agent.name, " schedule: ", activity, " at ", clock.format_time())
+		# print(agent.name, " schedule: ", activity, " at ", clock.format_time())
 	return SUCCESS
 
 func _find_schedule_entry(schedule: Array[Dictionary], now: int) -> Dictionary:

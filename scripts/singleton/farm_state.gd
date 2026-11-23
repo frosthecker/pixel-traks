@@ -5,6 +5,7 @@ extends Node
 ## world reload.
 
 signal farming_level_changed(level: int, xp: int, xp_to_next: int)
+signal farming_xp_changed(xp: int, xp_to_next: int)
 signal tool_upgraded(tool: int, tier: int)
 
 const BASE_XP := 40
@@ -28,6 +29,7 @@ func reset() -> void:
 	tool_tiers.clear()
 	_ensure_defaults()
 	farming_level_changed.emit(farming_level, farming_xp, xp_to_next_level())
+	farming_xp_changed.emit(farming_xp, xp_to_next_level())
 
 func get_save_data() -> Dictionary:
 	_ensure_defaults()
@@ -49,6 +51,7 @@ func load_save_data(save_data: Dictionary) -> void:
 			if tool_tiers.has(tool_key):
 				tool_tiers[tool_key] = maxi(0, int(tiers[key]))
 	farming_level_changed.emit(farming_level, farming_xp, xp_to_next_level())
+	farming_xp_changed.emit(farming_xp, xp_to_next_level())
 
 func xp_to_next_level() -> int:
 	return BASE_XP + (farming_level - 1) * XP_PER_LEVEL
@@ -62,6 +65,7 @@ func add_farming_xp(amount: int) -> void:
 		farming_xp -= xp_to_next_level()
 		farming_level += 1
 		leveled_up = true
+	farming_xp_changed.emit(farming_xp, xp_to_next_level())
 	if leveled_up:
 		farming_level_changed.emit(farming_level, farming_xp, xp_to_next_level())
 

@@ -48,7 +48,7 @@ func apprentice_fisher_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -61,9 +61,9 @@ func _prepare_fisher_work(level: Node) -> void:
 		Vector2(-250, 350),  # Marina's spot
 		Vector2(-150, 250),
 	]
-	var spot := spots[worker_work_phase % spots.size()]
+	var spot: Vector2 = spots[worker_work_phase % spots.size()]
 	worker_target_position = spot
-	worker_target_tool = Tool.FISH
+	worker_target_tool = Enum.Tool.FISH
 
 func _on_dialogic_signal(argument: Variant) -> void:
 	var sig_str := str(argument)

@@ -48,7 +48,7 @@ func miner_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -62,9 +62,9 @@ func _prepare_miner_work(level: Node) -> void:
 		Vector2(350, -150),
 		Vector2(500, -300),
 	]
-	var vein := veins[worker_work_phase % veins.size()]
+	var vein: Vector2 = veins[worker_work_phase % veins.size()]
 	worker_target_position = vein
-	worker_target_tool = Tool.AXE  # Pickaxe
+	worker_target_tool = Enum.Tool.AXE  # Pickaxe
 
 func _on_dialogic_signal(argument: Variant) -> void:
 	var sig_str := str(argument)

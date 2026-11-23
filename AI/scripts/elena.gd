@@ -48,7 +48,7 @@ func potter_work_step() -> bool:
 	move(Vector2.ZERO, 0.0)
 	last_direction = global_position.direction_to(worker_target_position).round()
 	if last_direction.is_zero_approx(): last_direction = Vector2.RIGHT
-	level.npc_tool_use(worker_target_tool, worker_target_position, false, Seed.WHEAT)
+	level.npc_tool_use(worker_target_tool, worker_target_position, false, Enum.Seed.WHEAT)
 	_play_tool_animation(worker_target_tool)
 	worker_target_position = Vector2.INF
 	worker_work_phase += 1
@@ -57,13 +57,13 @@ func potter_work_step() -> bool:
 func _prepare_potter_work(level: Node) -> void:
 	# Elena works at wheel (hoe), kiln (axe), clay pit (shovel)
 	var activities := [
-		{"tool": Tool.HOE, "spot": _find_wheel_spot},      # Wheel throwing
-		{"tool": Tool.AXE, "spot": _find_kiln_spot},       # Kiln firing
-		{"tool": Tool.HOE, "spot": _find_clay_spot},    # Clay digging
+		{"tool": Enum.Tool.HOE, "spot": _find_wheel_spot},      # Wheel throwing
+		{"tool": Enum.Tool.AXE, "spot": _find_kiln_spot},       # Kiln firing
+		{"tool": Enum.Tool.HOE, "spot": _find_clay_spot},    # Clay digging
 	]
-	var act := activities[worker_work_phase % activities.size()]
+	var act: Dictionary = activities[worker_work_phase % activities.size()]
 	worker_target_tool = act.tool
-	worker_target_position = act.spot(level)
+	worker_target_position = act.spot.call(level)
 
 func _find_wheel_spot(level: Node) -> Vector2:
 	return Vector2(-200, -100)  # Workshop wheel

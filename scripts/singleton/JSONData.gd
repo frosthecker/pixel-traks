@@ -8,8 +8,9 @@ func _ready():
 
 func LoadData(file_path: String) -> Dictionary:
 	if not FileAccess.file_exists(file_path):
-		print("File does not exist: ", file_path)
-		return {}
+		# print("File does not exist: ", file_path)
+		pass
+	return {}
 	
 	# Godot 4: Open file directly using FileAccess
 	var file = FileAccess.open(file_path, FileAccess.READ)
@@ -22,5 +23,5 @@ func LoadData(file_path: String) -> Dictionary:
 	if json_data is Dictionary:
 		return json_data
 	else:
-		print("Failed to parse JSON or data is not a Dictionary")
+		# print("Failed to parse JSON or data is not a Dictionary")
 		return {}

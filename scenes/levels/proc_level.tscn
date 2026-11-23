@@ -103,15 +103,8 @@ rabbit_preset_path = "res://assets/animal_presets/rabbit.json"
 
 [node name="Layers" type="Node2D" parent="." unique_id=991742646]
 
-[node name="ColorRect" parent="Layers" unique_id=973203033 instance=ExtResource("2_5jnv5")]
-visible = false
-z_index = -2
-offset_left = -2048.0
-offset_top = -2048.0
-offset_right = 2048.0
-offset_bottom = 2048.0
-
 [node name="water" type="TileMapLayer" parent="Layers" unique_id=1839696258]
+visible = true
 z_index = -2
 material = SubResource("ShaderMaterial_pixelwater")
 tile_set = ExtResource("2_7iper")

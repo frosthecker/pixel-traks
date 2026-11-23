@@ -7,7 +7,7 @@ const SLOT_COUNT := 3
 const SAVE_PATH_TEMPLATE := "user://world_slot_%d.save"
 const RESUME_PATH := "user://resume.save"
 const META_PATH := "user://save_meta.cfg"
-const RESUME_INTERVAL_SECONDS := 10.0
+const RESUME_INTERVAL_SECONDS := 60.0
 
 var _resume_elapsed := 0.0
 var current_slot := 1
@@ -91,7 +91,7 @@ func save_game(level_override: Node = null, slot: int = 0) -> bool:
 	var level := level_override if level_override != null else _get_level()
 	if level == null:
 		return false
-	if not bool(level.get("world_boot_complete")):
+	if not (level.get("world_boot_complete") == true):
 		return false
 
 	var payload := _build_payload(level, target_slot)
@@ -102,14 +102,14 @@ func save_game(level_override: Node = null, slot: int = 0) -> bool:
 	var level_data: Dictionary = payload["level"]
 	var time_data: Dictionary = level_data.get("world_time", {})
 	_write_meta(target_slot, int(time_data.get("day_count", 1)))
-	print("Game saved to ", slot_path(target_slot))
+	# print("Game saved to ", slot_path(target_slot))
 	return true
 
 func save_resume(level_override: Node = null) -> bool:
 	var level := level_override if level_override != null else _get_level()
 	if level == null:
 		return false
-	if not bool(level.get("world_boot_complete")):
+	if not (level.get("world_boot_complete") == true):
 		return false
 	return _write_compressed(RESUME_PATH, _build_payload(level, current_slot))
 
@@ -122,7 +122,7 @@ func load_game(level_override: Node = null, slot: int = 0) -> bool:
 		return false
 	current_slot = target_slot
 	if _apply_payload(save_data, level_override):
-		print("Game loaded from ", slot_path(target_slot))
+		# print("Game loaded from ", slot_path(target_slot))
 		return true
 	return false
 
@@ -134,7 +134,7 @@ func load_resume(level_override: Node = null) -> bool:
 		return false
 	current_slot = clampi(int(save_data.get("slot", 0)), 0, SLOT_COUNT)
 	if _apply_payload(save_data, level_override):
-		print("Game resumed from ", RESUME_PATH)
+		# print("Game resumed from ", RESUME_PATH)
 		return true
 	return false
 

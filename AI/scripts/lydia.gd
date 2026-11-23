@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 func travel_step() -> bool:
 	# Lydia travels between ports
 	var travel_points := [Vector2(-50, 250), Vector2(0, 300), Vector2(50, 200)]
-	var target := travel_points[worker_work_phase % travel_points.size()]
+	var target: Vector2 = travel_points[worker_work_phase % travel_points.size()]
 	
 	if global_position.distance_to(target) > 15.0:
 		var dir := global_position.direction_to(target)

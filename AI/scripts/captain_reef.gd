@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 func harbor_master_work_step() -> bool:
 	# Patrols harbor area
 	var posts := [Vector2(-150, 400), Vector2(-100, 350), Vector2(-200, 450), Vector2(-50, 380)]
-	var target := posts[worker_work_phase % posts.size()]
+	var target: Vector2 = posts[worker_work_phase % posts.size()]
 	
 	if global_position.distance_to(target) > 15.0:
 		var dir := global_position.direction_to(target)

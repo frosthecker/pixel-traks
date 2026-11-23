@@ -58,22 +58,22 @@ func _prepare_organic_work(level: Node) -> void:
 	# Elara focuses on composting, companion planting, natural methods
 	if worker_work_phase % 3 == 0:
 		worker_target_position = _find_compost_spot(level)
-		worker_target_tool = Tool.HOE
+		worker_target_tool = Enum.Tool.HOE
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_planting_spot(level)
-			worker_target_tool = Tool.SEED
+			worker_target_tool = Enum.Tool.SEED
 	elif worker_work_phase % 3 == 1:
 		worker_target_position = _find_planting_spot(level)
-		worker_target_tool = Tool.SEED
+		worker_target_tool = Enum.Tool.SEED
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_water_spot(level)
-			worker_target_tool = Tool.WATER
+			worker_target_tool = Enum.Tool.WATER
 	else:
 		worker_target_position = _find_water_spot(level)
-		worker_target_tool = Tool.WATER
+		worker_target_tool = Enum.Tool.WATER
 		if worker_target_position == Vector2.INF:
 			worker_target_position = _find_planting_spot(level)
-			worker_target_tool = Tool.SEED
+			worker_target_tool = Enum.Tool.SEED
 
 func _find_compost_spot(level: Node) -> Vector2:
 	# Look for dark dirt to enrich

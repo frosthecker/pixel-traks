@@ -18,7 +18,6 @@ func _tick(_delta: float) -> Status:
 
 	if candidates.is_empty():
 		blackboard.set_var(target_var, null)
-		print("No target found in group: ", group)
 		return FAILURE
 
 	# Use the closest matching target instead of relying on group order.
@@ -36,7 +35,7 @@ func _tick(_delta: float) -> Status:
 
 	blackboard.set_var(target_var, target)
 	if target != last_reported_target:
-		print("Found target: ", target.name)
+		# print("Found target: ", target.name)
 		last_reported_target = target
 	return SUCCESS
 

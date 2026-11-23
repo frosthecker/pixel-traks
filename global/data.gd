@@ -27,7 +27,7 @@ var PLANT_DATA = {
 		'h_frames': 3,
 		'grow_speed': 1.0,
 		'death_max': 2,
-		'seasons': [Enum.Season.SPRING, Enum.Season.WINTER],
+		'seasons': [Enum.Season.FALL],
 		'reward': Enum.Item.CABBAGE},
 	Enum.Seed.PUMPKIN: {
 		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/pumpkin_spritesheet.png",
@@ -63,7 +63,7 @@ var PLANT_DATA = {
 		'h_frames': 3,
 		'grow_speed': 0.5,
 		'death_max': 3,
-		'seasons': [Enum.Season.SPRING, Enum.Season.WINTER],
+		'seasons': [Enum.Season.SPRING],
 		'reward': Enum.Item.CAULIFLOWER},
 	Enum.Seed.POTATO: {
 		'texture': "res://assets/Sunnyside_World_Assets/Elements/Crops/potato_spritesheet.png",

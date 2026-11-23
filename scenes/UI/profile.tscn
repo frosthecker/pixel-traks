@@ -385,3 +385,18 @@ offset_bottom = 232.0
 theme = ExtResource("4_jy8kg")
 theme_override_colors/font_placeholder_color = Color(0, 0, 0, 0.6)
 placeholder_text = "descibe yourself"
+
+[node name="xpbar" type="TextureProgressBar" parent="game_data/level_xp"]
+offset_left = -12.0
+offset_top = 108.0
+offset_right = 112.0
+offset_bottom = 114.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("5_7r2ko")
+texture_progress = ExtResource("6_848fq")
+max_value = 40.0
+

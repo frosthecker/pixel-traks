@@ -33,23 +33,24 @@ func load_config() -> void:
 	var env_key := OS.get_environment("GROQ_API_KEY").strip_edges()
 	if not env_key.is_empty():
 		api_key = env_key
-		print("[GroqService] Loaded API key from GROQ_API_KEY environment variable.")
+		# print("[GroqService] Loaded API key from GROQ_API_KEY environment variable.")
 		return
 
 	# 2. Check user config file (writable location)
 	if FileAccess.file_exists(USER_CONFIG_PATH):
 		if _load_json_config(USER_CONFIG_PATH):
-			print("[GroqService] Loaded configuration from %s." % USER_CONFIG_PATH)
+			# print("[GroqService] Loaded configuration from %s." % USER_CONFIG_PATH)
 			return
 
 	# 3. Check project config file (res://)
 	if FileAccess.file_exists(CONFIG_FILE_PATH):
 		if _load_json_config(CONFIG_FILE_PATH):
-			print("[GroqService] Loaded configuration from %s." % CONFIG_FILE_PATH)
+			# print("[GroqService] Loaded configuration from %s." % CONFIG_FILE_PATH)
 			return
 
 	if api_key.is_empty() or api_key == "YOUR_GROQ_API_KEY_HERE":
-		print("[GroqService] No Groq API key set. Please set GROQ_API_KEY or configure res://groq_config.json.")
+		# print("[GroqService] No Groq API key set. Please set GROQ_API_KEY or configure res://groq_config.json.")
+		pass
 
 func _load_json_config(path: String) -> bool:
 	var file := FileAccess.open(path, FileAccess.READ)
@@ -91,7 +92,7 @@ func save_config(new_api_key: String, new_model: String = "", save_to_user: bool
 	api_key = config_data["api_key"]
 	if not new_model.is_empty():
 		model = new_model
-	print("[GroqService] Configuration saved to: ", target_path)
+	# print("[GroqService] Configuration saved to: ", target_path)
 	return true
 
 ## Returns true if a valid API key appears to be configured.
@@ -208,10 +209,10 @@ func generate_npc_dialogue(
 		if status_code == 404 or "model" in err_str.to_lower():
 			for fallback_model in FALLBACK_MODELS:
 				if fallback_model != model:
-					print("[GroqService] Model '%s' failed. Attempting fallback: %s..." % [model, fallback_model])
+					# print("[GroqService] Model '%s' failed. Attempting fallback: %s..." % [model, fallback_model])
 					var fallback_res = await send_chat_request(messages, fallback_model)
 					if fallback_res.get("success", false):
-						print("[GroqService] Fallback to '%s' succeeded!" % fallback_model)
+						# print("[GroqService] Fallback to '%s' succeeded!" % fallback_model)
 						model = fallback_model
 						result = fallback_res
 						break

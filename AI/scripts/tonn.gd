@@ -37,7 +37,7 @@ func scout_work_step() -> bool:
 		Vector2(50, -220), Vector2(-50, -220), Vector2(100, -250),
 		Vector2(0, -200), Vector2(150, -180), Vector2(-100, -250),
 	]
-	var target := scout_points[worker_work_phase % scout_points.size()]
+	var target: Vector2 = scout_points[worker_work_phase % scout_points.size()]
 	
 	if global_position.distance_to(target) > 15.0:
 		var dir := global_position.direction_to(target)

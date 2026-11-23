@@ -1192,13 +1192,16 @@ texture = ExtResource("10_rwguo")
 
 [node name="header" type="Node2D" parent="." unique_id=1871205970]
 visible = false
+position = Vector2(2, -145)
 scale = Vector2(0.85, 0.85)
 
 [node name="HBoxContainer" type="HBoxContainer" parent="header" unique_id=1910866899]
-offset_left = -31.0
-offset_top = -132.0
-offset_right = 115.0
-offset_bottom = -92.0
+offset_left = -220.0
+offset_top = -22.0
+offset_right = 220.0
+offset_bottom = 22.0
+alignment = 1
+theme_override_constants/separation = 10
 
 [node name="TextureRect2" type="TextureRect" parent="header/HBoxContainer" unique_id=2062969579]
 layout_mode = 2
@@ -1207,8 +1210,11 @@ texture = ExtResource("36_ujkxp")
 [node name="Label" type="Label" parent="header/HBoxContainer" unique_id=1510626755]
 layout_mode = 2
 theme = ExtResource("37_1l3pj")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
 text = "Profile"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="header/HBoxContainer" unique_id=1933687379]
 layout_mode = 2

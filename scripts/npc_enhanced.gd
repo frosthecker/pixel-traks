@@ -10,6 +10,7 @@ const NPCRelationshipType = preload("res://resources/npc_relationship.gd")
 const NPCMemoryType = preload("res://resources/npc_memory.gd")
 const NPCNavigationType = preload("res://scripts/npc_navigation.gd")
 const NPCSocialType = preload("res://scripts/npc_social.gd")
+const NemotronServiceType = preload("res://scripts/nemotron_service.gd")
 
 ## Movement & Animation
 var direction: Vector2 = Vector2.ZERO
@@ -39,6 +40,13 @@ var can_move: bool = true
 @export var use_groq_ai: bool = true
 @export var groq_character_id: String = ""
 @export var enable_interactive_choices: bool = true
+
+@export_category("Nemotron AI")
+@export var use_nemotron_ai: bool = false
+@export var nemotron_character_id: String = ""
+
+@export_category("Local AI (NobodyWho)")
+@export var use_local_ai: bool = true
 
 @export_category("Behavior")
 @export_enum("idle", "wander", "follow_player", "follow_npc", "chase", "talk", "work", "flee", "sleep", "socialize", "trade", "travel")
@@ -74,6 +82,10 @@ var path_target: Vector2 = Vector2.INF
 var is_following_path: bool = false
 var stuck_timer: float = 0.0
 var last_position: Vector2 = Vector2.ZERO
+var _next_worker_search_msec: int = 0
+var _last_anim_direction := Vector2(9999.0, 9999.0)
+var _last_move_state: String = ""
+var _pathfind_tick: int = 0
 
 @onready var emoticon_player: AnimationPlayer = get_node_or_null("emoticonAnimation/AnimationPlayer")
 @onready var key_ui: AnimatedSprite2D = $Key_UI/key_UI
@@ -185,6 +197,7 @@ func _initialize_components() -> void:
 		npc_social.relationship_changed.connect(_on_relationship_changed)
 		npc_social.group_formed.connect(_on_group_formed)
 		npc_social.rumor_spread.connect(_on_rumor_spread)
+		npc_social.show_bubble.connect(_show_speech_bubble)
 	
 	last_position = global_position
 
@@ -204,6 +217,26 @@ func _physics_process(delta: float) -> void:
 		pass
 
 func _update_pathfinding(delta: float) -> void:
+	# Throttle pathfinding to every 3rd physics frame to reduce CPU load
+	_pathfind_tick += 1
+	if _pathfind_tick % 3 != 0:
+		# Still need to move along current path even on skipped frames
+		if is_following_path and not current_path.is_empty():
+			var target := current_path[0]
+			var to_target := target - global_position
+			var distance := to_target.length()
+			if distance <= 12.0:
+				current_path.remove_at(0)
+				if current_path.is_empty():
+					_on_path_completed()
+					return
+			var move_direction := to_target.normalized()
+			var move_speed := base_speed * (npc_navigation.movement_speed_multiplier if npc_navigation else 1.0)
+			if npc_navigation and npc_navigation.avoidance_enabled:
+				move_direction = npc_navigation._apply_avoidance(move_direction)
+			move(move_direction, move_speed)
+		return
+	
 	if not is_following_path or current_path.is_empty():
 		return
 	
@@ -287,7 +320,7 @@ func _update_schedule_state() -> void:
 			_request_path(target_loc)
 	
 	schedule_changed.emit(activity)
-	print("%s schedule: %s at %s" % [npc_name, behavior_state, clock.format_time()])
+	# print("%s schedule: %s at %s" % [npc_name, behavior_state, clock.format_time()])
 
 func _schedule_activity_to_state(activity: String) -> String:
 	match activity:
@@ -350,18 +383,28 @@ func interact(interactor: Node2D = null) -> void:
 	
 	npc_interacted.emit(player)
 	
-	var groq_service := get_node_or_null("/root/GroqService")
-	if use_groq_ai and groq_service != null and groq_service.has_valid_api_key():
-		_start_groq_dialogue(groq_service)
-	elif dialogic:
-		if not random_timelines.is_empty():
-			dialogic.call("start", random_timelines.pick_random())
-		else:
-			dialogic.call("start", dialogue_timeline)
+	# Prefer the offline NobodyWho model, then Nemotron, then Groq, then local Dialogic.
+	var local_llm := get_node_or_null("/root/LocalLLM")
+	if use_local_ai and local_llm != null and local_llm.has_method("is_ready") and local_llm.is_ready():
+		_start_local_llm_dialogue(local_llm)
+		return
+
+	var nemotron_service := get_node_or_null("/root/NemotronService")
+	if use_nemotron_ai and nemotron_service != null and nemotron_service.has_valid_api_key():
+		_start_nemotron_dialogue(nemotron_service)
 	else:
-		dialogue_running = false
-		can_move = true
-		_resume_ai()
+		var groq_service := get_node_or_null("/root/GroqService")
+		if use_groq_ai and groq_service != null and groq_service.has_valid_api_key():
+			_start_groq_dialogue(groq_service)
+		elif dialogic:
+			if not random_timelines.is_empty():
+				dialogic.call("start", random_timelines.pick_random())
+			else:
+				dialogic.call("start", dialogue_timeline)
+		else:
+			dialogue_running = false
+			can_move = true
+			_resume_ai()
 
 func _start_groq_dialogue(groq_service: Node, player_prompt: String = "") -> void:
 	is_requesting_ai = true
@@ -405,7 +448,7 @@ func _start_groq_dialogue(groq_service: Node, player_prompt: String = "") -> voi
 		emoticon_player.stop()
 	
 	if ai_text.is_empty():
-		print("[%s] Groq returned empty dialogue, falling back." % npc_name)
+		# print("[%s] Groq returned empty dialogue, falling back." % npc_name)
 		if dialogic:
 			if not random_timelines.is_empty():
 				dialogic.call("start", random_timelines.pick_random())
@@ -456,9 +499,21 @@ func _on_dialogic_signal(argument: Variant) -> void:
 			prompt = "The player asks if you've heard any rumors. Share one if you know any."
 		"groq_ask_relationship":
 			prompt = "The player asks about your opinion of them. Answer honestly based on your relationship."
+		"nemotron_ask_farm":
+			prompt = "The player asks about your farm/work. Answer in character."
+		"nemotron_ask_tips":
+			prompt = "The player asks for advice. Give practical tips."
+		"nemotron_ask_now":
+			prompt = "The player asks what you're doing. Explain your current activity."
+		"nemotron_ask_rumor":
+			prompt = "The player asks if you've heard any rumors. Share one if you know any."
+		"nemotron_ask_relationship":
+			prompt = "The player asks about your opinion of them. Answer honestly based on your relationship."
 		_:
 			if sig_str.begins_with("groq_custom:"):
 				prompt = sig_str.substr(len("groq_custom:")).strip_edges()
+			elif sig_str.begins_with("nemotron_custom:"):
+				prompt = sig_str.substr(len("nemotron_custom:")).strip_edges()
 			else:
 				return
 	
@@ -500,6 +555,147 @@ func _on_dialogic_signal(argument: Variant) -> void:
 		npc_memory.learn_fact("player_asked_%s" % prompt.left(20), answer, 0.8, "player")
 		
 		var timeline = groq_service.create_dialogic_timeline(groq_character_id, answer, [])
+		dialogic.call("start", timeline)
+	else:
+		_end_interaction()
+
+func _start_local_llm_dialogue(local_llm: Node, player_prompt: String = "") -> void:
+	is_requesting_ai = true
+	play_chat_animation()
+
+	var clock := get_node_or_null("/root/WorldTime")
+	var time_str: String = clock.format_time() if clock else "daytime"
+	var current_activity := current_schedule_activity if not current_schedule_activity.is_empty() else behavior_state
+	var personality := biodata.personality if biodata else "Friendly island resident."
+	var mood := str(biodata.current_mood) if biodata else "neutral"
+	var player_rel := _get_or_create_relationship("player", "player")
+
+	var system_prompt := (
+		"You are %s, a resident of the cozy pixel-art island of Pixel Traks. " +
+		"Personality: %s. Current mood: %s. You are currently %s. It is %s. " +
+		"You are talking with the player, whom you %s. " +
+		"Stay in character. Reply with ONE short, natural spoken sentence (max 20 words). " +
+		"No narration, no quotes, no stage directions, no emojis."
+	) % [npc_name, personality, mood, current_activity, time_str, player_rel.get_relationship_description()]
+
+	var history: Array = []
+	for turn in conversation_history:
+		if turn is Dictionary:
+			history.append(turn)
+
+	var prompt_text := player_prompt
+	if prompt_text.strip_edges().is_empty():
+		prompt_text = "The player approaches you and says hello. Greet them naturally."
+
+	var answer: String = await local_llm.generate_line(system_prompt, history, prompt_text)
+	is_requesting_ai = false
+
+	if answer.is_empty():
+		if dialogic and not dialogue_timeline.is_empty():
+			dialogic.call("start", dialogue_timeline)
+		else:
+			_end_interaction()
+		return
+
+	conversation_history.append({"role": "user", "content": prompt_text})
+	conversation_history.append({"role": "assistant", "content": answer})
+	if conversation_history.size() > 8:
+		conversation_history = conversation_history.slice(conversation_history.size() - 8)
+
+	npc_memory.add_event_memory(
+		"conversation",
+		"Talked with player: %s" % answer.left(50),
+		["player"],
+		"",
+		0.1
+	)
+
+	var groq_service := get_node_or_null("/root/GroqService")
+	if dialogic != null and groq_service != null and not groq_character_id.is_empty():
+		var timeline = groq_service.create_dialogic_timeline(groq_character_id, answer, [])
+		dialogic.call("start", timeline)
+	else:
+		_show_speech_bubble(answer)
+		call_deferred("_end_local_dialogue_after_delay")
+
+func _end_local_dialogue_after_delay() -> void:
+	var tree := get_tree()
+	if tree == null:
+		return
+	await tree.create_timer(4.0).timeout
+	if is_instance_valid(self) and dialogue_running:
+		_end_interaction()
+
+func _start_nemotron_dialogue(nemotron_service: Node, player_prompt: String = "") -> void:
+	is_requesting_ai = true
+	if emoticon_player and emoticon_player.has_animation("chatting"):
+		emoticon_player.play("chatting")
+	
+	var clock := get_node_or_null("/root/WorldTime")
+	var time_str: String = clock.format_time() if clock else "daytime"
+	var current_activity := current_schedule_activity if not current_schedule_activity.is_empty() else behavior_state
+	var personality := biodata.personality if biodata else "Friendly island resident."
+	var mood := str(biodata.current_mood) if biodata else "neutral"
+	
+	# Add relationship context
+	var player_rel := _get_or_create_relationship("player", "player")
+	var relationship_context := ""
+	if player_rel.current_tier >= 2:
+		relationship_context = " You are good friends with the player."
+	elif player_rel.current_tier >= 1:
+		relationship_context = " You know the player casually."
+	elif player_rel.current_tier <= -1:
+		relationship_context = " You dislike the player."
+	
+	var context := {
+		"time": time_str,
+		"activity": current_activity,
+		"mood": mood,
+		"relationship": player_rel.get_relationship_description(),
+	}
+	
+	var ai_turn: Dictionary = await nemotron_service.generate_npc_dialogue_turn(
+		nemotron_character_id,
+		personality + relationship_context,
+		context,
+		player_prompt,
+		conversation_history
+	)
+	var ai_text: String = str(ai_turn.get("dialogue", ""))
+	
+	is_requesting_ai = false
+	if emoticon_player:
+		emoticon_player.stop()
+	
+	if ai_text.is_empty():
+		if dialogic:
+			if not random_timelines.is_empty():
+				dialogic.call("start", random_timelines.pick_random())
+			else:
+				dialogic.call("start", dialogue_timeline)
+		else:
+			_end_interaction()
+		return
+	
+	# Record in conversation history
+	var prompt_recorded := player_prompt if not player_prompt.is_empty() else "Player interacted with you."
+	conversation_history.append({"role": "user", "content": prompt_recorded})
+	conversation_history.append({"role": "assistant", "content": ai_text})
+	if conversation_history.size() > 8:
+		conversation_history = conversation_history.slice(conversation_history.size() - 8)
+	
+	# Add memory of this conversation
+	npc_memory.add_event_memory("conversation", "Talked with player: %s" % ai_text.left(50), ["player"], "", 0.1)
+	
+	if dialogic:
+		var choices: Array = []
+		if enable_interactive_choices:
+			for choice in ai_turn.get("choices", []):
+				choices.append({
+					"label": str(choice.get("label", "")),
+					"signal": "nemotron_custom:%s" % str(choice.get("prompt", ""))
+				})
+		var timeline = nemotron_service.create_dialogic_timeline(nemotron_character_id, ai_text, choices)
 		dialogic.call("start", timeline)
 	else:
 		_end_interaction()
@@ -606,14 +802,14 @@ func _on_path_completed() -> void:
 		behavior_state = previous_behavior_state
 
 func _on_path_blocked(blocked_position: Vector2) -> void:
-	print("[%s] Path blocked at %s" % [npc_name, blocked_position])
+	# print("[%s] Path blocked at %s" % [npc_name, blocked_position])
 	path_failed.emit(blocked_position)
 	# Try to find alternative after delay
 	call_deferred("_request_path_recalculation")
 
 func _on_path_recalculated(new_path: Array[Vector2]) -> void:
 	current_path = new_path
-	print("[%s] Path recalculated, %d waypoints" % [npc_name, new_path.size()])
+	# print("[%s] Path recalculated, %d waypoints" % [npc_name, new_path.size()])
 
 ## Relationship System
 
@@ -663,6 +859,54 @@ func _on_social_interaction_ended(participant_a: Node, participant_b: Node, inte
 	social_interaction_ended.emit(other, interaction_type, outcome)
 	_resume_ai()
 
+## Speech bubble / chat animation
+
+var _speech_bubble: Label
+var _speech_bubble_tween: Tween
+
+func _ensure_speech_bubble() -> void:
+	if _speech_bubble != null and is_instance_valid(_speech_bubble):
+		return
+	_speech_bubble = Label.new()
+	_speech_bubble.name = "SpeechBubble"
+	_speech_bubble.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_speech_bubble.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_speech_bubble.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_speech_bubble.size = Vector2(128, 52)
+	_speech_bubble.position = Vector2(-64, -84)
+	_speech_bubble.z_index = 100
+	_speech_bubble.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_speech_bubble.add_theme_font_size_override("font_size", 8)
+	_speech_bubble.add_theme_color_override("font_color", Color.WHITE)
+	_speech_bubble.add_theme_color_override("font_outline_color", Color.BLACK)
+	_speech_bubble.add_theme_constant_override("outline_size", 4)
+	_speech_bubble.visible = false
+	add_child(_speech_bubble)
+
+func _show_speech_bubble(text: String) -> void:
+	if text.strip_edges().is_empty():
+		return
+	_ensure_speech_bubble()
+	_speech_bubble.text = text
+	_speech_bubble.visible = true
+	_speech_bubble.modulate = Color(1, 1, 1, 1)
+	play_chat_animation()
+
+	if _speech_bubble_tween != null and _speech_bubble_tween.is_valid():
+		_speech_bubble_tween.kill()
+	_speech_bubble_tween = create_tween()
+	_speech_bubble_tween.tween_interval(3.0)
+	_speech_bubble_tween.tween_property(_speech_bubble, "modulate:a", 0.0, 0.5)
+	_speech_bubble_tween.tween_callback(_hide_speech_bubble)
+
+func _hide_speech_bubble() -> void:
+	if _speech_bubble != null and is_instance_valid(_speech_bubble):
+		_speech_bubble.visible = false
+
+func play_chat_animation() -> void:
+	if emoticon_player != null and emoticon_player.has_animation("chatting"):
+		emoticon_player.play("chatting")
+
 func _on_relationship_changed(target_id: String, old_tier: int, new_tier: int, affinity_change: float) -> void:
 	relationship_changed.emit(target_id, new_tier, _get_or_create_relationship(target_id).affinity)
 	
@@ -676,7 +920,8 @@ func _on_relationship_changed(target_id: String, old_tier: int, new_tier: int, a
 		npc_memory.add_event_memory("enemy_made", "Became enemies with %s" % target_id, [target_id], "", -0.5)
 
 func _on_group_formed(group_id: String, members: Array[Node]) -> void:
-	print("[%s] Joined group %s" % [npc_name, group_id])
+	# print("[%s] Joined group %s" % [npc_name, group_id])
+	pass
 
 func _on_rumor_spread(rumor: Dictionary, from_npc: Node, to_npc: Node) -> void:
 	if to_npc == self:
@@ -691,6 +936,12 @@ func worker_work_step() -> bool:
 		return true
 	
 	if worker_target_position == Vector2.INF:
+		# Finding a planting spot or tree scans the whole farm/object list.
+		# Throttle it so an idle worker does not run that scan every frame.
+		var now := Time.get_ticks_msec()
+		if now < _next_worker_search_msec:
+			return false
+		_next_worker_search_msec = now + 750
 		_prepare_worker_work(level)
 		if worker_target_position == Vector2.INF:
 			return true
@@ -737,6 +988,9 @@ func _find_planting_spot(level: Node) -> Vector2:
 	if dirt_layer == null:
 		return Vector2.INF
 	var used_cells: Array = level.get("used_cells")
+	var used_lookup := {}
+	for used_cell in used_cells:
+		used_lookup[used_cell] = true
 	var farm_cells := dirt_layer.get_used_cells()
 	if farm_cells.is_empty():
 		return Vector2.INF
@@ -745,7 +999,7 @@ func _find_planting_spot(level: Node) -> Vector2:
 	var best_position := Vector2.INF
 	var best_distance := INF
 	for cell in farm_cells:
-		if cell in used_cells:
+		if used_lookup.has(cell):
 			continue
 		var position := dirt_layer.to_global(dirt_layer.map_to_local(cell))
 		var distance := global_position.distance_squared_to(position)
@@ -895,11 +1149,17 @@ func move(move_direction: Vector2 = Vector2.ZERO, move_speed: float = 0.0) -> vo
 func animate() -> void:
 	if direction:
 		var direction_animation = Vector2(round(direction.x), round(direction.y))
-		move_state_machine.travel("walk")
-		animation_tree.set("parameters/MoveStateMachine/idle/blend_position", direction_animation)
-		animation_tree.set("parameters/MoveStateMachine/walk/blend_position", direction_animation)
+		if _last_move_state != "walk":
+			move_state_machine.travel("walk")
+			_last_move_state = "walk"
+		if direction_animation != _last_anim_direction:
+			animation_tree.set("parameters/MoveStateMachine/idle/blend_position", direction_animation)
+			animation_tree.set("parameters/MoveStateMachine/walk/blend_position", direction_animation)
+			_last_anim_direction = direction_animation
 	else:
-		move_state_machine.travel("idle")
+		if _last_move_state != "idle":
+			move_state_machine.travel("idle")
+			_last_move_state = "idle"
 
 func tool_use_emit() -> void:
 	pass
@@ -908,7 +1168,11 @@ func check_for_self(node) -> bool:
 	return node == self
 
 func get_unique_npc_id() -> String:
-	return npc_id
+	if not npc_id.is_empty():
+		return npc_id
+	if not npc_name.is_empty():
+		return npc_name.to_lower().replace(" ", "_")
+	return "npc_%d" % get_instance_id()
 
 func get_inventory_items() -> Array[String]:
 	# Override in specific NPC
